@@ -1,63 +1,66 @@
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewCustomerScreen() {
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <Text style={styles.headerLabel}>Musteri Modulu</Text>
-        <Text style={styles.headerTitle}>Yeni Musteri Ekle</Text>
-        <Text style={styles.headerSub}>
-          Musteri bilgilerini doldurun, kayit islemi sonradan eklenecek.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.fieldLabel}>Ad Soyad</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Ali Celik"
-          placeholderTextColor="#5E8C78"
-        />
-
-        <Text style={styles.fieldLabel}>Telefon</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="05xx xxx xx xx"
-          placeholderTextColor="#5E8C78"
-          keyboardType="phone-pad"
-        />
-
-        <Text style={styles.fieldLabel}>Email</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="ornek@mail.com"
-          placeholderTextColor="#5E8C78"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <Text style={styles.fieldLabel}>Bagli Arac (Plaka)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: 34 ABC 123"
-          placeholderTextColor="#5E8C78"
-        />
-
-        <Text style={styles.fieldLabel}>Adres</Text>
-        <TextInput
-          style={[styles.input, styles.inputMultiline]}
-          placeholder="Musteri adresini yazin..."
-          placeholderTextColor="#5E8C78"
-          multiline
-          numberOfLines={3}
-          textAlignVertical="top"
-        />
-
-        <View style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Kaydet</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.headerLabel}>Musteri Modulu</Text>
+          <Text style={styles.headerTitle}>Yeni Musteri Ekle</Text>
+          <Text style={styles.headerSub}>
+            Musteri bilgilerini doldurun, kayit islemi sonradan eklenecek.
+          </Text>
         </View>
-      </View>
-    </ScrollView>
+
+        <View style={styles.card}>
+          <Text style={styles.fieldLabel}>Ad Soyad</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Ali Celik"
+            placeholderTextColor="#5E8C78"
+          />
+
+          <Text style={styles.fieldLabel}>Telefon</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="05xx xxx xx xx"
+            placeholderTextColor="#5E8C78"
+            keyboardType="phone-pad"
+          />
+
+          <Text style={styles.fieldLabel}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="ornek@mail.com"
+            placeholderTextColor="#5E8C78"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+          <Text style={styles.fieldLabel}>Bagli Arac (Plaka)</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: 34 ABC 123"
+            placeholderTextColor="#5E8C78"
+          />
+
+          <Text style={styles.fieldLabel}>Adres</Text>
+          <TextInput
+            style={[styles.input, styles.inputMultiline]}
+            placeholder="Musteri adresini yazin..."
+            placeholderTextColor="#5E8C78"
+            multiline
+            numberOfLines={3}
+            textAlignVertical="top"
+          />
+
+          <View style={styles.saveButton}>
+            <Text style={styles.saveButtonText}>Kaydet</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

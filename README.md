@@ -68,4 +68,11 @@ Join our community of developers creating universal apps.
     // Customer girişi -> Bu da bizi araç , kayıt vb alanlara sadece kendi servis'ini, kendi aracını görüntüleme -> View kullanarak
     // User girişi -> Kullanıcı kayıt etme (admin) , servise araç ekleme (customerM), kayıt açma (Worker) , Servis kayıtlarını , araçları görüntüleme
 
+Tamamlananacaklar :
+-Dosya yolu düzenlenecek,
+-Araç,Kullanıcı vb. silme düzeltilecek
+-API'ler bağlanacak ,
+-Auth entegre edilecek,
+-Logic yazılacak
+
 }

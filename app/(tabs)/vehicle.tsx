@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const vehicleCards = [
@@ -8,6 +9,8 @@ const vehicleCards = [
 ];
 
 export default function VehiclesScreen() {
+  const [deleteMode, setDeleteMode] = useState(false);
+
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <View style={styles.hero}>
@@ -30,22 +33,42 @@ export default function VehiclesScreen() {
       </View>
 
       <View style={styles.controls}>
-        <View style={styles.primaryAction}>
-          <Text style={styles.primaryActionText}>+ Yeni Arac</Text>
-        </View>
-        <View style={styles.secondaryAction}>
-          <Text style={styles.secondaryActionText}>- Arac Sil</Text>
-        </View>
+        <Link href="/new-vehicle" asChild>
+          <Pressable style={styles.primaryAction}>
+            <Text style={styles.primaryActionText}>+ Yeni Arac</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          style={[
+            styles.secondaryAction,
+            deleteMode && styles.secondaryActionActive,
+          ]}
+          onPress={() => setDeleteMode((v) => !v)}
+        >
+          <Text
+            style={[
+              styles.secondaryActionText,
+              deleteMode && styles.secondaryActionTextActive,
+            ]}
+          >
+            {deleteMode ? "Vazgec" : "- Arac Sil"}
+          </Text>
+        </Pressable>
       </View>
 
       {vehicleCards.map((vehicle) => (
         <Link key={vehicle.plate} href="/vehicle-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View style={styles.vehicleCard}>
-              <Text style={styles.plate}>{vehicle.plate}</Text>
-              <Text style={styles.model}>{vehicle.model}</Text>
-              <Text style={styles.km}>{vehicle.km}</Text>
-              <Text style={styles.detailText}>Detay ve Guncelle</Text>
+            <View
+              style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}
+            >
+              {deleteMode && <View style={styles.selectCircle} />}
+              <View style={deleteMode ? styles.cardContent : undefined}>
+                <Text style={styles.plate}>{vehicle.plate}</Text>
+                <Text style={styles.model}>{vehicle.model}</Text>
+                <Text style={styles.km}>{vehicle.km}</Text>
+                <Text style={styles.detailText}>Detay ve Guncelle</Text>
+              </View>
             </View>
           </Pressable>
         </Link>
@@ -166,5 +189,28 @@ const styles = StyleSheet.create({
     color: "#845D3F",
     fontSize: 12,
     fontWeight: "700",
+  },
+  secondaryActionActive: {
+    borderColor: "#B0412E",
+    backgroundColor: "#FFF0EC",
+  },
+  secondaryActionTextActive: {
+    color: "#B0412E",
+  },
+  vehicleCardRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  selectCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#B0412E",
+    backgroundColor: "#FFFFFF",
+  },
+  cardContent: {
+    flex: 1,
   },
 });

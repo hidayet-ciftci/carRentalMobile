@@ -1,60 +1,63 @@
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewServiceScreen() {
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <Text style={styles.headerLabel}>Servis Modulu</Text>
-        <Text style={styles.headerTitle}>Yeni Servis Kaydi</Text>
-        <Text style={styles.headerSub}>
-          Servis bilgilerini doldurun, kayit islemi sonradan eklenecek.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.fieldLabel}>Plaka</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: 34 ABC 123"
-          placeholderTextColor="#A090C0"
-        />
-
-        <Text style={styles.fieldLabel}>Servis Turu</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Periyodik Bakim"
-          placeholderTextColor="#A090C0"
-        />
-
-        <Text style={styles.fieldLabel}>Aciklama</Text>
-        <TextInput
-          style={[styles.input, styles.inputMultiline]}
-          placeholder="Servis detaylarini yazin..."
-          placeholderTextColor="#A090C0"
-          multiline
-          numberOfLines={3}
-          textAlignVertical="top"
-        />
-
-        <Text style={styles.fieldLabel}>Tarih</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="GG.AA.YYYY"
-          placeholderTextColor="#A090C0"
-        />
-
-        <Text style={styles.fieldLabel}>Teknisyen</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Mehmet Usta"
-          placeholderTextColor="#A090C0"
-        />
-
-        <View style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Kaydet</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.headerLabel}>Servis Modulu</Text>
+          <Text style={styles.headerTitle}>Yeni Servis Kaydi</Text>
+          <Text style={styles.headerSub}>
+            Servis bilgilerini doldurun, kayit islemi sonradan eklenecek.
+          </Text>
         </View>
-      </View>
-    </ScrollView>
+
+        <View style={styles.card}>
+          <Text style={styles.fieldLabel}>Plaka</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: 34 ABC 123"
+            placeholderTextColor="#A090C0"
+          />
+
+          <Text style={styles.fieldLabel}>Servis Turu</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Periyodik Bakim"
+            placeholderTextColor="#A090C0"
+          />
+
+          <Text style={styles.fieldLabel}>Aciklama</Text>
+          <TextInput
+            style={[styles.input, styles.inputMultiline]}
+            placeholder="Servis detaylarini yazin..."
+            placeholderTextColor="#A090C0"
+            multiline
+            numberOfLines={3}
+            textAlignVertical="top"
+          />
+
+          <Text style={styles.fieldLabel}>Tarih</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="GG.AA.YYYY"
+            placeholderTextColor="#A090C0"
+          />
+
+          <Text style={styles.fieldLabel}>Teknisyen</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Mehmet Usta"
+            placeholderTextColor="#A090C0"
+          />
+
+          <View style={styles.saveButton}>
+            <Text style={styles.saveButtonText}>Kaydet</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

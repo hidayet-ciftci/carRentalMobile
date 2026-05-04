@@ -1,66 +1,69 @@
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewVehicleScreen() {
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <Text style={styles.headerLabel}>Arac Modulu</Text>
-        <Text style={styles.headerTitle}>Yeni Arac Ekle</Text>
-        <Text style={styles.headerSub}>
-          Araca ait bilgileri doldurun, kayit islemi sonradan eklenecek.
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.fieldLabel}>Plaka</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: 34 ABC 123"
-          placeholderTextColor="#9E8C7A"
-        />
-
-        <Text style={styles.fieldLabel}>Marka</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Renault"
-          placeholderTextColor="#9E8C7A"
-        />
-
-        <Text style={styles.fieldLabel}>Model</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Clio"
-          placeholderTextColor="#9E8C7A"
-        />
-
-        <Text style={styles.fieldLabel}>Yil</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: 2022"
-          placeholderTextColor="#9E8C7A"
-          keyboardType="numeric"
-        />
-
-        <Text style={styles.fieldLabel}>Kilometre</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: 45000"
-          placeholderTextColor="#9E8C7A"
-          keyboardType="numeric"
-        />
-
-        <Text style={styles.fieldLabel}>Durum</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ornek: Musait / Kirada"
-          placeholderTextColor="#9E8C7A"
-        />
-
-        <View style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Kaydet</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.headerLabel}>Arac Modulu</Text>
+          <Text style={styles.headerTitle}>Yeni Arac Ekle</Text>
+          <Text style={styles.headerSub}>
+            Araca ait bilgileri doldurun, kayit islemi sonradan eklenecek.
+          </Text>
         </View>
-      </View>
-    </ScrollView>
+
+        <View style={styles.card}>
+          <Text style={styles.fieldLabel}>Plaka</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: 34 ABC 123"
+            placeholderTextColor="#9E8C7A"
+          />
+
+          <Text style={styles.fieldLabel}>Marka</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Renault"
+            placeholderTextColor="#9E8C7A"
+          />
+
+          <Text style={styles.fieldLabel}>Model</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Clio"
+            placeholderTextColor="#9E8C7A"
+          />
+
+          <Text style={styles.fieldLabel}>Yil</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: 2022"
+            placeholderTextColor="#9E8C7A"
+            keyboardType="numeric"
+          />
+
+          <Text style={styles.fieldLabel}>Kilometre</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: 45000"
+            placeholderTextColor="#9E8C7A"
+            keyboardType="numeric"
+          />
+
+          <Text style={styles.fieldLabel}>Durum</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Musait / Kirada"
+            placeholderTextColor="#9E8C7A"
+          />
+
+          <View style={styles.saveButton}>
+            <Text style={styles.saveButtonText}>Kaydet</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

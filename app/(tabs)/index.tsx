@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#E7EDF5",
+    gap: 15,
   },
   cardLink: {
     borderRadius: 16,
