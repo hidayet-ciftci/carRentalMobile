@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const staffCards = [
   { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
@@ -29,13 +30,20 @@ export default function ManagementScreen() {
 
       <Text style={styles.sectionTitle}>Kullanici Listesi</Text>
       {staffCards.map((item) => (
-        <View key={item.name} style={styles.card}>
-          <View>
-            <Text style={styles.cardTitle}>{item.name}</Text>
-            <Text style={styles.cardSub}>{item.role}</Text>
-          </View>
-          <Text style={styles.status}>{item.status}</Text>
-        </View>
+        <Link key={item.name} href="/user-detail" asChild>
+          <Pressable style={styles.cardLink}>
+            <View style={styles.card}>
+              <View>
+                <Text style={styles.cardTitle}>{item.name}</Text>
+                <Text style={styles.cardSub}>{item.role}</Text>
+              </View>
+              <View style={styles.cardRight}>
+                <Text style={styles.status}>{item.status}</Text>
+                <Text style={styles.detailText}>Detay ve Guncelle</Text>
+              </View>
+            </View>
+          </Pressable>
+        </Link>
       ))}
     </ScrollView>
   );
@@ -116,6 +124,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E7EDF5",
   },
+  cardLink: {
+    borderRadius: 16,
+    width: "100%",
+  },
+  cardRight: {
+    alignItems: "flex-end",
+    gap: 6,
+  },
   cardTitle: {
     fontSize: 16,
     fontWeight: "700",
@@ -131,6 +147,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 4,
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  detailText: {
+    color: "#2B5678",
     fontSize: 12,
     fontWeight: "700",
   },

@@ -25,20 +25,29 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
-        options={{
-          title: "Yonetim",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person.3.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
+        name="vehicle"
         options={{
           title: "Arac",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="car.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="vehicle-records"
+        options={{
+          title: "Servis",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="doc.text.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Yönetim",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="person.3.fill" color={color} />
           ),
         }}
       />
@@ -48,15 +57,6 @@ export default function TabLayout() {
           title: "Musteri",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="person.fill" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="vehicle-records"
-        options={{
-          title: "Kayit",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="doc.text.fill" color={color} />
           ),
         }}
       />

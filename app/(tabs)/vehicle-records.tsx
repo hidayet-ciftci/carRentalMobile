@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const records = [
   {
@@ -34,19 +35,28 @@ export default function VehicleRecordsScreen() {
       </View>
 
       <View style={styles.rowActions}>
-        <Text style={styles.add}>+ Kayit Ekle</Text>
-        <Text style={styles.remove}>- Kayit Sil</Text>
+        <View style={styles.primaryAction}>
+          <Text style={styles.primaryActionText}>+ Yeni Servis</Text>
+        </View>
+        <View style={styles.secondaryAction}>
+          <Text style={styles.secondaryActionText}>- Servis Sil</Text>
+        </View>
       </View>
 
       {records.map((record) => (
-        <View key={record.id} style={styles.recordCard}>
-          <View style={styles.recordHeader}>
-            <Text style={styles.recordId}>{record.id}</Text>
-            <Text style={styles.recordDate}>{record.date}</Text>
-          </View>
-          <Text style={styles.recordPlate}>{record.plate}</Text>
-          <Text style={styles.recordNote}>{record.note}</Text>
-        </View>
+        <Link key={record.id} href="/service-detail" asChild>
+          <Pressable style={styles.cardLink}>
+            <View style={styles.recordCard}>
+              <View style={styles.recordHeader}>
+                <Text style={styles.recordId}>{record.id}</Text>
+                <Text style={styles.recordDate}>{record.date}</Text>
+              </View>
+              <Text style={styles.recordPlate}>{record.plate}</Text>
+              <Text style={styles.recordNote}>{record.note}</Text>
+              <Text style={styles.detailText}>Detay ve Guncelle</Text>
+            </View>
+          </Pressable>
+        </Link>
       ))}
     </ScrollView>
   );
@@ -85,14 +95,29 @@ const styles = StyleSheet.create({
   },
   rowActions: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 4,
+    gap: 10,
   },
-  add: {
-    color: "#1F9468",
+  primaryAction: {
+    flex: 1,
+    borderRadius: 14,
+    backgroundColor: "#1F9468",
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  secondaryAction: {
+    flex: 1,
+    borderRadius: 14,
+    backgroundColor: "#EEE8F8",
+    paddingVertical: 12,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#D7C9EE",
+  },
+  primaryActionText: {
+    color: "#FFFFFF",
     fontWeight: "700",
   },
-  remove: {
+  secondaryActionText: {
     color: "#B04545",
     fontWeight: "700",
   },
@@ -103,6 +128,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E4DCF5",
     gap: 4,
+  },
+  cardLink: {
+    borderRadius: 16,
+    width: "100%",
   },
   recordHeader: {
     flexDirection: "row",
@@ -124,5 +153,11 @@ const styles = StyleSheet.create({
   },
   recordNote: {
     color: "#6B6285",
+  },
+  detailText: {
+    marginTop: 4,
+    color: "#5D4D9A",
+    fontSize: 12,
+    fontWeight: "700",
   },
 });

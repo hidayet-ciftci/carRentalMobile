@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const customers = [
   { name: "Esra Cetin", phone: "0501 222 33 44", car: "34 CRN 107" },
@@ -28,11 +29,16 @@ export default function CustomersScreen() {
 
       <Text style={styles.listTitle}>Musteri Listesi</Text>
       {customers.map((customer) => (
-        <View key={customer.phone} style={styles.customerCard}>
-          <Text style={styles.customerName}>{customer.name}</Text>
-          <Text style={styles.customerMeta}>Telefon: {customer.phone}</Text>
-          <Text style={styles.customerMeta}>Arac: {customer.car}</Text>
-        </View>
+        <Link key={customer.phone} href="/customer-admin-detail" asChild>
+          <Pressable style={styles.cardLink}>
+            <View style={styles.customerCard}>
+              <Text style={styles.customerName}>{customer.name}</Text>
+              <Text style={styles.customerMeta}>Telefon: {customer.phone}</Text>
+              <Text style={styles.customerMeta}>Arac: {customer.car}</Text>
+              <Text style={styles.detailText}>Detay ve Guncelle</Text>
+            </View>
+          </Pressable>
+        </Link>
       ))}
     </ScrollView>
   );
@@ -111,6 +117,10 @@ const styles = StyleSheet.create({
     padding: 14,
     gap: 4,
   },
+  cardLink: {
+    borderRadius: 16,
+    width: "100%",
+  },
   customerName: {
     fontSize: 16,
     fontWeight: "700",
@@ -118,5 +128,11 @@ const styles = StyleSheet.create({
   },
   customerMeta: {
     color: "#5D7C6F",
+  },
+  detailText: {
+    marginTop: 4,
+    color: "#2A654F",
+    fontSize: 12,
+    fontWeight: "700",
   },
 });

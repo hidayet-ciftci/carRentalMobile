@@ -1,9 +1,18 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Link, router } from "expo-router";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function AdminLoginScreen() {
   return (
     <View style={styles.page}>
+      <TouchableOpacity style={styles.backButton} onPress={router.back}>
+        <Text>Go Back</Text>
+      </TouchableOpacity>
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>Kullanici Girisi</Text>
         <Text style={styles.panelSub}>
@@ -81,5 +90,16 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 15,
+  },
+  backButton: {
+    backgroundColor: "white",
+    borderRadius: 14,
+    width: 75,
+    margin: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    right: 5,
+    top: 60,
+    position: "absolute",
   },
 });
