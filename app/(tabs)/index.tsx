@@ -1,98 +1,137 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const staffCards = [
+  { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
+  { name: "Zeynep Kaya", role: "Operasyon", status: "Izinli" },
+  { name: "Murat Aydin", role: "Satis", status: "Aktif" },
+];
 
-export default function HomeScreen() {
+export default function ManagementScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+      <View style={styles.banner}>
+        <Text style={styles.bannerLabel}>Yonetim Merkezi</Text>
+        <Text style={styles.bannerTitle}>Kullanici Islemleri</Text>
+        <Text style={styles.bannerSubtitle}>
+          Kullanici goruntuleme, ekleme, duzenleme ve kaldirma islemleri icin
+          tasarim alani.
+        </Text>
+      </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <View style={styles.quickActions}>
+        <View style={styles.actionButton}>
+          <Text style={styles.actionText}>+ Kullanici Ekle</Text>
+        </View>
+        <View style={styles.actionButtonMuted}>
+          <Text style={styles.actionTextMuted}>- Kullanici Cikar</Text>
+        </View>
+      </View>
+
+      <Text style={styles.sectionTitle}>Kullanici Listesi</Text>
+      {staffCards.map((item) => (
+        <View key={item.name} style={styles.card}>
+          <View>
+            <Text style={styles.cardTitle}>{item.name}</Text>
+            <Text style={styles.cardSub}>{item.role}</Text>
+          </View>
+          <Text style={styles.status}>{item.status}</Text>
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  page: {
+    flex: 1,
+    backgroundColor: "#F3F6FB",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  content: {
+    padding: 16,
+    gap: 14,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  banner: {
+    backgroundColor: "#0E4A67",
+    borderRadius: 22,
+    padding: 20,
+    gap: 6,
+  },
+  bannerLabel: {
+    color: "#9ED5EE",
+    fontSize: 12,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    fontWeight: "700",
+  },
+  bannerTitle: {
+    color: "#FFFFFF",
+    fontSize: 24,
+    fontWeight: "800",
+  },
+  bannerSubtitle: {
+    color: "#D4E8F4",
+    lineHeight: 20,
+  },
+  quickActions: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  actionButton: {
+    flex: 1,
+    backgroundColor: "#0FA47A",
+    borderRadius: 14,
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  actionButtonMuted: {
+    flex: 1,
+    backgroundColor: "#EEF2F8",
+    borderRadius: 14,
+    paddingVertical: 12,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#D7DFEA",
+  },
+  actionText: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+  },
+  actionTextMuted: {
+    color: "#1B2F42",
+    fontWeight: "700",
+  },
+  sectionTitle: {
+    marginTop: 8,
+    fontSize: 17,
+    fontWeight: "700",
+    color: "#18293D",
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#E7EDF5",
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#12243A",
+  },
+  cardSub: {
+    marginTop: 4,
+    color: "#60758C",
+  },
+  status: {
+    color: "#0A7C5A",
+    backgroundColor: "#DDF9EE",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    fontSize: 12,
+    fontWeight: "700",
   },
 });

@@ -48,3 +48,24 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+{
+// expo
+
+    // Frontend kismi
+
+    // Kullanici -> kayit olup , login yapacak, Token'i local'da saklanip silinecek
+    // User -> 3 rol'e sahip olacak -> Admin , User , Customer Manager.
+    // Admin tüm sayfalara yetkisi olup her işlemi yapabilecek.
+    // User yani Worker , sadece ServiceRecord açma vb işlemleri yapabilecek
+    // Customer Manager , sadece Customer yani müşteri açma vb işlemleri yapacak.
+    // Customer giriş yapmadan kendi bilgilerini görüntüleyebilecek.
+    // Customer tablosu -> görüntüleme Unauthorized
+    // Customer tablosu -> Ekleme , silme , update -> CustomerManager
+    // User,UserClaimOP,ClaimOP tablosu -> Sadece Admin
+    // ServiceRecord , Vehicle -> Worker
+
+    // Customer girişi -> Bu da bizi araç , kayıt vb alanlara sadece kendi servis'ini, kendi aracını görüntüleme -> View kullanarak
+    // User girişi -> Kullanıcı kayıt etme (admin) , servise araç ekleme (customerM), kayıt açma (Worker) , Servis kayıtlarını , araçları görüntüleme
+
+}
