@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const staffCards = [
@@ -8,6 +9,8 @@ const staffCards = [
 ];
 
 export default function ManagementScreen() {
+  const [deleteMode, setDeleteMode] = useState(false);
+
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <View style={styles.banner}>
@@ -20,12 +23,27 @@ export default function ManagementScreen() {
       </View>
 
       <View style={styles.quickActions}>
-        <View style={styles.actionButton}>
-          <Text style={styles.actionText}>+ Kullanici Ekle</Text>
-        </View>
-        <View style={styles.actionButtonMuted}>
-          <Text style={styles.actionTextMuted}>- Kullanici Cikar</Text>
-        </View>
+        <Link href="/new-user" asChild>
+          <Pressable style={styles.actionButton}>
+            <Text style={styles.actionText}>+ Kullanici Ekle</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          style={[
+            styles.actionButtonMuted,
+            deleteMode && styles.actionButtonMutedActive,
+          ]}
+          onPress={() => setDeleteMode((v) => !v)}
+        >
+          <Text
+            style={[
+              styles.actionTextMuted,
+              deleteMode && styles.actionTextMutedActive,
+            ]}
+          >
+            {deleteMode ? "Vazgec" : "- Kullanici Cikar"}
+          </Text>
+        </Pressable>
       </View>
 
       <Text style={styles.sectionTitle}>Kullanici Listesi</Text>
@@ -33,7 +51,8 @@ export default function ManagementScreen() {
         <Link key={item.name} href="/user-detail" asChild>
           <Pressable style={styles.cardLink}>
             <View style={styles.card}>
-              <View>
+              {deleteMode && <View style={styles.selectCircle} />}
+              <View style={styles.cardLeft}>
                 <Text style={styles.cardTitle}>{item.name}</Text>
                 <Text style={styles.cardSub}>{item.role}</Text>
               </View>
@@ -154,5 +173,23 @@ const styles = StyleSheet.create({
     color: "#2B5678",
     fontSize: 12,
     fontWeight: "700",
+  },
+  actionButtonMutedActive: {
+    borderColor: "#1B2F42",
+    backgroundColor: "#E2E9F3",
+  },
+  actionTextMutedActive: {
+    color: "#1B2F42",
+  },
+  selectCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#1B2F42",
+    backgroundColor: "#FFFFFF",
+  },
+  cardLeft: {
+    flex: 1,
   },
 });

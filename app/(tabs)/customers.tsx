@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const customers = [
@@ -8,6 +9,8 @@ const customers = [
 ];
 
 export default function CustomersScreen() {
+  const [deleteMode, setDeleteMode] = useState(false);
+
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <View style={styles.headerCard}>
@@ -19,23 +22,48 @@ export default function CustomersScreen() {
       </View>
 
       <View style={styles.actions}>
-        <View style={styles.primaryAction}>
-          <Text style={styles.primaryText}>+ Musteri Ekle</Text>
-        </View>
-        <View style={styles.secondaryAction}>
-          <Text style={styles.secondaryText}>- Musteri Cikar</Text>
-        </View>
+        <Link href="/new-customer" asChild>
+          <Pressable style={styles.primaryAction}>
+            <Text style={styles.primaryText}>+ Musteri Ekle</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          style={[
+            styles.secondaryAction,
+            deleteMode && styles.secondaryActionActive,
+          ]}
+          onPress={() => setDeleteMode((v) => !v)}
+        >
+          <Text
+            style={[
+              styles.secondaryText,
+              deleteMode && styles.secondaryTextActive,
+            ]}
+          >
+            {deleteMode ? "Vazgec" : "- Musteri Cikar"}
+          </Text>
+        </Pressable>
       </View>
 
       <Text style={styles.listTitle}>Musteri Listesi</Text>
       {customers.map((customer) => (
         <Link key={customer.phone} href="/customer-admin-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View style={styles.customerCard}>
-              <Text style={styles.customerName}>{customer.name}</Text>
-              <Text style={styles.customerMeta}>Telefon: {customer.phone}</Text>
-              <Text style={styles.customerMeta}>Arac: {customer.car}</Text>
-              <Text style={styles.detailText}>Detay ve Guncelle</Text>
+            <View
+              style={[
+                styles.customerCard,
+                deleteMode && styles.customerCardRow,
+              ]}
+            >
+              {deleteMode && <View style={styles.selectCircle} />}
+              <View style={deleteMode ? styles.cardContent : undefined}>
+                <Text style={styles.customerName}>{customer.name}</Text>
+                <Text style={styles.customerMeta}>
+                  Telefon: {customer.phone}
+                </Text>
+                <Text style={styles.customerMeta}>Arac: {customer.car}</Text>
+                <Text style={styles.detailText}>Detay ve Guncelle</Text>
+              </View>
             </View>
           </Pressable>
         </Link>
@@ -134,5 +162,28 @@ const styles = StyleSheet.create({
     color: "#2A654F",
     fontSize: 12,
     fontWeight: "700",
+  },
+  secondaryActionActive: {
+    borderColor: "#294639",
+    backgroundColor: "#DFF0E8",
+  },
+  secondaryTextActive: {
+    color: "#1A3127",
+  },
+  customerCardRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  selectCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#294639",
+    backgroundColor: "#FFFFFF",
+  },
+  cardContent: {
+    flex: 1,
   },
 });

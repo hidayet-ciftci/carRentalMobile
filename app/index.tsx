@@ -22,7 +22,7 @@ export default function EntryScreen() {
         </View>
       </Link>
 
-      <Link href="/admin-login" style={styles.choiceCardDark}>
+      <Link href="/user-login" style={styles.choiceCardDark}>
         <View>
           <Text style={styles.choiceLabelDark}>Kullanici Girisi</Text>
           <Text style={styles.choiceDescDark}>

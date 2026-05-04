@@ -1,4 +1,5 @@
 import { Link } from "expo-router";
+import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const records = [
@@ -23,6 +24,8 @@ const records = [
 ];
 
 export default function VehicleRecordsScreen() {
+  const [deleteMode, setDeleteMode] = useState(false);
+
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <View style={styles.topCard}>
@@ -35,25 +38,45 @@ export default function VehicleRecordsScreen() {
       </View>
 
       <View style={styles.rowActions}>
-        <View style={styles.primaryAction}>
-          <Text style={styles.primaryActionText}>+ Yeni Servis</Text>
-        </View>
-        <View style={styles.secondaryAction}>
-          <Text style={styles.secondaryActionText}>- Servis Sil</Text>
-        </View>
+        <Link href="/new-service" asChild>
+          <Pressable style={styles.primaryAction}>
+            <Text style={styles.primaryActionText}>+ Yeni Servis</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          style={[
+            styles.secondaryAction,
+            deleteMode && styles.secondaryActionActive,
+          ]}
+          onPress={() => setDeleteMode((v) => !v)}
+        >
+          <Text
+            style={[
+              styles.secondaryActionText,
+              deleteMode && styles.secondaryActionTextActive,
+            ]}
+          >
+            {deleteMode ? "Vazgec" : "- Servis Sil"}
+          </Text>
+        </Pressable>
       </View>
 
       {records.map((record) => (
         <Link key={record.id} href="/service-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View style={styles.recordCard}>
-              <View style={styles.recordHeader}>
-                <Text style={styles.recordId}>{record.id}</Text>
-                <Text style={styles.recordDate}>{record.date}</Text>
+            <View
+              style={[styles.recordCard, deleteMode && styles.recordCardRow]}
+            >
+              {deleteMode && <View style={styles.selectCircle} />}
+              <View style={deleteMode ? styles.cardContent : undefined}>
+                <View style={styles.recordHeader}>
+                  <Text style={styles.recordId}>{record.id}</Text>
+                  <Text style={styles.recordDate}>{record.date}</Text>
+                </View>
+                <Text style={styles.recordPlate}>{record.plate}</Text>
+                <Text style={styles.recordNote}>{record.note}</Text>
+                <Text style={styles.detailText}>Detay ve Guncelle</Text>
               </View>
-              <Text style={styles.recordPlate}>{record.plate}</Text>
-              <Text style={styles.recordNote}>{record.note}</Text>
-              <Text style={styles.detailText}>Detay ve Guncelle</Text>
             </View>
           </Pressable>
         </Link>
@@ -159,5 +182,28 @@ const styles = StyleSheet.create({
     color: "#5D4D9A",
     fontSize: 12,
     fontWeight: "700",
+  },
+  secondaryActionActive: {
+    borderColor: "#B04545",
+    backgroundColor: "#F9F0F8",
+  },
+  secondaryActionTextActive: {
+    color: "#B04545",
+  },
+  recordCardRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  selectCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#B04545",
+    backgroundColor: "#FFFFFF",
+  },
+  cardContent: {
+    flex: 1,
   },
 });
