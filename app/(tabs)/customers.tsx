@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -25,13 +25,17 @@ export default function CustomersScreen() {
       </ThemedView>
 
       <View style={styles.actions}>
-        <Link href="/new-customer" asChild>
-          <Pressable style={styles.primaryAction}>
-            <ThemedText style={styles.primaryText}>
-              {deleteMode ? "Onayla" : "+ Musteri Ekle"}
-            </ThemedText>
-          </Pressable>
-        </Link>
+        <Pressable
+          style={styles.primaryAction}
+          onPress={() => {
+            deleteMode ? console.log("silindi") : router.push("/new-customer");
+          }}
+        >
+          <ThemedText style={styles.primaryText}>
+            {deleteMode ? "Onayla" : "+ Musteri Ekle"}
+          </ThemedText>
+        </Pressable>
+
         <Pressable
           style={[
             styles.secondaryAction,

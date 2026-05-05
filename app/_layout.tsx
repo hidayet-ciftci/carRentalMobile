@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
   anchor: "index",
@@ -38,6 +39,7 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="auto" />
+      <Toast />
     </ThemeProvider>
   );
 }

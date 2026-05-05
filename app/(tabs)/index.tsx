@@ -1,8 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const staffCards = [
   { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
@@ -26,13 +27,19 @@ export default function ManagementScreen() {
       </ThemedView>
 
       <View style={styles.quickActions}>
-        <Link href="/new-user" asChild>
-          <Pressable style={styles.actionButton}>
-            <ThemedText style={styles.actionText}>
-              {deleteMode ? "Onayla" : "+ Kullanici Ekle"}
-            </ThemedText>
-          </Pressable>
-        </Link>
+        <Pressable
+          style={styles.actionButton}
+          onPress={() => {
+            deleteMode
+              ? Toast.show({ type: "error", text1: "silindi" })
+              : router.push("/new-user");
+          }}
+        >
+          <ThemedText style={styles.actionText}>
+            {deleteMode ? "Onayla" : "+ Kullanici Ekle"}
+          </ThemedText>
+        </Pressable>
+
         <Pressable
           style={[
             styles.actionButtonMuted,
