@@ -28,7 +28,9 @@ export default function ManagementScreen() {
       <View style={styles.quickActions}>
         <Link href="/new-user" asChild>
           <Pressable style={styles.actionButton}>
-            <ThemedText style={styles.actionText}>+ Kullanici Ekle</ThemedText>
+            <ThemedText style={styles.actionText}>
+              {deleteMode ? "Onayla" : "+ Kullanici Ekle"}
+            </ThemedText>
           </Pressable>
         </Link>
         <Pressable

@@ -27,7 +27,7 @@ const records = [
 
 export default function VehicleRecordsScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
-  const [selected, setSelected] = useState<number>();
+  const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -44,7 +44,7 @@ export default function VehicleRecordsScreen() {
         <Link href="/new-service" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryActionText}>
-              + Yeni Servis
+              {deleteMode ? "Onayla" : "+ Yeni Servis"}
             </ThemedText>
           </Pressable>
         </Link>
@@ -81,13 +81,23 @@ export default function VehicleRecordsScreen() {
           key={record.id}
           style={styles.cardLink}
           onPress={() => {
-            deleteMode ? setSelected(index) : router.push("/service-detail");
+            deleteMode
+              ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
+              : router.push("/service-detail");
           }}
         >
           <ThemedView
             style={[styles.recordCard, deleteMode && styles.recordCardRow]}
           >
-            {deleteMode && <ThemedView style={styles.selectCircle} />}
+            {deleteMode && (
+              <ThemedView
+                style={
+                  selecteds[index] == true
+                    ? styles.selectedCircle
+                    : styles.selectCircle
+                }
+              />
+            )}
             <View style={deleteMode ? styles.cardContent : undefined}>
               <View style={styles.recordHeader}>
                 <ThemedText style={styles.recordId}>{record.id}</ThemedText>
@@ -223,6 +233,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#B04545",
     backgroundColor: "#FFFFFF",
+  },
+  selectedCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#B04545",
+    backgroundColor: "#B04545",
   },
   cardContent: {
     flex: 1,

@@ -27,7 +27,9 @@ export default function CustomersScreen() {
       <View style={styles.actions}>
         <Link href="/new-customer" asChild>
           <Pressable style={styles.primaryAction}>
-            <ThemedText style={styles.primaryText}>+ Musteri Ekle</ThemedText>
+            <ThemedText style={styles.primaryText}>
+              {deleteMode ? "Onayla" : "+ Musteri Ekle"}
+            </ThemedText>
           </Pressable>
         </Link>
         <Pressable
@@ -63,9 +65,12 @@ export default function CustomersScreen() {
           style={styles.cardLink}
           onPress={() => {
             deleteMode
-              ? !selected.includes(index) && setSelected([...selected, index])
+              ? setSelected((prev) =>
+                  prev.includes(index)
+                    ? prev.filter((i) => i !== index)
+                    : [...prev, index],
+                )
               : router.push("/customer-admin-detail");
-            console.log(selected);
           }}
         >
           <View
