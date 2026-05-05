@@ -1,6 +1,8 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 const records = [
   {
@@ -28,19 +30,21 @@ export default function VehicleRecordsScreen() {
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.topCard}>
-        <Text style={styles.topLabel}>Arac Kayit Modulu</Text>
-        <Text style={styles.topTitle}>Servis Kayitlari</Text>
-        <Text style={styles.topDesc}>
+      <ThemedView style={styles.topCard}>
+        <ThemedText style={styles.topLabel}>Arac Kayit Modulu</ThemedText>
+        <ThemedText style={styles.topTitle}>Servis Kayitlari</ThemedText>
+        <ThemedText style={styles.topDesc}>
           Arac kayitlarini goruntuleme, ekleme ve silme is akisi icin tasarim
           alani.
-        </Text>
-      </View>
+        </ThemedText>
+      </ThemedView>
 
-      <View style={styles.rowActions}>
+      <ThemedView style={styles.rowActions}>
         <Link href="/new-service" asChild>
           <Pressable style={styles.primaryAction}>
-            <Text style={styles.primaryActionText}>+ Yeni Servis</Text>
+            <ThemedText style={styles.primaryActionText}>
+              + Yeni Servis
+            </ThemedText>
           </Pressable>
         </Link>
         <Pressable
@@ -50,34 +54,40 @@ export default function VehicleRecordsScreen() {
           ]}
           onPress={() => setDeleteMode((v) => !v)}
         >
-          <Text
+          <ThemedText
             style={[
               styles.secondaryActionText,
               deleteMode && styles.secondaryActionTextActive,
             ]}
           >
             {deleteMode ? "Vazgec" : "- Servis Sil"}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
+      </ThemedView>
 
       {records.map((record) => (
         <Link key={record.id} href="/service-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View
+            <ThemedView
               style={[styles.recordCard, deleteMode && styles.recordCardRow]}
             >
-              {deleteMode && <View style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <View style={styles.recordHeader}>
-                  <Text style={styles.recordId}>{record.id}</Text>
-                  <Text style={styles.recordDate}>{record.date}</Text>
-                </View>
-                <Text style={styles.recordPlate}>{record.plate}</Text>
-                <Text style={styles.recordNote}>{record.note}</Text>
-                <Text style={styles.detailText}>Detay ve Guncelle</Text>
-              </View>
-            </View>
+              {deleteMode && <ThemedView style={styles.selectCircle} />}
+              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
+                <ThemedView style={styles.recordHeader}>
+                  <ThemedText style={styles.recordId}>{record.id}</ThemedText>
+                  <ThemedText style={styles.recordDate}>
+                    {record.date}
+                  </ThemedText>
+                </ThemedView>
+                <ThemedText style={styles.recordPlate}>
+                  {record.plate}
+                </ThemedText>
+                <ThemedText style={styles.recordNote}>{record.note}</ThemedText>
+                <ThemedText style={styles.detailText}>
+                  Detay ve Guncelle
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
           </Pressable>
         </Link>
       ))}

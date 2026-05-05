@@ -1,11 +1,7 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { router } from "expo-router";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CustomerDetailsScreen() {
@@ -13,29 +9,31 @@ export default function CustomerDetailsScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
         <TouchableOpacity style={styles.backButton} onPress={router.back}>
-          <Text>Go Back</Text>
+          <ThemedText>Go Back</ThemedText>
         </TouchableOpacity>
-        <View style={styles.hero}>
-          <Text style={styles.heroTitle}>Musteri Detaylari</Text>
-          <Text style={styles.heroSub}>
+        <ThemedView style={styles.hero}>
+          <ThemedText style={styles.heroTitle}>Musteri Detaylari</ThemedText>
+          <ThemedText style={styles.heroSub}>
             Bu alan telefon numarasi ile bulunan arac ve servis bilgilerini
             gosterir.
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={styles.infoCard}>
-          <Text style={styles.heading}>Arac Bilgileri</Text>
-          <Text style={styles.item}>Plaka: 34 CRN 107</Text>
-          <Text style={styles.item}>Model: Renault Clio</Text>
-          <Text style={styles.item}>Kira Bitis: 15.05.2026</Text>
-        </View>
+        <ThemedView style={styles.infoCard}>
+          <ThemedText style={styles.heading}>Arac Bilgileri</ThemedText>
+          <ThemedText style={styles.item}>Plaka: 34 CRN 107</ThemedText>
+          <ThemedText style={styles.item}>Model: Renault Clio</ThemedText>
+          <ThemedText style={styles.item}>Kira Bitis: 15.05.2026</ThemedText>
+        </ThemedView>
 
-        <View style={styles.infoCard}>
-          <Text style={styles.heading}>Servis Kaydi</Text>
-          <Text style={styles.item}>Son Servis: 02.05.2026</Text>
-          <Text style={styles.item}>Durum: Tamamlandi</Text>
-          <Text style={styles.item}>Not: Periyodik bakim yapildi.</Text>
-        </View>
+        <ThemedView style={styles.infoCard}>
+          <ThemedText style={styles.heading}>Servis Kaydi</ThemedText>
+          <ThemedText style={styles.item}>Son Servis: 02.05.2026</ThemedText>
+          <ThemedText style={styles.item}>Durum: Tamamlandi</ThemedText>
+          <ThemedText style={styles.item}>
+            Not: Periyodik bakim yapildi.
+          </ThemedText>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );

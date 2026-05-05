@@ -1,36 +1,42 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function EntryScreen() {
   return (
-    <View style={styles.page}>
-      <View style={styles.backgroundCircleA} />
-      <View style={styles.backgroundCircleB} />
+    <ThemedView style={styles.page}>
+      <ThemedView style={styles.backgroundCircleA} />
+      <ThemedView style={styles.backgroundCircleB} />
 
       <View style={styles.headerBox}>
-        <Text style={styles.brand}>Araç Bakım Muayene</Text>
-        <Text style={styles.title}>Araç Bakım Uygulaması</Text>
-        <Text style={styles.subtitle}>Lutfen giris tipini secin</Text>
+        <ThemedText style={styles.brand}>Araç Bakım Muayene</ThemedText>
+        <ThemedText style={styles.title}>Araç Bakım Uygulaması</ThemedText>
+        <ThemedText style={styles.subtitle}>
+          Lutfen giris tipini secin
+        </ThemedText>
       </View>
 
       <Link href="/customer-access" style={styles.choiceCard}>
         <View>
-          <Text style={styles.choiceLabel}>Musteri Girisi </Text>
-          <Text style={styles.choiceDesc}>
+          <ThemedText style={styles.choiceLabel}>Musteri Girisi </ThemedText>
+          <ThemedText style={styles.choiceDesc}>
             Telefon numarasi ile arac ve servis kaydini goruntule
-          </Text>
+          </ThemedText>
         </View>
       </Link>
 
       <Link href="/user-login" style={styles.choiceCardDark}>
         <View>
-          <Text style={styles.choiceLabelDark}>Kullanici Girisi</Text>
-          <Text style={styles.choiceDescDark}>
+          <ThemedText style={styles.choiceLabelDark}>
+            Kullanici Girisi
+          </ThemedText>
+          <ThemedText style={styles.choiceDescDark}>
             Email ve şifre ile yonetim paneline gecis yap
-          </Text>
+          </ThemedText>
         </View>
       </Link>
-    </View>
+    </ThemedView>
   );
 }
 
@@ -75,6 +81,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   title: {
+    lineHeight: 35,
     fontSize: 30,
     fontWeight: "800",
     color: "#0F2234",

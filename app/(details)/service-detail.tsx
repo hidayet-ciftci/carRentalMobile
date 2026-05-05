@@ -1,41 +1,37 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { router } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function ServiceDetailScreen() {
   return (
-    <View style={styles.page}>
+    <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Text>Go Back</Text>
+        <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
-      <View style={styles.card}>
-        <Text style={styles.title}>Servis Detayi</Text>
-        <Text style={styles.subtitle}>
+      <ThemedView style={styles.card}>
+        <ThemedText style={styles.title}>Servis Detayi</ThemedText>
+        <ThemedText style={styles.subtitle}>
           Secilen servis kaydinin detaylari ve guncelleme alanlari.
-        </Text>
+        </ThemedText>
 
-        <Text style={styles.label}>Kayit No</Text>
+        <ThemedText style={styles.label}>Kayit No</ThemedText>
         <TextInput style={styles.input} value="SRV-2401" editable={false} />
 
-        <Text style={styles.label}>Plaka</Text>
+        <ThemedText style={styles.label}>Plaka</ThemedText>
         <TextInput style={styles.input} defaultValue="34 CRN 107" />
 
-        <Text style={styles.label}>Servis Notu</Text>
+        <ThemedText style={styles.label}>Servis Notu</ThemedText>
         <TextInput style={styles.input} defaultValue="Periyodik bakim" />
 
-        <Text style={styles.label}>Tarih</Text>
+        <ThemedText style={styles.label}>Tarih</ThemedText>
         <TextInput style={styles.input} defaultValue="02.05.2026" />
 
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Guncelle</Text>
-        </View>
-      </View>
-    </View>
+        <ThemedView style={styles.button}>
+          <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
+        </ThemedView>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

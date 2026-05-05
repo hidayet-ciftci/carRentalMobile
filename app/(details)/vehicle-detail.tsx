@@ -1,41 +1,37 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { router } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function VehicleDetailScreen() {
   return (
-    <View style={styles.page}>
+    <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Text>Go Back</Text>
+        <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
-      <View style={styles.card}>
-        <Text style={styles.title}>Arac Detayi</Text>
-        <Text style={styles.subtitle}>
+      <ThemedView style={styles.card}>
+        <ThemedText style={styles.title}>Arac Detayi</ThemedText>
+        <ThemedText style={styles.subtitle}>
           Secilen aracin bilgilerini guncellemek icin tasarim alani.
-        </Text>
+        </ThemedText>
 
-        <Text style={styles.label}>Plaka</Text>
+        <ThemedText style={styles.label}>Plaka</ThemedText>
         <TextInput style={styles.input} value="34 CRN 107" editable={false} />
 
-        <Text style={styles.label}>Model</Text>
+        <ThemedText style={styles.label}>Model</ThemedText>
         <TextInput style={styles.input} defaultValue="Renault Clio" />
 
-        <Text style={styles.label}>Kilometre</Text>
+        <ThemedText style={styles.label}>Kilometre</ThemedText>
         <TextInput style={styles.input} defaultValue="83.200" />
 
-        <Text style={styles.label}>Durum</Text>
+        <ThemedText style={styles.label}>Durum</ThemedText>
         <TextInput style={styles.input} defaultValue="Kirada" />
 
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Guncelle</Text>
-        </View>
-      </View>
-    </View>
+        <ThemedView style={styles.button}>
+          <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
+        </ThemedView>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

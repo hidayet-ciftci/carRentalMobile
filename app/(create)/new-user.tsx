@@ -1,27 +1,31 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewUserScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerLabel}>Yonetim Modulu</Text>
-          <Text style={styles.headerTitle}>Yeni Kullanici Ekle</Text>
-          <Text style={styles.headerSub}>
+        <ThemedView style={styles.header}>
+          <ThemedText style={styles.headerLabel}>Yonetim Modulu</ThemedText>
+          <ThemedText style={styles.headerTitle}>
+            Yeni Kullanici Ekle
+          </ThemedText>
+          <ThemedText style={styles.headerSub}>
             Kullanici bilgilerini doldurun, kayit islemi sonradan eklenecek.
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={styles.card}>
-          <Text style={styles.fieldLabel}>Ad Soyad</Text>
+        <ThemedView style={styles.card}>
+          <ThemedText style={styles.fieldLabel}>Ad Soyad</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Ahmet Demir"
             placeholderTextColor="#7A90A8"
           />
 
-          <Text style={styles.fieldLabel}>Email</Text>
+          <ThemedText style={styles.fieldLabel}>Email</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="ornek@carrental.com"
@@ -30,7 +34,7 @@ export default function NewUserScreen() {
             autoCapitalize="none"
           />
 
-          <Text style={styles.fieldLabel}>Telefon</Text>
+          <ThemedText style={styles.fieldLabel}>Telefon</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="05xx xxx xx xx"
@@ -38,14 +42,14 @@ export default function NewUserScreen() {
             keyboardType="phone-pad"
           />
 
-          <Text style={styles.fieldLabel}>Rol</Text>
+          <ThemedText style={styles.fieldLabel}>Rol</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Yonetici / Operasyon / Satis"
             placeholderTextColor="#7A90A8"
           />
 
-          <Text style={styles.fieldLabel}>Sifre</Text>
+          <ThemedText style={styles.fieldLabel}>Sifre</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Guclu bir sifre girin"
@@ -53,10 +57,10 @@ export default function NewUserScreen() {
             secureTextEntry
           />
 
-          <View style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Kaydet</Text>
-          </View>
-        </View>
+          <ThemedView style={styles.saveButton}>
+            <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
+          </ThemedView>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,6 +1,8 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 const customers = [
   { name: "Esra Cetin", phone: "0501 222 33 44", car: "34 CRN 107" },
@@ -13,18 +15,18 @@ export default function CustomersScreen() {
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.headerCard}>
-        <Text style={styles.headerMini}>Musteri Paneli</Text>
-        <Text style={styles.headerTitle}>Musteri Is Takibi</Text>
-        <Text style={styles.headerText}>
+      <ThemedView style={styles.headerCard}>
+        <ThemedText style={styles.headerMini}>Musteri Paneli</ThemedText>
+        <ThemedText style={styles.headerTitle}>Musteri Is Takibi</ThemedText>
+        <ThemedText style={styles.headerText}>
           Musteri goruntuleme, ekleme ve cikarma islemleri icin arayuz taslagi.
-        </Text>
-      </View>
+        </ThemedText>
+      </ThemedView>
 
-      <View style={styles.actions}>
+      <ThemedView style={styles.actions}>
         <Link href="/new-customer" asChild>
           <Pressable style={styles.primaryAction}>
-            <Text style={styles.primaryText}>+ Musteri Ekle</Text>
+            <ThemedText style={styles.primaryText}>+ Musteri Ekle</ThemedText>
           </Pressable>
         </Link>
         <Pressable
@@ -34,37 +36,43 @@ export default function CustomersScreen() {
           ]}
           onPress={() => setDeleteMode((v) => !v)}
         >
-          <Text
+          <ThemedText
             style={[
               styles.secondaryText,
               deleteMode && styles.secondaryTextActive,
             ]}
           >
             {deleteMode ? "Vazgec" : "- Musteri Cikar"}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
+      </ThemedView>
 
-      <Text style={styles.listTitle}>Musteri Listesi</Text>
+      <ThemedText style={styles.listTitle}>Musteri Listesi</ThemedText>
       {customers.map((customer) => (
         <Link key={customer.phone} href="/customer-admin-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View
+            <ThemedView
               style={[
                 styles.customerCard,
                 deleteMode && styles.customerCardRow,
               ]}
             >
-              {deleteMode && <View style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <Text style={styles.customerName}>{customer.name}</Text>
-                <Text style={styles.customerMeta}>
+              {deleteMode && <ThemedView style={styles.selectCircle} />}
+              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
+                <ThemedText style={styles.customerName}>
+                  {customer.name}
+                </ThemedText>
+                <ThemedText style={styles.customerMeta}>
                   Telefon: {customer.phone}
-                </Text>
-                <Text style={styles.customerMeta}>Arac: {customer.car}</Text>
-                <Text style={styles.detailText}>Detay ve Guncelle</Text>
-              </View>
-            </View>
+                </ThemedText>
+                <ThemedText style={styles.customerMeta}>
+                  Arac: {customer.car}
+                </ThemedText>
+                <ThemedText style={styles.detailText}>
+                  Detay ve Guncelle
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
           </Pressable>
         </Link>
       ))}

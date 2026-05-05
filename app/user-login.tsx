@@ -1,32 +1,28 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link, router } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function AdminLoginScreen() {
   return (
-    <View style={styles.page}>
+    <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Text>Go Back</Text>
+        <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
-      <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Kullanici Girisi</Text>
-        <Text style={styles.panelSub}>
+      <ThemedView style={styles.panel}>
+        <ThemedText style={styles.panelTitle}>Kullanici Girisi</ThemedText>
+        <ThemedText style={styles.panelSub}>
           Email ve password ile yonetim ekranina gecis yapin.
-        </Text>
+        </ThemedText>
 
-        <Text style={styles.label}>Email</Text>
+        <ThemedText style={styles.label}>Email</ThemedText>
         <TextInput
           placeholder="ornek@carrental.com"
           placeholderTextColor="#8EA2B4"
           style={styles.input}
         />
 
-        <Text style={styles.label}>Password</Text>
+        <ThemedText style={styles.label}>Password</ThemedText>
         <TextInput
           placeholder="********"
           placeholderTextColor="#8EA2B4"
@@ -35,10 +31,10 @@ export default function AdminLoginScreen() {
         />
 
         <Link href="/(tabs)" style={styles.loginButton}>
-          <Text style={styles.loginText}>Panele Giris Yap</Text>
+          <ThemedText style={styles.loginText}>Panele Giris Yap</ThemedText>
         </Link>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

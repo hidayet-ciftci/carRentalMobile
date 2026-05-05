@@ -1,34 +1,36 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewServiceScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerLabel}>Servis Modulu</Text>
-          <Text style={styles.headerTitle}>Yeni Servis Kaydi</Text>
-          <Text style={styles.headerSub}>
+        <ThemedView style={styles.header}>
+          <ThemedText style={styles.headerLabel}>Servis Modulu</ThemedText>
+          <ThemedText style={styles.headerTitle}>Yeni Servis Kaydi</ThemedText>
+          <ThemedText style={styles.headerSub}>
             Servis bilgilerini doldurun, kayit islemi sonradan eklenecek.
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={styles.card}>
-          <Text style={styles.fieldLabel}>Plaka</Text>
+        <ThemedView style={styles.card}>
+          <ThemedText style={styles.fieldLabel}>Plaka</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: 34 ABC 123"
             placeholderTextColor="#A090C0"
           />
 
-          <Text style={styles.fieldLabel}>Servis Turu</Text>
+          <ThemedText style={styles.fieldLabel}>Servis Turu</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Periyodik Bakim"
             placeholderTextColor="#A090C0"
           />
 
-          <Text style={styles.fieldLabel}>Aciklama</Text>
+          <ThemedText style={styles.fieldLabel}>Aciklama</ThemedText>
           <TextInput
             style={[styles.input, styles.inputMultiline]}
             placeholder="Servis detaylarini yazin..."
@@ -38,24 +40,24 @@ export default function NewServiceScreen() {
             textAlignVertical="top"
           />
 
-          <Text style={styles.fieldLabel}>Tarih</Text>
+          <ThemedText style={styles.fieldLabel}>Tarih</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="GG.AA.YYYY"
             placeholderTextColor="#A090C0"
           />
 
-          <Text style={styles.fieldLabel}>Teknisyen</Text>
+          <ThemedText style={styles.fieldLabel}>Teknisyen</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Mehmet Usta"
             placeholderTextColor="#A090C0"
           />
 
-          <View style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Kaydet</Text>
-          </View>
-        </View>
+          <ThemedView style={styles.saveButton}>
+            <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
+          </ThemedView>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );

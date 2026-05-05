@@ -1,26 +1,22 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link, router } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function CustomerAccessScreen() {
   return (
-    <View style={styles.page}>
+    <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Text>Go Back</Text>
+        <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
-      <View style={styles.card}>
-        <Text style={styles.title}>Musteri Girisi</Text>
-        <Text style={styles.subtitle}>
+      <ThemedView style={styles.card}>
+        <ThemedText style={styles.title}>Musteri Girisi</ThemedText>
+        <ThemedText style={styles.subtitle}>
           Telefon numaranizi girerek arac ve servis kayitlarinizi
           goruntuleyebilirsiniz.
-        </Text>
+        </ThemedText>
 
-        <Text style={styles.label}>Telefon Numarasi</Text>
+        <ThemedText style={styles.label}>Telefon Numarasi</ThemedText>
         <TextInput
           placeholder="05xx xxx xx xx"
           placeholderTextColor="#7A8B9C"
@@ -28,10 +24,10 @@ export default function CustomerAccessScreen() {
         />
 
         <Link href="/customer-details" style={styles.button}>
-          <Text style={styles.buttonText}>Detaylari Goruntule</Text>
+          <ThemedText style={styles.buttonText}>Detaylari Goruntule</ThemedText>
         </Link>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

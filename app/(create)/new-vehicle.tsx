@@ -1,41 +1,43 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewVehicleScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerLabel}>Arac Modulu</Text>
-          <Text style={styles.headerTitle}>Yeni Arac Ekle</Text>
-          <Text style={styles.headerSub}>
+        <ThemedView style={styles.header}>
+          <ThemedText style={styles.headerLabel}>Arac Modulu</ThemedText>
+          <ThemedText style={styles.headerTitle}>Yeni Arac Ekle</ThemedText>
+          <ThemedText style={styles.headerSub}>
             Araca ait bilgileri doldurun, kayit islemi sonradan eklenecek.
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={styles.card}>
-          <Text style={styles.fieldLabel}>Plaka</Text>
+        <ThemedView style={styles.card}>
+          <ThemedText style={styles.fieldLabel}>Plaka</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: 34 ABC 123"
             placeholderTextColor="#9E8C7A"
           />
 
-          <Text style={styles.fieldLabel}>Marka</Text>
+          <ThemedText style={styles.fieldLabel}>Marka</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Renault"
             placeholderTextColor="#9E8C7A"
           />
 
-          <Text style={styles.fieldLabel}>Model</Text>
+          <ThemedText style={styles.fieldLabel}>Model</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Clio"
             placeholderTextColor="#9E8C7A"
           />
 
-          <Text style={styles.fieldLabel}>Yil</Text>
+          <ThemedText style={styles.fieldLabel}>Yil</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: 2022"
@@ -43,7 +45,7 @@ export default function NewVehicleScreen() {
             keyboardType="numeric"
           />
 
-          <Text style={styles.fieldLabel}>Kilometre</Text>
+          <ThemedText style={styles.fieldLabel}>Kilometre</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: 45000"
@@ -51,17 +53,17 @@ export default function NewVehicleScreen() {
             keyboardType="numeric"
           />
 
-          <Text style={styles.fieldLabel}>Durum</Text>
+          <ThemedText style={styles.fieldLabel}>Durum</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Musait / Kirada"
             placeholderTextColor="#9E8C7A"
           />
 
-          <View style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Kaydet</Text>
-          </View>
-        </View>
+          <ThemedView style={styles.saveButton}>
+            <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
+          </ThemedView>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );

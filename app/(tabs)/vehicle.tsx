@@ -1,6 +1,8 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 const vehicleCards = [
   { plate: "34 CRN 107", model: "Renault Clio", km: "83.200 km" },
@@ -13,29 +15,31 @@ export default function VehiclesScreen() {
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.hero}>
-        <Text style={styles.heroSmall}>Arac Modulu</Text>
-        <Text style={styles.heroTitle}>Filo Durumu</Text>
-        <Text style={styles.heroSub}>
+      <ThemedView style={styles.hero}>
+        <ThemedText style={styles.heroSmall}>Arac Modulu</ThemedText>
+        <ThemedText style={styles.heroTitle}>Filo Durumu</ThemedText>
+        <ThemedText style={styles.heroSub}>
           Arac goruntuleme, ekleme ve cikarma alanlarinin taslak ekrani.
-        </Text>
-      </View>
+        </ThemedText>
+      </ThemedView>
 
-      <View style={styles.statsRow}>
-        <View style={styles.statCard}>
-          <Text style={styles.statValue}>48</Text>
-          <Text style={styles.statLabel}>Toplam Arac</Text>
-        </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statValue}>12</Text>
-          <Text style={styles.statLabel}>Kiradaki</Text>
-        </View>
-      </View>
+      <ThemedView style={styles.statsRow}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statValue}>48</ThemedText>
+          <ThemedText style={styles.statLabel}>Toplam Arac</ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statValue}>12</ThemedText>
+          <ThemedText style={styles.statLabel}>Kiradaki</ThemedText>
+        </ThemedView>
+      </ThemedView>
 
-      <View style={styles.controls}>
+      <ThemedView style={styles.controls}>
         <Link href="/new-vehicle" asChild>
           <Pressable style={styles.primaryAction}>
-            <Text style={styles.primaryActionText}>+ Yeni Arac</Text>
+            <ThemedText style={styles.primaryActionText}>
+              + Yeni Arac
+            </ThemedText>
           </Pressable>
         </Link>
         <Pressable
@@ -45,31 +49,33 @@ export default function VehiclesScreen() {
           ]}
           onPress={() => setDeleteMode((v) => !v)}
         >
-          <Text
+          <ThemedText
             style={[
               styles.secondaryActionText,
               deleteMode && styles.secondaryActionTextActive,
             ]}
           >
             {deleteMode ? "Vazgec" : "- Arac Sil"}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
+      </ThemedView>
 
       {vehicleCards.map((vehicle) => (
         <Link key={vehicle.plate} href="/vehicle-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View
+            <ThemedView
               style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}
             >
-              {deleteMode && <View style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <Text style={styles.plate}>{vehicle.plate}</Text>
-                <Text style={styles.model}>{vehicle.model}</Text>
-                <Text style={styles.km}>{vehicle.km}</Text>
-                <Text style={styles.detailText}>Detay ve Guncelle</Text>
-              </View>
-            </View>
+              {deleteMode && <ThemedView style={styles.selectCircle} />}
+              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
+                <ThemedText style={styles.plate}>{vehicle.plate}</ThemedText>
+                <ThemedText style={styles.model}>{vehicle.model}</ThemedText>
+                <ThemedText style={styles.km}>{vehicle.km}</ThemedText>
+                <ThemedText style={styles.detailText}>
+                  Detay ve Guncelle
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
           </Pressable>
         </Link>
       ))}

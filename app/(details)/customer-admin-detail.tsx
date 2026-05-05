@@ -1,41 +1,37 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { router } from "expo-router";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function CustomerAdminDetailScreen() {
   return (
-    <View style={styles.page}>
+    <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <Text>Go Back</Text>
+        <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
-      <View style={styles.card}>
-        <Text style={styles.title}>Musteri Detayi</Text>
-        <Text style={styles.subtitle}>
+      <ThemedView style={styles.card}>
+        <ThemedText style={styles.title}>Musteri Detayi</ThemedText>
+        <ThemedText style={styles.subtitle}>
           Secilen musterinin bilgilerinin guncellenebilecegi tasarim ekrani.
-        </Text>
+        </ThemedText>
 
-        <Text style={styles.label}>Ad Soyad</Text>
+        <ThemedText style={styles.label}>Ad Soyad</ThemedText>
         <TextInput style={styles.input} defaultValue="Esra Cetin" />
 
-        <Text style={styles.label}>Telefon</Text>
+        <ThemedText style={styles.label}>Telefon</ThemedText>
         <TextInput style={styles.input} defaultValue="0501 222 33 44" />
 
-        <Text style={styles.label}>Bagli Arac</Text>
+        <ThemedText style={styles.label}>Bagli Arac</ThemedText>
         <TextInput style={styles.input} defaultValue="34 CRN 107" />
 
-        <Text style={styles.label}>Adres</Text>
+        <ThemedText style={styles.label}>Adres</ThemedText>
         <TextInput style={styles.input} defaultValue="Istanbul" />
 
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>Guncelle</Text>
-        </View>
-      </View>
-    </View>
+        <ThemedView style={styles.button}>
+          <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
+        </ThemedView>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

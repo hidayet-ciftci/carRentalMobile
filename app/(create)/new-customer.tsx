@@ -1,27 +1,29 @@
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewCustomerScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerLabel}>Musteri Modulu</Text>
-          <Text style={styles.headerTitle}>Yeni Musteri Ekle</Text>
-          <Text style={styles.headerSub}>
+        <ThemedView style={styles.header}>
+          <ThemedText style={styles.headerLabel}>Musteri Modulu</ThemedText>
+          <ThemedText style={styles.headerTitle}>Yeni Musteri Ekle</ThemedText>
+          <ThemedText style={styles.headerSub}>
             Musteri bilgilerini doldurun, kayit islemi sonradan eklenecek.
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={styles.card}>
-          <Text style={styles.fieldLabel}>Ad Soyad</Text>
+        <ThemedView style={styles.card}>
+          <ThemedText style={styles.fieldLabel}>Ad Soyad</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Ali Celik"
             placeholderTextColor="#5E8C78"
           />
 
-          <Text style={styles.fieldLabel}>Telefon</Text>
+          <ThemedText style={styles.fieldLabel}>Telefon</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="05xx xxx xx xx"
@@ -29,7 +31,7 @@ export default function NewCustomerScreen() {
             keyboardType="phone-pad"
           />
 
-          <Text style={styles.fieldLabel}>Email</Text>
+          <ThemedText style={styles.fieldLabel}>Email</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="ornek@mail.com"
@@ -38,14 +40,14 @@ export default function NewCustomerScreen() {
             autoCapitalize="none"
           />
 
-          <Text style={styles.fieldLabel}>Bagli Arac (Plaka)</Text>
+          <ThemedText style={styles.fieldLabel}>Bagli Arac (Plaka)</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: 34 ABC 123"
             placeholderTextColor="#5E8C78"
           />
 
-          <Text style={styles.fieldLabel}>Adres</Text>
+          <ThemedText style={styles.fieldLabel}>Adres</ThemedText>
           <TextInput
             style={[styles.input, styles.inputMultiline]}
             placeholder="Musteri adresini yazin..."
@@ -55,10 +57,10 @@ export default function NewCustomerScreen() {
             textAlignVertical="top"
           />
 
-          <View style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Kaydet</Text>
-          </View>
-        </View>
+          <ThemedView style={styles.saveButton}>
+            <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
+          </ThemedView>
+        </ThemedView>
       </ScrollView>
     </SafeAreaView>
   );

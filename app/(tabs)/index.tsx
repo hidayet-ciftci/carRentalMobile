@@ -1,6 +1,8 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 const staffCards = [
   { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
@@ -13,19 +15,19 @@ export default function ManagementScreen() {
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
-      <View style={styles.banner}>
-        <Text style={styles.bannerLabel}>Yonetim Merkezi</Text>
-        <Text style={styles.bannerTitle}>Kullanici Islemleri</Text>
-        <Text style={styles.bannerSubtitle}>
+      <ThemedView style={styles.banner}>
+        <ThemedText style={styles.bannerLabel}>Yonetim Merkezi</ThemedText>
+        <ThemedText style={styles.bannerTitle}>Kullanici Islemleri</ThemedText>
+        <ThemedText style={styles.bannerSubtitle}>
           Kullanici goruntuleme, ekleme, duzenleme ve kaldirma islemleri icin
           tasarim alani.
-        </Text>
-      </View>
+        </ThemedText>
+      </ThemedView>
 
-      <View style={styles.quickActions}>
+      <ThemedView style={styles.quickActions}>
         <Link href="/new-user" asChild>
           <Pressable style={styles.actionButton}>
-            <Text style={styles.actionText}>+ Kullanici Ekle</Text>
+            <ThemedText style={styles.actionText}>+ Kullanici Ekle</ThemedText>
           </Pressable>
         </Link>
         <Pressable
@@ -35,32 +37,34 @@ export default function ManagementScreen() {
           ]}
           onPress={() => setDeleteMode((v) => !v)}
         >
-          <Text
+          <ThemedText
             style={[
               styles.actionTextMuted,
               deleteMode && styles.actionTextMutedActive,
             ]}
           >
             {deleteMode ? "Vazgec" : "- Kullanici Cikar"}
-          </Text>
+          </ThemedText>
         </Pressable>
-      </View>
+      </ThemedView>
 
-      <Text style={styles.sectionTitle}>Kullanici Listesi</Text>
+      <ThemedText style={styles.sectionTitle}>Kullanici Listesi</ThemedText>
       {staffCards.map((item) => (
         <Link key={item.name} href="/user-detail" asChild>
           <Pressable style={styles.cardLink}>
-            <View style={styles.card}>
-              {deleteMode && <View style={styles.selectCircle} />}
-              <View style={styles.cardLeft}>
-                <Text style={styles.cardTitle}>{item.name}</Text>
-                <Text style={styles.cardSub}>{item.role}</Text>
-              </View>
-              <View style={styles.cardRight}>
-                <Text style={styles.status}>{item.status}</Text>
-                <Text style={styles.detailText}>Detay ve Guncelle</Text>
-              </View>
-            </View>
+            <ThemedView style={styles.card}>
+              {deleteMode && <ThemedView style={styles.selectCircle} />}
+              <ThemedView style={styles.cardLeft}>
+                <ThemedText style={styles.cardTitle}>{item.name}</ThemedText>
+                <ThemedText style={styles.cardSub}>{item.role}</ThemedText>
+              </ThemedView>
+              <ThemedView style={styles.cardRight}>
+                <ThemedText style={styles.status}>{item.status}</ThemedText>
+                <ThemedText style={styles.detailText}>
+                  Detay ve Guncelle
+                </ThemedText>
+              </ThemedView>
+            </ThemedView>
           </Pressable>
         </Link>
       ))}
