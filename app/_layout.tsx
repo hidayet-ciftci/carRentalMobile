@@ -23,10 +23,10 @@ export default function RootLayout() {
         <Stack.Screen name="(customer)/customer-access" />
         <Stack.Screen name="(customer)/customer-details" />
         <Stack.Screen name="user-login" />
-        <Stack.Screen name="(details)/vehicle-detail" />
-        <Stack.Screen name="(details)/service-detail" />
         <Stack.Screen name="(details)/user-detail" />
         <Stack.Screen name="(details)/customer-admin-detail" />
+        <Stack.Screen name="(details)/vehicle-detail" />
+        <Stack.Screen name="(details)/service-detail" />
         <Stack.Screen name="(create)/new-vehicle" />
         <Stack.Screen name="(create)/new-service" />
         <Stack.Screen name="(create)/new-user" />

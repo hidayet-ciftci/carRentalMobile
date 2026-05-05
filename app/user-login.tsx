@@ -1,13 +1,13 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Link, router } from "expo-router";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 
 export default function AdminLoginScreen() {
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <ThemedText>Go Back</ThemedText>
+        <Text style={styles.loginText}>Go Back</Text>
       </TouchableOpacity>
       <ThemedView style={styles.panel}>
         <ThemedText style={styles.panelTitle}>Kullanici Girisi</ThemedText>
@@ -88,9 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   backButton: {
-    backgroundColor: "white",
     borderRadius: 14,
-    width: 75,
     margin: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,

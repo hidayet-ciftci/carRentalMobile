@@ -85,9 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   backButton: {
-    backgroundColor: "white",
     borderRadius: 14,
-    width: 75,
     margin: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,

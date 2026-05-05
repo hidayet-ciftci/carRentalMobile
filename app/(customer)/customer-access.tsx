@@ -9,6 +9,7 @@ export default function CustomerAccessScreen() {
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
         <ThemedText>Go Back</ThemedText>
       </TouchableOpacity>
+
       <ThemedView style={styles.card}>
         <ThemedText style={styles.title}>Musteri Girisi</ThemedText>
         <ThemedText style={styles.subtitle}>
@@ -83,9 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   backButton: {
-    backgroundColor: "white",
     borderRadius: 14,
-    width: 75,
     margin: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,
