@@ -4,8 +4,16 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
+import { RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function CustomerAccessScreen() {
   const [email, setEmail] = useState<string>("");
+
+  const unLoginCustomerData = useSelector(
+    (state: RootState) => state.unloginCustomerData.CustomerData,
+  );
+  const disPatch = useDispatch();
 
   const getCustomerDetail = async () => {
     const url =
@@ -26,6 +34,19 @@ export default function CustomerAccessScreen() {
       console.log(error);
     }
   };
+
+  /* const handleLoginCustomer = () => {
+    const loginData = getCustomerDetail();
+    if (loginData.success) disPatch(setData(data));
+  };
+  
+  DİSPATCH ile veri global olarak set ediliyor.
+  - amaç : api'den data.success true gelirse route.push yapıp veriyi çekme
+  veya false gelirse uyarı yapmak
+  
+  */
+
+  console.log(unLoginCustomerData);
 
   return (
     <ThemedView style={styles.page}>

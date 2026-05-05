@@ -7,7 +7,10 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { Provider } from "react-redux";
+
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { store } from "@/store/store";
 import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
@@ -18,28 +21,30 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(customer)/customer-access" />
-        <Stack.Screen name="(customer)/customer-details" />
-        <Stack.Screen name="user-login" />
-        <Stack.Screen name="(details)/user-detail" />
-        <Stack.Screen name="(details)/customer-admin-detail" />
-        <Stack.Screen name="(details)/vehicle-detail" />
-        <Stack.Screen name="(details)/service-detail" />
-        <Stack.Screen name="(create)/new-vehicle" />
-        <Stack.Screen name="(create)/new-service" />
-        <Stack.Screen name="(create)/new-user" />
-        <Stack.Screen name="(create)/new-customer" />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-      <Toast />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(customer)/customer-access" />
+          <Stack.Screen name="(customer)/customer-details" />
+          <Stack.Screen name="user-login" />
+          <Stack.Screen name="(details)/user-detail" />
+          <Stack.Screen name="(details)/customer-admin-detail" />
+          <Stack.Screen name="(details)/vehicle-detail" />
+          <Stack.Screen name="(details)/service-detail" />
+          <Stack.Screen name="(create)/new-vehicle" />
+          <Stack.Screen name="(create)/new-service" />
+          <Stack.Screen name="(create)/new-user" />
+          <Stack.Screen name="(create)/new-customer" />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="modal"
+            options={{ presentation: "modal", title: "Modal" }}
+          />
+        </Stack>
+        <StatusBar style="auto" />
+        <Toast />
+      </ThemeProvider>
+    </Provider>
   );
 }
