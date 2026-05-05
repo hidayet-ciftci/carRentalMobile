@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 const staffCards = [
   { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
@@ -24,7 +24,7 @@ export default function ManagementScreen() {
         </ThemedText>
       </ThemedView>
 
-      <ThemedView style={styles.quickActions}>
+      <View style={styles.quickActions}>
         <Link href="/new-user" asChild>
           <Pressable style={styles.actionButton}>
             <ThemedText style={styles.actionText}>+ Kullanici Ekle</ThemedText>
@@ -46,9 +46,27 @@ export default function ManagementScreen() {
             {deleteMode ? "Vazgec" : "- Kullanici Cikar"}
           </ThemedText>
         </Pressable>
-      </ThemedView>
+      </View>
 
       <ThemedText style={styles.sectionTitle}>Kullanici Listesi</ThemedText>
+      <View style={styles.statsRow}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statLabel}>
+            Toplam Servis elemanı:{" "}
+            <ThemedText style={styles.statValue}>15</ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Toplam Müşteri hizmetleri:{" "}
+            <ThemedText style={styles.statValue}>5</ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Toplam Yönetici: <ThemedText style={styles.statValue}>3</ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Toplam Çalışan: <ThemedText style={styles.statValue}>23</ThemedText>
+          </ThemedText>
+        </ThemedView>
+      </View>
       {staffCards.map((item) => (
         <Link
           key={item.name}
@@ -57,19 +75,19 @@ export default function ManagementScreen() {
           asChild
         >
           <Pressable style={styles.cardLink}>
-            <ThemedView style={styles.card}>
+            <View style={styles.card}>
               {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <ThemedView style={styles.cardLeft}>
+              <View style={styles.cardLeft}>
                 <ThemedText style={styles.cardTitle}>{item.name}</ThemedText>
                 <ThemedText style={styles.cardSub}>{item.role}</ThemedText>
-              </ThemedView>
-              <ThemedView style={styles.cardRight}>
+              </View>
+              <View style={styles.cardRight}>
                 <ThemedText style={styles.status}>{item.status}</ThemedText>
                 <ThemedText style={styles.detailText}>
                   Detay ve Guncelle
                 </ThemedText>
-              </ThemedView>
-            </ThemedView>
+              </View>
+            </View>
           </Pressable>
         </Link>
       ))}
@@ -201,5 +219,25 @@ const styles = StyleSheet.create({
   },
   cardLeft: {
     flex: 1,
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E7EDF5",
+    padding: 14,
+  },
+  statValue: {
+    fontWeight: "800",
+    color: "#12243A",
+  },
+  statLabel: {
+    marginTop: 4,
+    color: "#60758C",
   },
 });

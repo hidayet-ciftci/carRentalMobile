@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 const records = [
   {
@@ -39,7 +39,7 @@ export default function VehicleRecordsScreen() {
         </ThemedText>
       </ThemedView>
 
-      <ThemedView style={styles.rowActions}>
+      <View style={styles.rowActions}>
         <Link href="/new-service" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryActionText}>
@@ -63,8 +63,18 @@ export default function VehicleRecordsScreen() {
             {deleteMode ? "Vazgec" : "- Servis Sil"}
           </ThemedText>
         </Pressable>
-      </ThemedView>
-
+      </View>
+      <View style={styles.statsRow}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statLabel}>
+            Toplam Servis: <ThemedText style={styles.statValue}>48</ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Tamlananlar Servisler:{" "}
+            <ThemedText style={styles.statValue}>48</ThemedText>
+          </ThemedText>
+        </ThemedView>
+      </View>
       {records.map((record) => (
         <Link
           key={record.id}
@@ -77,13 +87,13 @@ export default function VehicleRecordsScreen() {
               style={[styles.recordCard, deleteMode && styles.recordCardRow]}
             >
               {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
-                <ThemedView style={styles.recordHeader}>
+              <View style={deleteMode ? styles.cardContent : undefined}>
+                <View style={styles.recordHeader}>
                   <ThemedText style={styles.recordId}>{record.id}</ThemedText>
                   <ThemedText style={styles.recordDate}>
                     {record.date}
                   </ThemedText>
-                </ThemedView>
+                </View>
                 <ThemedText style={styles.recordPlate}>
                   {record.plate}
                 </ThemedText>
@@ -91,7 +101,7 @@ export default function VehicleRecordsScreen() {
                 <ThemedText style={styles.detailText}>
                   Detay ve Guncelle
                 </ThemedText>
-              </ThemedView>
+              </View>
             </ThemedView>
           </Pressable>
         </Link>
@@ -220,5 +230,25 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flex: 1,
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#E4DCF5",
+    padding: 14,
+  },
+  statValue: {
+    fontWeight: "800",
+    color: "#2B2018",
+  },
+  statLabel: {
+    marginTop: 4,
+    color: "#5A4A8A",
   },
 });

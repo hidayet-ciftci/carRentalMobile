@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 const customers = [
   { name: "Esra Cetin", phone: "0501 222 33 44", car: "34 CRN 107" },
@@ -23,7 +23,7 @@ export default function CustomersScreen() {
         </ThemedText>
       </ThemedView>
 
-      <ThemedView style={styles.actions}>
+      <View style={styles.actions}>
         <Link href="/new-customer" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryText}>+ Musteri Ekle</ThemedText>
@@ -45,9 +45,17 @@ export default function CustomersScreen() {
             {deleteMode ? "Vazgec" : "- Musteri Cikar"}
           </ThemedText>
         </Pressable>
-      </ThemedView>
+      </View>
 
       <ThemedText style={styles.listTitle}>Musteri Listesi</ThemedText>
+
+      <View style={styles.statsRow}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statLabel}>
+            Toplam Müşteri: <ThemedText style={styles.statValue}>48</ThemedText>
+          </ThemedText>
+        </ThemedView>
+      </View>
       {customers.map((customer) => (
         <Link
           key={customer.phone}
@@ -56,14 +64,14 @@ export default function CustomersScreen() {
           disabled={deleteMode ?? true}
         >
           <Pressable style={styles.cardLink}>
-            <ThemedView
+            <View
               style={[
                 styles.customerCard,
                 deleteMode && styles.customerCardRow,
               ]}
             >
               {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
+              <View style={deleteMode ? styles.cardContent : undefined}>
                 <ThemedText style={styles.customerName}>
                   {customer.name}
                 </ThemedText>
@@ -76,8 +84,8 @@ export default function CustomersScreen() {
                 <ThemedText style={styles.detailText}>
                   Detay ve Guncelle
                 </ThemedText>
-              </ThemedView>
-            </ThemedView>
+              </View>
+            </View>
           </Pressable>
         </Link>
       ))}
@@ -198,5 +206,25 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flex: 1,
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#DDE8E2",
+    padding: 14,
+  },
+  statValue: {
+    fontWeight: "800",
+    color: "#2B2018",
+  },
+  statLabel: {
+    marginTop: 4,
+    color: "#2A654F",
   },
 });

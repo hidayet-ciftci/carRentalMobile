@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 const vehicleCards = [
   { plate: "34 CRN 107", model: "Renault Clio", km: "83.200 km" },
@@ -22,19 +22,7 @@ export default function VehiclesScreen() {
           Arac goruntuleme, ekleme ve cikarma alanlarinin taslak ekrani.
         </ThemedText>
       </ThemedView>
-
-      <ThemedView style={styles.statsRow}>
-        <ThemedView style={styles.statCard}>
-          <ThemedText style={styles.statValue}>48</ThemedText>
-          <ThemedText style={styles.statLabel}>Toplam Arac</ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.statCard}>
-          <ThemedText style={styles.statValue}>12</ThemedText>
-          <ThemedText style={styles.statLabel}>Kiradaki</ThemedText>
-        </ThemedView>
-      </ThemedView>
-
-      <ThemedView style={styles.controls}>
+      <View style={styles.controls}>
         <Link href="/new-vehicle" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryActionText}>
@@ -58,8 +46,14 @@ export default function VehiclesScreen() {
             {deleteMode ? "Vazgec" : "- Arac Sil"}
           </ThemedText>
         </Pressable>
-      </ThemedView>
-
+      </View>
+      <View style={styles.statsRow}>
+        <ThemedView style={styles.statCard}>
+          <ThemedText style={styles.statLabel}>
+            Toplam Arac: <ThemedText style={styles.statValue}>48</ThemedText>
+          </ThemedText>
+        </ThemedView>
+      </View>
       {vehicleCards.map((vehicle) => (
         <Link
           key={vehicle.plate}
@@ -68,19 +62,19 @@ export default function VehiclesScreen() {
           disabled={deleteMode ?? true}
         >
           <Pressable style={styles.cardLink}>
-            <ThemedView
+            <View
               style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}
             >
               {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <ThemedView style={deleteMode ? styles.cardContent : undefined}>
+              <View style={deleteMode ? styles.cardContent : undefined}>
                 <ThemedText style={styles.plate}>{vehicle.plate}</ThemedText>
                 <ThemedText style={styles.model}>{vehicle.model}</ThemedText>
                 <ThemedText style={styles.km}>{vehicle.km}</ThemedText>
                 <ThemedText style={styles.detailText}>
                   Detay ve Guncelle
                 </ThemedText>
-              </ThemedView>
-            </ThemedView>
+              </View>
+            </View>
           </Pressable>
         </Link>
       ))}
@@ -132,7 +126,6 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   statValue: {
-    fontSize: 26,
     fontWeight: "800",
     color: "#2B2018",
   },
