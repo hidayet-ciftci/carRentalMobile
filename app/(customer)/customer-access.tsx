@@ -1,9 +1,32 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
+import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 export default function CustomerAccessScreen() {
+  const [email, setEmail] = useState<string>("");
+
+  const getCustomerDetail = async () => {
+    const url =
+      "http://192.168.1.101:7265/api/ServiceRecords/OneServiceDetails";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(email),
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
@@ -20,13 +43,22 @@ export default function CustomerAccessScreen() {
         <ThemedText style={styles.label}>Telefon Numarasi</ThemedText>
         <TextInput
           placeholder="05xx xxx xx xx"
+          value={email}
+          onChangeText={setEmail}
           placeholderTextColor="#7A8B9C"
           style={styles.input}
         />
 
-        <Link href="/customer-details" style={styles.button}>
+        <TouchableOpacity
+          onPress={
+            /* () => {
+            router.push("/customer-details");
+          } */ getCustomerDetail
+          }
+          style={styles.button}
+        >
           <ThemedText style={styles.buttonText}>Detaylari Goruntule</ThemedText>
-        </Link>
+        </TouchableOpacity>
       </ThemedView>
     </ThemedView>
   );
