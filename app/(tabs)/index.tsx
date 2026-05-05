@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -12,6 +12,7 @@ const staffCards = [
 
 export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -67,29 +68,38 @@ export default function ManagementScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {staffCards.map((item) => (
-        <Link
+      {staffCards.map((item, index) => (
+        <Pressable
           key={item.name}
-          disabled={deleteMode ?? true}
-          href="/user-detail"
-          asChild
+          style={styles.cardLink}
+          onPress={() => {
+            deleteMode
+              ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
+              : router.push("/user-detail");
+          }}
         >
-          <Pressable style={styles.cardLink}>
-            <View style={styles.card}>
-              {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <View style={styles.cardLeft}>
-                <ThemedText style={styles.cardTitle}>{item.name}</ThemedText>
-                <ThemedText style={styles.cardSub}>{item.role}</ThemedText>
-              </View>
-              <View style={styles.cardRight}>
-                <ThemedText style={styles.status}>{item.status}</ThemedText>
-                <ThemedText style={styles.detailText}>
-                  Detay ve Guncelle
-                </ThemedText>
-              </View>
+          <View style={styles.card}>
+            {deleteMode && (
+              <ThemedView
+                style={
+                  selecteds[index] == true
+                    ? styles.selectedCircle
+                    : styles.selectCircle
+                }
+              />
+            )}
+            <View style={styles.cardLeft}>
+              <ThemedText style={styles.cardTitle}>{item.name}</ThemedText>
+              <ThemedText style={styles.cardSub}>{item.role}</ThemedText>
             </View>
-          </Pressable>
-        </Link>
+            <View style={styles.cardRight}>
+              <ThemedText style={styles.status}>{item.status}</ThemedText>
+              <ThemedText style={styles.detailText}>
+                Detay ve Guncelle
+              </ThemedText>
+            </View>
+          </View>
+        </Pressable>
       ))}
     </ScrollView>
   );
@@ -216,6 +226,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#1B2F42",
     backgroundColor: "#FFFFFF",
+  },
+  selectedCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#1B2F42",
+    backgroundColor: "#1B2F42",
   },
   cardLeft: {
     flex: 1,

@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -12,6 +12,7 @@ const vehicleCards = [
 
 export default function VehiclesScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [selected, setSelected] = useState<number>();
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -54,29 +55,28 @@ export default function VehiclesScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {vehicleCards.map((vehicle) => (
-        <Link
+      {vehicleCards.map((vehicle, index) => (
+        <Pressable
           key={vehicle.plate}
-          href="/vehicle-detail"
-          asChild
-          disabled={deleteMode ?? true}
+          style={styles.cardLink}
+          onPress={() => {
+            deleteMode ? setSelected(index) : router.push("/vehicle-detail");
+          }}
         >
-          <Pressable style={styles.cardLink}>
-            <View
-              style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}
-            >
-              {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <ThemedText style={styles.plate}>{vehicle.plate}</ThemedText>
-                <ThemedText style={styles.model}>{vehicle.model}</ThemedText>
-                <ThemedText style={styles.km}>{vehicle.km}</ThemedText>
-                <ThemedText style={styles.detailText}>
-                  Detay ve Guncelle
-                </ThemedText>
-              </View>
+          <View
+            style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}
+          >
+            {deleteMode && <ThemedView style={styles.selectCircle} />}
+            <View style={deleteMode ? styles.cardContent : undefined}>
+              <ThemedText style={styles.plate}>{vehicle.plate}</ThemedText>
+              <ThemedText style={styles.model}>{vehicle.model}</ThemedText>
+              <ThemedText style={styles.km}>{vehicle.km}</ThemedText>
+              <ThemedText style={styles.detailText}>
+                Detay ve Guncelle
+              </ThemedText>
             </View>
-          </Pressable>
-        </Link>
+          </View>
+        </Pressable>
       ))}
     </ScrollView>
   );

@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -12,6 +12,7 @@ const customers = [
 
 export default function CustomersScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [selected, setSelected] = useState<number[]>([]);
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -56,38 +57,45 @@ export default function CustomersScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {customers.map((customer) => (
-        <Link
+      {customers.map((customer, index) => (
+        <Pressable
           key={customer.phone}
-          href="/customer-admin-detail"
-          asChild
-          disabled={deleteMode ?? true}
+          style={styles.cardLink}
+          onPress={() => {
+            deleteMode
+              ? !selected.includes(index) && setSelected([...selected, index])
+              : router.push("/customer-admin-detail");
+            console.log(selected);
+          }}
         >
-          <Pressable style={styles.cardLink}>
-            <View
-              style={[
-                styles.customerCard,
-                deleteMode && styles.customerCardRow,
-              ]}
-            >
-              {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <ThemedText style={styles.customerName}>
-                  {customer.name}
-                </ThemedText>
-                <ThemedText style={styles.customerMeta}>
-                  Telefon: {customer.phone}
-                </ThemedText>
-                <ThemedText style={styles.customerMeta}>
-                  Arac: {customer.car}
-                </ThemedText>
-                <ThemedText style={styles.detailText}>
-                  Detay ve Guncelle
-                </ThemedText>
-              </View>
+          <View
+            style={[styles.customerCard, deleteMode && styles.customerCardRow]}
+          >
+            {deleteMode && (
+              <ThemedView
+                style={
+                  selected.includes(index)
+                    ? styles.selectedCircle
+                    : styles.selectCircle
+                }
+              />
+            )}
+            <View style={deleteMode ? styles.cardContent : undefined}>
+              <ThemedText style={styles.customerName}>
+                {customer.name}
+              </ThemedText>
+              <ThemedText style={styles.customerMeta}>
+                Telefon: {customer.phone}
+              </ThemedText>
+              <ThemedText style={styles.customerMeta}>
+                Arac: {customer.car}
+              </ThemedText>
+              <ThemedText style={styles.detailText}>
+                Detay ve Guncelle
+              </ThemedText>
             </View>
-          </Pressable>
-        </Link>
+          </View>
+        </Pressable>
       ))}
     </ScrollView>
   );
@@ -203,6 +211,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#294639",
     backgroundColor: "#FFFFFF",
+  },
+  selectedCircle: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#294639",
+    backgroundColor: "#294639",
   },
   cardContent: {
     flex: 1,

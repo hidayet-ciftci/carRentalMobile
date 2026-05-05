@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -27,6 +27,7 @@ const records = [
 
 export default function VehicleRecordsScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [selected, setSelected] = useState<number>();
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -75,36 +76,31 @@ export default function VehicleRecordsScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {records.map((record) => (
-        <Link
+      {records.map((record, index) => (
+        <Pressable
           key={record.id}
-          href="/service-detail"
-          asChild
-          disabled={deleteMode ?? true}
+          style={styles.cardLink}
+          onPress={() => {
+            deleteMode ? setSelected(index) : router.push("/service-detail");
+          }}
         >
-          <Pressable style={styles.cardLink}>
-            <ThemedView
-              style={[styles.recordCard, deleteMode && styles.recordCardRow]}
-            >
-              {deleteMode && <ThemedView style={styles.selectCircle} />}
-              <View style={deleteMode ? styles.cardContent : undefined}>
-                <View style={styles.recordHeader}>
-                  <ThemedText style={styles.recordId}>{record.id}</ThemedText>
-                  <ThemedText style={styles.recordDate}>
-                    {record.date}
-                  </ThemedText>
-                </View>
-                <ThemedText style={styles.recordPlate}>
-                  {record.plate}
-                </ThemedText>
-                <ThemedText style={styles.recordNote}>{record.note}</ThemedText>
-                <ThemedText style={styles.detailText}>
-                  Detay ve Guncelle
-                </ThemedText>
+          <ThemedView
+            style={[styles.recordCard, deleteMode && styles.recordCardRow]}
+          >
+            {deleteMode && <ThemedView style={styles.selectCircle} />}
+            <View style={deleteMode ? styles.cardContent : undefined}>
+              <View style={styles.recordHeader}>
+                <ThemedText style={styles.recordId}>{record.id}</ThemedText>
+                <ThemedText style={styles.recordDate}>{record.date}</ThemedText>
               </View>
-            </ThemedView>
-          </Pressable>
-        </Link>
+              <ThemedText style={styles.recordPlate}>{record.plate}</ThemedText>
+              <ThemedText style={styles.recordNote}>{record.note}</ThemedText>
+              <ThemedText style={styles.detailText}>
+                Detay ve Guncelle
+              </ThemedText>
+            </View>
+          </ThemedView>
+        </Pressable>
       ))}
     </ScrollView>
   );

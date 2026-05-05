@@ -70,7 +70,8 @@ Join our community of developers creating universal apps.
 
 Tamamlananacaklar :
 -Dosya yolu düzenlenecek ??,
--Araç,Kullanıcı vb. silme düzeltilecek
+-Araç,Kullanıcı vb. silme düzeltilecek ++
+-Hot toast ile geri bildirim , hatalar handle edilecek.
 -API'ler bağlanacak ,
 -Auth entegre edilecek,
 -Logic yazılacak
