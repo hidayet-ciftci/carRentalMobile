@@ -66,7 +66,12 @@ export default function VehicleRecordsScreen() {
       </ThemedView>
 
       {records.map((record) => (
-        <Link key={record.id} href="/service-detail" asChild>
+        <Link
+          key={record.id}
+          href="/service-detail"
+          asChild
+          disabled={deleteMode ?? true}
+        >
           <Pressable style={styles.cardLink}>
             <ThemedView
               style={[styles.recordCard, deleteMode && styles.recordCardRow]}

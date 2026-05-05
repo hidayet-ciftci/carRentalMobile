@@ -50,7 +50,12 @@ export default function ManagementScreen() {
 
       <ThemedText style={styles.sectionTitle}>Kullanici Listesi</ThemedText>
       {staffCards.map((item) => (
-        <Link key={item.name} href="/user-detail" asChild>
+        <Link
+          key={item.name}
+          disabled={deleteMode ?? true}
+          href="/user-detail"
+          asChild
+        >
           <Pressable style={styles.cardLink}>
             <ThemedView style={styles.card}>
               {deleteMode && <ThemedView style={styles.selectCircle} />}

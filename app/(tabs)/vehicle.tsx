@@ -61,7 +61,12 @@ export default function VehiclesScreen() {
       </ThemedView>
 
       {vehicleCards.map((vehicle) => (
-        <Link key={vehicle.plate} href="/vehicle-detail" asChild>
+        <Link
+          key={vehicle.plate}
+          href="/vehicle-detail"
+          asChild
+          disabled={deleteMode ?? true}
+        >
           <Pressable style={styles.cardLink}>
             <ThemedView
               style={[styles.vehicleCard, deleteMode && styles.vehicleCardRow]}

@@ -49,7 +49,12 @@ export default function CustomersScreen() {
 
       <ThemedText style={styles.listTitle}>Musteri Listesi</ThemedText>
       {customers.map((customer) => (
-        <Link key={customer.phone} href="/customer-admin-detail" asChild>
+        <Link
+          key={customer.phone}
+          href="/customer-admin-detail"
+          asChild
+          disabled={deleteMode ?? true}
+        >
           <Pressable style={styles.cardLink}>
             <ThemedView
               style={[

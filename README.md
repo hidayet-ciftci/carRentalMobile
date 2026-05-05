@@ -69,7 +69,7 @@ Join our community of developers creating universal apps.
     // User girişi -> Kullanıcı kayıt etme (admin) , servise araç ekleme (customerM), kayıt açma (Worker) , Servis kayıtlarını , araçları görüntüleme
 
 Tamamlananacaklar :
--Dosya yolu düzenlenecek,
+-Dosya yolu düzenlenecek ??,
 -Araç,Kullanıcı vb. silme düzeltilecek
 -API'ler bağlanacak ,
 -Auth entegre edilecek,
