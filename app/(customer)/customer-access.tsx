@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import { getCustomerDetail } from "@/constants/unLoginApi";
+import { getCustomerDetail } from "@/constants/api";
 import { setData } from "@/store/uCustomerSlice";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";

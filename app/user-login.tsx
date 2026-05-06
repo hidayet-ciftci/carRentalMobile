@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { getToken } from "@/constants/api";
 import { loginDataType } from "@/constants/types";
-import { getToken } from "@/constants/unLoginApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useState } from "react";
