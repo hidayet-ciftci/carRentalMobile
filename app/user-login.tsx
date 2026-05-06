@@ -1,8 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { getToken } from "@/constants/api";
 import { loginDataType } from "@/constants/types";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/hooks/useAuth";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
@@ -13,15 +12,22 @@ export default function AdminLoginScreen() {
     email: "user122@user.com",
     password: "12345678",
   });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { login } = useAuth();
 
   const handleLogin = async () => {
-    const LoginResponse = await getToken(loginData);
-    if (!LoginResponse?.success)
-      Toast.show({ type: "error", text1: LoginResponse?.message });
-    if (LoginResponse?.success) {
-      await login(loginData.email, loginData.password);
+    if (isSubmitting) return;
+    try {
+      setIsSubmitting(true);
+      const logData = await login(loginData.email, loginData.password);
+      if (!logData.res) {
+        Toast.show({ type: "error", text1: logData.msg });
+      }
+    } catch (error: any) {
+      Toast.show({ type: "error", text1: error.message });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -59,7 +65,11 @@ export default function AdminLoginScreen() {
           style={styles.input}
         />
 
-        <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+        <TouchableOpacity
+          onPress={handleLogin}
+          style={styles.loginButton}
+          disabled={isSubmitting}
+        >
           <ThemedText style={styles.loginText}>Panele Giris Yap</ThemedText>
         </TouchableOpacity>
       </ThemedView>

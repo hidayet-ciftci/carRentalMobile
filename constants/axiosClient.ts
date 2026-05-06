@@ -8,12 +8,12 @@ import {
   saveTokens,
 } from "./storage";
 
-const api = axios.create({
+const axiosClient = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
   timeout: 10000,
 });
 
-api.interceptors.request.use(async (config) => {
+axiosClient.interceptors.request.use(async (config) => {
   const token = await getAccessToken();
 
   if (token) {
@@ -23,7 +23,7 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-api.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -42,7 +42,7 @@ api.interceptors.response.use(
         store.dispatch(setToken(newAccessToken));
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalRequest);
+        return axiosClient(originalRequest);
       } catch (error) {
         await clearTokens();
         store.dispatch(clearToken());
@@ -53,4 +53,4 @@ api.interceptors.response.use(
   },
 );
 
-export default api;
+export default axiosClient;

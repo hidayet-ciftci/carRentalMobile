@@ -14,19 +14,19 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // login success
+    // login başarılı ise token'ı kaydet
     setToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
       state.isLoading = false;
     },
 
-    // logout veya failed refresh
+    // logout veya refresh başarısız ise token'ı null yap ve yüklenme durumunu kapat.
 
     clearToken: (state) => {
       state.accessToken = null;
       state.isLoading = false;
     },
-    // uygulama açıldı
+    // yüklenme durumunu belirle -> token kontrolü bittiğinde çağrılır
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
