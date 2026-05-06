@@ -4,26 +4,9 @@ import { router } from "expo-router";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { unloginCustomerDataTypes } from "@/constants/types";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-
-interface unloginCustomerDataTypes {
-  address?: string;
-  brand?: string;
-  color?: string;
-  viN_Number?: string;
-  description?: string;
-  email?: string;
-  employer_Name?: string;
-  fullName?: string;
-  phoneNumber?: string;
-  plate?: string;
-  state?: string;
-  price?: number | null;
-  plannedEndDate?: string;
-  endDate?: string;
-  createdTime?: string;
-}
 
 export default function CustomerDetailsScreen() {
   const unLoginCustomerData: unloginCustomerDataTypes = useSelector(
@@ -163,7 +146,7 @@ const styles = StyleSheet.create({
     margin: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    right: 0,
+    right: -275,
     position: "fixed",
   },
 });

@@ -4,35 +4,17 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
+import { getCustomerDetail } from "@/constants/unLoginApi";
 import { setData } from "@/store/uCustomerSlice";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
 export default function CustomerAccessScreen() {
   const [email, setEmail] = useState<string>("");
-
   const disPatch = useDispatch();
 
-  const getCustomerDetail = async () => {
-    const url = process.env.EXPO_PUBLIC_API_URL as string;
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(email),
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   async function handleLogin() {
-    const loginData = await getCustomerDetail();
+    const loginData = await getCustomerDetail(email);
     if (!loginData?.success)
       Toast.show({ type: "error", text1: loginData?.message ?? "Bulunamadı " });
     if (loginData?.success) {
@@ -41,15 +23,10 @@ export default function CustomerAccessScreen() {
     }
   }
 
-  /* const handleLoginCustomer = () => {
-    const loginData = getCustomerDetail();
-    if (loginData.success) disPatch(setData(data));
-  };
-  
+  /*
   DİSPATCH ile veri global olarak set ediliyor.
   - amaç : api'den data.success true gelirse route.push yapıp veriyi çekme
   veya false gelirse uyarı yapmak
-  
   */
 
   return (
