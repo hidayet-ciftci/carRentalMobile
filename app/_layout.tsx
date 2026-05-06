@@ -60,7 +60,7 @@ function AppContent() {
     if (isLoggedIn) {
       router.replace("/(tabs)"); // token var → ana ekran
     } else {
-      router.replace("/user-login"); // token yok → login
+      router.replace("/"); // token yok → login
     }
   }, [isLoggedIn, isLoading]);
 

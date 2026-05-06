@@ -11,7 +11,10 @@ export const useAuth = () => {
   const isLoggedIn = !!accessToken; // !!string ?
 
   const login = async (email: string, password: string) => {
-    const res = await api.post("loginURL", { email, password });
+    const res = await api.post(
+      `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/login`,
+      { email, password },
+    );
 
     const { accessToken, refreshToken } = res.data;
 

@@ -2,7 +2,7 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { getToken } from "@/constants/api";
 import { loginDataType } from "@/constants/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "@/hooks/auth";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
@@ -14,20 +14,14 @@ export default function AdminLoginScreen() {
     password: "12345678",
   });
 
+  const { login } = useAuth();
+
   const handleLogin = async () => {
     const LoginResponse = await getToken(loginData);
     if (!LoginResponse?.success)
       Toast.show({ type: "error", text1: LoginResponse?.message });
     if (LoginResponse?.success) {
-      await AsyncStorage.setItem(
-        "accessToken",
-        LoginResponse?.data?.accessToken,
-      );
-      await AsyncStorage.setItem(
-        "refreshToken",
-        LoginResponse?.data?.refreshToken,
-      );
-      router.push("/(tabs)");
+      await login(loginData.email, loginData.password);
     }
   };
 

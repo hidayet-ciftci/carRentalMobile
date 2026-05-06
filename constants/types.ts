@@ -17,6 +17,6 @@ export interface unloginCustomerDataTypes {
 }
 
 export interface loginDataType {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }

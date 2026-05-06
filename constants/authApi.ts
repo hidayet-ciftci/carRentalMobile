@@ -26,20 +26,23 @@ api.interceptors.request.use(async (config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalReguest = error.config;
-    if (error.response?.status === 401 && !originalReguest._retry) {
-      originalReguest._retry = true;
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
       try {
         const refreshToken = await getRefreshToken();
-        const response = await axios.post("url", { refreshToken });
+        const response = await axios.post(
+          `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/refresh`,
+          { refreshToken },
+        );
 
         const newAccessToken = response.data.accessToken;
 
         await saveTokens(newAccessToken, refreshToken!);
         store.dispatch(setToken(newAccessToken));
 
-        originalReguest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalReguest);
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return api(originalRequest);
       } catch (error) {
         await clearTokens();
         store.dispatch(clearToken());
