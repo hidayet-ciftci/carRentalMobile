@@ -1,9 +1,36 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { loginDataType } from "@/constants/types";
+import { getToken } from "@/constants/unLoginApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function AdminLoginScreen() {
+  const [loginData, setLoginData] = useState<loginDataType>({
+    email: "user122@user.com",
+    password: "12345678",
+  });
+
+  const handleLogin = async () => {
+    const LoginResponse = await getToken(loginData);
+    if (!LoginResponse?.success)
+      Toast.show({ type: "error", text1: LoginResponse?.message });
+    if (LoginResponse?.success) {
+      await AsyncStorage.setItem(
+        "accessToken",
+        LoginResponse?.data?.accessToken,
+      );
+      await AsyncStorage.setItem(
+        "refreshToken",
+        LoginResponse?.data?.refreshToken,
+      );
+      router.push("/(tabs)");
+    }
+  };
+
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
@@ -17,22 +44,30 @@ export default function AdminLoginScreen() {
 
         <ThemedText style={styles.label}>Email</ThemedText>
         <TextInput
-          placeholder="ornek@carrental.com"
+          value={loginData?.email}
+          onChangeText={(text) => {
+            setLoginData({ ...loginData, email: text });
+          }}
+          placeholder="ornek@ornek.com"
           placeholderTextColor="#8EA2B4"
           style={styles.input}
         />
 
         <ThemedText style={styles.label}>Password</ThemedText>
         <TextInput
+          value={loginData?.password}
+          onChangeText={(text) => {
+            setLoginData({ ...loginData, password: text });
+          }}
           placeholder="********"
           placeholderTextColor="#8EA2B4"
           secureTextEntry
           style={styles.input}
         />
 
-        <Link href="/(tabs)" style={styles.loginButton}>
+        <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
           <ThemedText style={styles.loginText}>Panele Giris Yap</ThemedText>
-        </Link>
+        </TouchableOpacity>
       </ThemedView>
     </ThemedView>
   );
