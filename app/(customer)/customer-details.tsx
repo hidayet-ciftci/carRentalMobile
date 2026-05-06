@@ -4,7 +4,32 @@ import { router } from "expo-router";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+
+interface unloginCustomerDataTypes {
+  address?: string;
+  brand?: string;
+  color?: string;
+  viN_Number?: string;
+  description?: string;
+  email?: string;
+  employer_Name?: string;
+  fullName?: string;
+  phoneNumber?: string;
+  plate?: string;
+  state?: string;
+  price?: number | null;
+  plannedEndDate?: string;
+  endDate?: string;
+  createdTime?: string;
+}
+
 export default function CustomerDetailsScreen() {
+  const unLoginCustomerData: unloginCustomerDataTypes = useSelector(
+    (state: RootState) => state.unloginCustomerData.CustomerData,
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -14,24 +39,77 @@ export default function CustomerDetailsScreen() {
         <ThemedView style={styles.hero}>
           <ThemedText style={styles.heroTitle}>Musteri Detaylari</ThemedText>
           <ThemedText style={styles.heroSub}>
-            Bu alan telefon numarasi ile bulunan arac ve servis bilgilerini
+            Bu alan email adresi ile bulunan kişi, arac ve servis bilgilerini
             gosterir.
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.infoCard}>
+          <ThemedText style={styles.heading}>Kişi bilgileri</ThemedText>
+          <ThemedText style={styles.item}>
+            İsim: {unLoginCustomerData.fullName ?? "isim bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            email: {unLoginCustomerData.email ?? "email bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Telefon: {unLoginCustomerData.phoneNumber ?? "telefon bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            adres: {unLoginCustomerData.address ?? "adres bilgisi yok"}
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedView style={styles.infoCard}>
           <ThemedText style={styles.heading}>Arac Bilgileri</ThemedText>
-          <ThemedText style={styles.item}>Plaka: 34 CRN 107</ThemedText>
-          <ThemedText style={styles.item}>Model: Renault Clio</ThemedText>
-          <ThemedText style={styles.item}>Kira Bitis: 15.05.2026</ThemedText>
+          <ThemedText style={styles.item}>
+            Plaka: {unLoginCustomerData.plate ?? "plaka bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Model: {unLoginCustomerData.brand ?? "Marka/Model bilgisi yok"}
+          </ThemedText>
+
+          <ThemedText style={styles.item}>
+            Renk: {unLoginCustomerData.color ?? "renk bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Şase Numarası:{" "}
+            {unLoginCustomerData.viN_Number ?? "Şase bilgisi yok"}
+          </ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.infoCard}>
           <ThemedText style={styles.heading}>Servis Kaydi</ThemedText>
-          <ThemedText style={styles.item}>Son Servis: 02.05.2026</ThemedText>
-          <ThemedText style={styles.item}>Durum: Tamamlandi</ThemedText>
           <ThemedText style={styles.item}>
-            Not: Periyodik bakim yapildi.
+            Servis oluşturulma tarihi:{" "}
+            {unLoginCustomerData.createdTime
+              ? new Date(unLoginCustomerData.createdTime).toLocaleDateString()
+              : "servis oluşturma tarih bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Durum: {unLoginCustomerData.state ?? "Araç Durum bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Not: {unLoginCustomerData.description ?? "açıklama bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Ücret: {unLoginCustomerData.price ?? "fiyat bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Planlanan Bitiş Tarihi:{" "}
+            {unLoginCustomerData.plannedEndDate
+              ? new Date(unLoginCustomerData.plannedEndDate).toLocaleString()
+              : "Planlanan bitiş tarih bilgisi yok"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Bitiş Tarihi:{" "}
+            {unLoginCustomerData.endDate
+              ? new Date(unLoginCustomerData.endDate).toLocaleString()
+              : "Servis devam etmekte"}
+          </ThemedText>
+          <ThemedText style={styles.item}>
+            Sorumlu kişi:{" "}
+            {unLoginCustomerData.employer_Name ?? "çalışan bilgisi yok"}
           </ThemedText>
         </ThemedView>
       </ScrollView>
@@ -85,7 +163,7 @@ const styles = StyleSheet.create({
     margin: 15,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    right: -275,
+    right: 0,
     position: "fixed",
   },
 });

@@ -4,20 +4,17 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import { RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { setData } from "@/store/uCustomerSlice";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 
 export default function CustomerAccessScreen() {
   const [email, setEmail] = useState<string>("");
 
-  const unLoginCustomerData = useSelector(
-    (state: RootState) => state.unloginCustomerData.CustomerData,
-  );
   const disPatch = useDispatch();
 
   const getCustomerDetail = async () => {
-    const url =
-      "http://192.168.1.101:7265/api/ServiceRecords/OneServiceDetails";
+    const url = process.env.EXPO_PUBLIC_API_URL as string;
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -28,12 +25,21 @@ export default function CustomerAccessScreen() {
         body: JSON.stringify(email),
       });
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
     }
   };
+
+  async function handleLogin() {
+    const loginData = await getCustomerDetail();
+    if (!loginData?.success)
+      Toast.show({ type: "error", text1: loginData?.message ?? "Bulunamadı " });
+    if (loginData?.success) {
+      disPatch(setData(loginData?.data));
+      router.push("/customer-details");
+    }
+  }
 
   /* const handleLoginCustomer = () => {
     const loginData = getCustomerDetail();
@@ -46,8 +52,6 @@ export default function CustomerAccessScreen() {
   
   */
 
-  console.log(unLoginCustomerData);
-
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
@@ -57,27 +61,20 @@ export default function CustomerAccessScreen() {
       <ThemedView style={styles.card}>
         <ThemedText style={styles.title}>Musteri Girisi</ThemedText>
         <ThemedText style={styles.subtitle}>
-          Telefon numaranizi girerek arac ve servis kayitlarinizi
+          Email Adresinizi girerek arac ve servis kayitlarinizi
           goruntuleyebilirsiniz.
         </ThemedText>
 
-        <ThemedText style={styles.label}>Telefon Numarasi</ThemedText>
+        <ThemedText style={styles.label}>Email Adresiniz</ThemedText>
         <TextInput
-          placeholder="05xx xxx xx xx"
+          placeholder="example@example.com"
           value={email}
           onChangeText={setEmail}
           placeholderTextColor="#7A8B9C"
           style={styles.input}
         />
 
-        <TouchableOpacity
-          onPress={
-            /* () => {
-            router.push("/customer-details");
-          } */ getCustomerDetail
-          }
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <ThemedText style={styles.buttonText}>Detaylari Goruntule</ThemedText>
         </TouchableOpacity>
       </ThemedView>
