@@ -1,5 +1,3 @@
-import { loginDataType } from "./types";
-
 export const getCustomerDetail = async (email: string) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/ServiceRecords/OneServiceDetails`;
   try {
@@ -18,7 +16,7 @@ export const getCustomerDetail = async (email: string) => {
   }
 };
 
-export const getToken = async (loginData: loginDataType) => {
+/* export const getToken = async (loginData: loginDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/login`;
   try {
     const response = await fetch(url, {
@@ -35,3 +33,4 @@ export const getToken = async (loginData: loginDataType) => {
     console.log(error);
   }
 };
+ */

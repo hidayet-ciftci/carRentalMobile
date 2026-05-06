@@ -20,12 +20,16 @@ export default function AdminLoginScreen() {
     if (isSubmitting) return;
     try {
       setIsSubmitting(true);
-      const logData = await login(loginData.email, loginData.password);
+      const logData: { res: boolean; msg: string } = await login(
+        loginData.email,
+        loginData.password,
+      );
       if (!logData.res) {
         Toast.show({ type: "error", text1: logData.msg });
       }
     } catch (error: any) {
       Toast.show({ type: "error", text1: error.message });
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }

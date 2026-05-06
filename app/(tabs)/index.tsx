@@ -15,11 +15,6 @@ export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
 
-  async function getTokens() {
-    const accessToken = await localStorage.getItem("accessToken");
-    const refreshToken = await localStorage.getItem("refreshToken");
-  }
-
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
       <ThemedView style={styles.banner}>

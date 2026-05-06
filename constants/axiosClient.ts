@@ -36,7 +36,7 @@ axiosClient.interceptors.response.use(
           { refreshToken },
         );
 
-        const newAccessToken = response.data.accessToken;
+        const newAccessToken = response.data.data.accessToken;
 
         await saveTokens(newAccessToken, refreshToken!);
         store.dispatch(setToken(newAccessToken));
