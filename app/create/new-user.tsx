@@ -1,12 +1,21 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { router } from "expo-router";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NewUserScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+        <TouchableOpacity style={styles.backButton} onPress={router.back}>
+          <ThemedText>Go Back</ThemedText>
+        </TouchableOpacity>
         <ThemedView style={styles.header}>
           <ThemedText style={styles.headerLabel}>Yonetim Modulu</ThemedText>
           <ThemedText style={styles.headerTitle}>
@@ -129,5 +138,15 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 15,
+  },
+  backButton: {
+    borderRadius: 14,
+    margin: 15,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    right: -275,
+    top: 0,
+    marginBlock: 0,
+    position: "fixed",
   },
 });

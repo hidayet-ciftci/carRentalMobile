@@ -71,39 +71,16 @@ function AppContent() {
       <Stack.Screen name="customer/customer-access" />
       <Stack.Screen name="customer/customer-details" />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="details/user-detail"
-        options={{ headerShown: true, title: "Kullanıcı Detay" }}
-      />
-      <Stack.Screen
-        name="details/customer-admin-detail"
-        options={{ headerShown: true, title: "Müşteri Detay" }}
-      />
-      <Stack.Screen
-        name="details/vehicle-detail"
-        options={{ headerShown: true, title: "Araç Detay" }}
-      />
-      <Stack.Screen
-        name="details/service-detail"
-        options={{ headerShown: true, title: "Servis Detay" }}
-      />
 
-      <Stack.Screen
-        name="create/new-vehicle"
-        options={{ headerShown: true, title: "Yeni Araç" }}
-      />
-      <Stack.Screen
-        name="create/new-service"
-        options={{ headerShown: true, title: "Yeni Servis" }}
-      />
-      <Stack.Screen
-        name="create/new-user"
-        options={{ headerShown: true, title: "Yeni Kullanıcı" }}
-      />
-      <Stack.Screen
-        name="create/new-customer"
-        options={{ headerShown: true, title: "Yeni Müşteri" }}
-      />
+      <Stack.Screen name="details/user-detail" />
+      <Stack.Screen name="details/customer-admin-detail" />
+      <Stack.Screen name="details/vehicle-detail" />
+      <Stack.Screen name="details/service-detail" />
+
+      <Stack.Screen name="create/new-vehicle" />
+      <Stack.Screen name="create/new-service" />
+      <Stack.Screen name="create/new-user" />
+      <Stack.Screen name="create/new-customer" />
 
       <Stack.Screen
         name="modal"

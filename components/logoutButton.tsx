@@ -1,8 +1,12 @@
 import { useAuth } from "@/hooks/useAuth";
-import { Button } from "react-native";
+import { Button, View } from "react-native";
 
 export const LogoutButton = () => {
   const { logOut } = useAuth();
 
-  return <Button title="Çıkış" onPress={logOut} />;
+  return (
+    <View style={{ marginRight: 20, marginTop: 10, width: 55 }}>
+      <Button title="Çıkış" onPress={logOut} />
+    </View>
+  );
 };
