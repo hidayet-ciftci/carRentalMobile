@@ -58,7 +58,7 @@ function AppContent() {
     if (isLoading) return; // kontrol henüz bitmedi, bekle
 
     if (isLoggedIn) {
-      router.replace("/(tabs)"); // token var → ana ekran
+      router.replace("/(tabs)/users"); // token var → ana ekran
     } else {
       router.replace("/"); // token yok → login
     }
@@ -67,17 +67,9 @@ function AppContent() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="(customer)/customer-access" />
-      <Stack.Screen name="(customer)/customer-details" />
       <Stack.Screen name="user-login" />
-      <Stack.Screen name="(details)/user-detail" />
-      <Stack.Screen name="(details)/customer-admin-detail" />
-      <Stack.Screen name="(details)/vehicle-detail" />
-      <Stack.Screen name="(details)/service-detail" />
-      <Stack.Screen name="(create)/new-vehicle" />
-      <Stack.Screen name="(create)/new-service" />
-      <Stack.Screen name="(create)/new-user" />
-      <Stack.Screen name="(create)/new-customer" />
+      <Stack.Screen name="customer/customer-access" />
+      <Stack.Screen name="customer/customer-details" />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="modal"

@@ -28,7 +28,9 @@ export default function CustomersScreen() {
         <Pressable
           style={styles.primaryAction}
           onPress={() => {
-            deleteMode ? console.log("silindi") : router.push("/new-customer");
+            deleteMode
+              ? console.log("silindi")
+              : router.push("/(tabs)/create/new-customer");
           }}
         >
           <ThemedText style={styles.primaryText}>
@@ -74,7 +76,7 @@ export default function CustomersScreen() {
                     ? prev.filter((i) => i !== index)
                     : [...prev, index],
                 )
-              : router.push("/customer-admin-detail");
+              : router.push("/(tabs)/details/customer-admin-detail");
           }}
         >
           <View

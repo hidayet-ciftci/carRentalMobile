@@ -1,19 +1,38 @@
 import * as SecureStore from "expo-secure-store";
+import { Platform } from "react-native";
 
 export const saveTokens = async (accessToken: string, refreshToken: string) => {
-  await SecureStore.setItemAsync("accessToken", accessToken);
-  await SecureStore.setItemAsync("refreshToken", refreshToken);
+  if (Platform.OS === "web") {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+  } else {
+    await SecureStore.setItemAsync("accessToken", accessToken);
+    await SecureStore.setItemAsync("refreshToken", refreshToken);
+  }
 };
 
 export const getAccessToken = async () => {
-  return await SecureStore.getItemAsync("accessToken");
+  if (Platform.OS === "web") {
+    localStorage.removeItem("accessToken");
+  } else {
+    return await SecureStore.getItemAsync("accessToken");
+  }
 };
 
 export const getRefreshToken = async () => {
-  return await SecureStore.getItemAsync("refreshToken");
+  if (Platform.OS === "web") {
+    localStorage.removeItem("refreshToken");
+  } else {
+    return await SecureStore.getItemAsync("refreshToken");
+  }
 };
 
 export const clearTokens = async () => {
-  await SecureStore.deleteItemAsync("accessToken");
-  await SecureStore.deleteItemAsync("refreshToken");
+  if (Platform.OS === "web") {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+  } else {
+    await SecureStore.deleteItemAsync("accessToken");
+    await SecureStore.deleteItemAsync("refreshToken");
+  }
 };

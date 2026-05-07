@@ -32,7 +32,7 @@ export default function ManagementScreen() {
           onPress={() => {
             deleteMode
               ? Toast.show({ type: "error", text1: "silindi" })
-              : router.push("/new-user");
+              : router.push("/(tabs)/create/new-user");
           }}
         >
           <ThemedText style={styles.actionText}>
@@ -84,7 +84,7 @@ export default function ManagementScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/user-detail");
+              : router.push("/(tabs)/details/user-detail");
           }}
         >
           <View style={styles.card}>
