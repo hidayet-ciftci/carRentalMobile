@@ -1,20 +1,23 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import axiosClient from "@/constants/axiosClient";
+import { userDataType } from "@/constants/types";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
-
-const staffCards = [
-  { name: "Ahmet Demir", role: "Yonetici", status: "Aktif" },
-  { name: "Zeynep Kaya", role: "Operasyon", status: "Izinli" },
-  { name: "Murat Aydin", role: "Satis", status: "Aktif" },
-];
 
 export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
+  const [userData, setUserData] = useState<userDataType[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchUsers = async () => {
     const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
@@ -31,15 +34,23 @@ export default function ManagementScreen() {
     const userData = await fetchUsers();
     console.log(userData);
     if (userData?.success) {
-      return userData?.data;
+      setUserData(userData.data);
+      setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: userData?.message });
     }
   };
 
-  /*  useEffect(() => {
+  useEffect(() => {
+    setIsLoading(true);
     handleGetUsers();
-  }, []); */
+  }, []);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -103,9 +114,9 @@ export default function ManagementScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {staffCards.map((item, index) => (
+      {userData?.map((user, index) => (
         <Pressable
-          key={item.name}
+          key={user.id}
           style={styles.cardLink}
           onPress={() => {
             deleteMode
@@ -124,11 +135,15 @@ export default function ManagementScreen() {
               />
             )}
             <View style={styles.cardLeft}>
-              <ThemedText style={styles.cardTitle}>{item.name}</ThemedText>
-              <ThemedText style={styles.cardSub}>{item.role}</ThemedText>
+              <ThemedText style={styles.cardTitle}>
+                {user.firstName + " " + user.lastName}
+              </ThemedText>
+              <ThemedText style={styles.cardSub}>{user.email}</ThemedText>
             </View>
             <View style={styles.cardRight}>
-              <ThemedText style={styles.status}>{item.status}</ThemedText>
+              <ThemedText style={styles.status}>
+                {user.status ? "aktif" : "pasif"}
+              </ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle
               </ThemedText>

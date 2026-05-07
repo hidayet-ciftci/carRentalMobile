@@ -20,3 +20,16 @@ export interface loginDataType {
   email: string;
   password: string;
 }
+
+export interface userDataType[] {
+  {id: number;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  passwordHash: string | null;
+  phoneNumber?: string | null;
+  status: boolean;
+  refreshToken?: null | string;
+  refreshTokenExpiry?: null | string;
+  createdTime: string;}
+}
