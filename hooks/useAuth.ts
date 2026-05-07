@@ -15,8 +15,10 @@ export const useAuth = () => {
       `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/login`,
       { email, password },
     );
+
     if (res.data.success) {
       const { accessToken, refreshToken } = res.data.data;
+
       await saveTokens(accessToken, refreshToken);
       dispatch(setToken(accessToken));
     }

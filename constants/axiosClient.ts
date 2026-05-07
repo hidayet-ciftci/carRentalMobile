@@ -35,7 +35,6 @@ axiosClient.interceptors.response.use(
           `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/refresh`,
           { refreshToken },
         );
-
         const newAccessToken = response.data.data.accessToken;
 
         await saveTokens(newAccessToken, refreshToken!);

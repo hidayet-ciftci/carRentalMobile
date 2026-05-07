@@ -13,7 +13,7 @@ export const saveTokens = async (accessToken: string, refreshToken: string) => {
 
 export const getAccessToken = async () => {
   if (Platform.OS === "web") {
-    localStorage.removeItem("accessToken");
+    return localStorage.getItem("accessToken");
   } else {
     return await SecureStore.getItemAsync("accessToken");
   }
@@ -21,7 +21,7 @@ export const getAccessToken = async () => {
 
 export const getRefreshToken = async () => {
   if (Platform.OS === "web") {
-    localStorage.removeItem("refreshToken");
+    return localStorage.getItem("refreshToken");
   } else {
     return await SecureStore.getItemAsync("refreshToken");
   }

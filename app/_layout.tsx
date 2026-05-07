@@ -9,11 +9,13 @@ import "react-native-reanimated";
 
 import { Provider, useDispatch, useSelector } from "react-redux";
 
+import axiosClient from "@/constants/axiosClient";
 import { getAccessToken } from "@/constants/storage";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { setLoading, setToken } from "@/store/authSlice";
 import { AppDispatch, RootState, store } from "@/store/store";
 import { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
@@ -43,9 +45,16 @@ function AppContent() {
   useEffect(() => {
     const checkToken = async () => {
       const token = await getAccessToken(); // storage.ts'e soruyor
-
+      // token 'i refresh token ile kontrol et.
       if (token) {
-        dispatch(setToken(token)); // token var → Redux'a yaz
+        dispatch(setToken(token));
+        try {
+          const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users/Me`;
+          const res = await axiosClient.get(url);
+        } catch (err) {
+          dispatch(setLoading(false));
+        }
+        // token var → Redux'a yaz
       } else {
         dispatch(setLoading(false)); // token yok → kontrol bitti
       }
@@ -63,6 +72,13 @@ function AppContent() {
       router.replace("/"); // token yok → login
     }
   }, [isLoggedIn, isLoading]);
+
+  // loading ekranı koy
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

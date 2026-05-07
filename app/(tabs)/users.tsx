@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import axiosClient from "@/constants/axiosClient";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
@@ -14,6 +15,31 @@ const staffCards = [
 export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
+
+  const fetchUsers = async () => {
+    const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
+    try {
+      const res = await axiosClient.get(url);
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetUsers = async () => {
+    const userData = await fetchUsers();
+    console.log(userData);
+    if (userData?.success) {
+      return userData?.data;
+    } else {
+      Toast.show({ type: "error", text1: userData?.message });
+    }
+  };
+
+  /*  useEffect(() => {
+    handleGetUsers();
+  }, []); */
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>

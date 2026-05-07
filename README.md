@@ -72,8 +72,12 @@ Tamamlananacaklar :
 -Dosya yolu düzenlenecek ??,
 -Araç,Kullanıcı vb. silme düzeltilecek ++
 -Hot toast ile geri bildirim , hatalar handle edilecek. ++
--API'ler bağlanacak ,
--Auth entegre edilecek,
+-API'ler bağlanacak , +-
+-Auth entegre edilecek, ++
 -Logic yazılacak
+
+- Tüm API ler bağlanacak sonra da AUTH üzerinde geliştirme yapılack
+- Auth girişde ve sonralarında refresh token ile istek atsın yeni token alıp giriş yapmış olsun accessToken bitmiş olabilir ?
+- bunun dışında token ++
 
 }
