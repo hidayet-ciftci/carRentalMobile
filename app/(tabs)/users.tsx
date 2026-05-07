@@ -1,11 +1,12 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { fetchUsers } from "@/constants/api";
+import { deleteByIdUser, fetchUsers } from "@/constants/api";
 import { userDataType } from "@/constants/types";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -15,7 +16,7 @@ import Toast from "react-native-toast-message";
 
 export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
-  const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
+  const [selecteds, setSelecteds] = useState<number[]>([]);
   const [userData, setUserData] = useState<userDataType[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -29,10 +30,37 @@ export default function ManagementScreen() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    const deletedUserData = await deleteByIdUser(selecteds);
+    if (deletedUserData?.success) {
+      Toast.show({ type: "success", text1: deletedUserData?.message });
+    } else {
+      Toast.show({ type: "error", text1: deletedUserData?.message });
+    }
+  };
+
+  const deleteButton = () => {
+    Alert.alert("Silme Onayı", "Seçilen kullanıcıları silmek istiyor musun?", [
+      {
+        text: "İptal",
+        style: "cancel",
+      },
+      {
+        text: "Sil",
+        style: "destructive",
+        onPress: handleDeleteUser,
+      },
+    ]);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     handleGetUsers();
   }, []);
+
+  useEffect(() => {
+    console.log(selecteds);
+  }, [selecteds]);
 
   if (isLoading) {
     return (
@@ -54,11 +82,15 @@ export default function ManagementScreen() {
       <View style={styles.quickActions}>
         <Pressable
           style={styles.actionButton}
-          onPress={() => {
+          onPress={
             deleteMode
-              ? Toast.show({ type: "error", text1: "silindi" })
-              : router.push("/create/new-user");
-          }}
+              ? () => {
+                  deleteButton();
+                }
+              : () => {
+                  router.push("/create/new-user");
+                }
+          }
         >
           <ThemedText style={styles.actionText}>
             {deleteMode ? "Onayla" : "+ Kullanici Ekle"}
@@ -102,13 +134,17 @@ export default function ManagementScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {userData?.map((user, index) => (
+      {userData?.map((user) => (
         <Pressable
           key={user.id}
           style={styles.cardLink}
           onPress={() => {
             deleteMode
-              ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
+              ? setSelecteds((prev) =>
+                  prev.includes(user.id)
+                    ? prev.filter((i) => i !== user.id)
+                    : [...prev, user.id],
+                )
               : router.push({
                   pathname: "/details/user-detail/[id]",
                   params: { id: user.id },
@@ -119,7 +155,7 @@ export default function ManagementScreen() {
             {deleteMode && (
               <ThemedView
                 style={
-                  selecteds[index] == true
+                  selecteds.includes(user.id)
                     ? styles.selectedCircle
                     : styles.selectCircle
                 }
