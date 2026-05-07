@@ -30,7 +30,7 @@ export default function CustomersScreen() {
           onPress={() => {
             deleteMode
               ? console.log("silindi")
-              : router.push("/(tabs)/create/new-customer");
+              : router.push("/create/new-customer");
           }}
         >
           <ThemedText style={styles.primaryText}>
@@ -76,7 +76,7 @@ export default function CustomersScreen() {
                     ? prev.filter((i) => i !== index)
                     : [...prev, index],
                 )
-              : router.push("/(tabs)/details/customer-admin-detail");
+              : router.push("/details/customer-admin-detail");
           }}
         >
           <View

@@ -19,7 +19,7 @@ export default function CustomerAccessScreen() {
       Toast.show({ type: "error", text1: loginData?.message ?? "Bulunamadı " });
     if (loginData?.success) {
       disPatch(setData(loginData?.data));
-      router.push("/customer-details");
+      router.push("/customer/customer-details");
     }
   }
 

@@ -62,38 +62,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="details/user-detail"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="details/vehicle-detail"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="details/service-detail"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="details/customer-admin-detail"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="create/new-vehicle"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="create/new-service"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="create/new-user"
-        options={{ href: null, headerShown: true }}
-      />
-      <Tabs.Screen
-        name="create/new-customer"
-        options={{ href: null, headerShown: true }}
-      />
     </Tabs>
   );
 }

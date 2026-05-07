@@ -24,7 +24,7 @@ export default function VehiclesScreen() {
         </ThemedText>
       </ThemedView>
       <View style={styles.controls}>
-        <Link href="/(tabs)/create/new-vehicle" asChild>
+        <Link href="/create/new-vehicle" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryActionText}>
               {deleteMode ? "Onayla" : "+ Yeni Arac"}
@@ -62,7 +62,7 @@ export default function VehiclesScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/(tabs)/details/vehicle-detail");
+              : router.push("/details/vehicle-detail");
           }}
         >
           <View

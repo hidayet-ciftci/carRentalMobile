@@ -41,7 +41,7 @@ export default function VehicleRecordsScreen() {
       </ThemedView>
 
       <View style={styles.rowActions}>
-        <Link href="/(tabs)/create/new-service" asChild>
+        <Link href="/create/new-service" asChild>
           <Pressable style={styles.primaryAction}>
             <ThemedText style={styles.primaryActionText}>
               {deleteMode ? "Onayla" : "+ Yeni Servis"}
@@ -83,7 +83,7 @@ export default function VehicleRecordsScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/(tabs)/details/service-detail");
+              : router.push("/details/service-detail");
           }}
         >
           <ThemedView

@@ -17,7 +17,7 @@ export default function EntryScreen() {
         </ThemedText>
       </View>
 
-      <Link href="/customer-access" style={styles.choiceCard}>
+      <Link href="/customer/customer-access" style={styles.choiceCard}>
         <View>
           <ThemedText style={styles.choiceLabel}>Musteri Girisi </ThemedText>
           <ThemedText style={styles.choiceDesc}>
