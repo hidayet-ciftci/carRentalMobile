@@ -31,5 +31,15 @@ export interface userDataType {
   status: boolean;
   refreshToken?: null | string;
   refreshTokenExpiry?: null | string;
-  createdTime: string;
+  createdTime?: string | null;
+}
+
+export interface userUpdateData {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  passwordHash: string | null;
+  phoneNumber?: string | null;
+  status: boolean;
 }

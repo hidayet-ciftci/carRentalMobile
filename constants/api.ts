@@ -1,5 +1,5 @@
 import axiosClient from "./axiosClient";
-import { userDataType } from "./types";
+import { userDataType, userUpdateData } from "./types";
 
 export const getCustomerDetail = async (email: string) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/ServiceRecords/OneServiceDetails`;
@@ -53,6 +53,28 @@ export const createUser = async (user: userDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
   try {
     const res = await axiosClient.post(url, user);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getIdUser = async (userId: string | string[]) => {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users/user-detail/${userId}`;
+  try {
+    const res = await axiosClient.get(url);
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUser = async (user: userUpdateData) => {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
+  try {
+    const res = await axiosClient.put(url, user);
     const data = res.data;
     return data;
   } catch (error) {

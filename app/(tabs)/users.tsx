@@ -21,7 +21,6 @@ export default function ManagementScreen() {
 
   const handleGetUsers = async () => {
     const userData = await fetchUsers();
-    console.log(userData);
     if (userData?.success) {
       setUserData(userData.data);
       setIsLoading(false);
@@ -110,7 +109,10 @@ export default function ManagementScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/details/user-detail");
+              : router.push({
+                  pathname: "/details/user-detail/[id]",
+                  params: { id: user.id },
+                });
           }}
         >
           <View style={styles.card}>
