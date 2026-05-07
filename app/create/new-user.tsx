@@ -1,6 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { createUser } from "@/constants/api";
+import { userDataType } from "@/constants/types";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,67 +11,134 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function NewUserScreen() {
+  const [newUserData, setNewUserData] = useState<userDataType>({
+    id: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    passwordHash: "",
+    phoneNumber: "",
+    status: true,
+    refreshToken: null,
+    refreshTokenExpiry: null,
+    createdTime: new Date().toISOString(),
+  });
+
+  const handleAddUser = async () => {
+    if (newUserData == undefined || newUserData == null) return;
+    const userData = await createUser(newUserData);
+    console.log(userData);
+    if (userData?.success) {
+      Toast.show({ type: "success", text1: userData?.message });
+      router.back();
+    } else Toast.show({ type: "error", text1: userData?.message });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
         <TouchableOpacity style={styles.backButton} onPress={router.back}>
           <ThemedText>Go Back</ThemedText>
         </TouchableOpacity>
+
         <ThemedView style={styles.header}>
           <ThemedText style={styles.headerLabel}>Yonetim Modulu</ThemedText>
+
           <ThemedText style={styles.headerTitle}>
             Yeni Kullanici Ekle
           </ThemedText>
+
           <ThemedText style={styles.headerSub}>
             Kullanici bilgilerini doldurun, kayit islemi sonradan eklenecek.
           </ThemedText>
         </ThemedView>
 
         <ThemedView style={styles.card}>
-          <ThemedText style={styles.fieldLabel}>Ad Soyad</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Ad</ThemedText>
+
           <TextInput
             style={styles.input}
-            placeholder="Ornek: Ahmet Demir"
+            placeholder="Ornek: Ahmet"
             placeholderTextColor="#7A90A8"
+            value={newUserData.firstName}
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                firstName: text,
+              }))
+            }
+          />
+
+          <ThemedText style={styles.fieldLabel}>Soyad</ThemedText>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Demir"
+            placeholderTextColor="#7A90A8"
+            value={newUserData.lastName}
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                lastName: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Email</ThemedText>
+
           <TextInput
             style={styles.input}
             placeholder="ornek@carrental.com"
             placeholderTextColor="#7A90A8"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={newUserData.email ?? ""}
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                email: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Telefon</ThemedText>
+
           <TextInput
             style={styles.input}
             placeholder="05xx xxx xx xx"
             placeholderTextColor="#7A90A8"
             keyboardType="phone-pad"
-          />
-
-          <ThemedText style={styles.fieldLabel}>Rol</ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="Ornek: Yonetici / Operasyon / Satis"
-            placeholderTextColor="#7A90A8"
+            value={newUserData.phoneNumber ?? ""}
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                phoneNumber: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Sifre</ThemedText>
+
           <TextInput
             style={styles.input}
             placeholder="Guclu bir sifre girin"
             placeholderTextColor="#7A90A8"
             secureTextEntry
+            value={newUserData.passwordHash ?? ""}
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                passwordHash: text,
+              }))
+            }
           />
 
-          <ThemedView style={styles.saveButton}>
+          <TouchableOpacity style={styles.saveButton} onPress={handleAddUser}>
             <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
-          </ThemedView>
+          </TouchableOpacity>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>
@@ -80,16 +150,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F3F6FB",
   },
+
   content: {
     padding: 16,
     gap: 14,
   },
+
   header: {
     backgroundColor: "#0E4A67",
     borderRadius: 20,
     padding: 18,
     gap: 4,
   },
+
   headerLabel: {
     color: "#9ED5EE",
     textTransform: "uppercase",
@@ -97,15 +170,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "700",
   },
+
   headerTitle: {
     color: "#FFFFFF",
     fontSize: 24,
     fontWeight: "800",
   },
+
   headerSub: {
     color: "#D4E8F4",
     lineHeight: 20,
   },
+
   card: {
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
@@ -114,10 +190,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E7EDF5",
   },
+
   fieldLabel: {
     color: "#294259",
     fontWeight: "700",
   },
+
   input: {
     borderWidth: 1,
     borderColor: "#D6E1EE",
@@ -127,6 +205,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FBFDFF",
     color: "#12243A",
   },
+
   saveButton: {
     marginTop: 6,
     backgroundColor: "#1D608A",
@@ -134,11 +213,13 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     alignItems: "center",
   },
+
   saveButtonText: {
     color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 15,
   },
+
   backButton: {
     borderRadius: 14,
     margin: 15,
@@ -147,6 +228,7 @@ const styles = StyleSheet.create({
     right: -275,
     top: 0,
     marginBlock: 0,
-    position: "fixed",
+    position: "absolute",
+    zIndex: 10,
   },
 });

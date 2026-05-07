@@ -21,8 +21,8 @@ export interface loginDataType {
   password: string;
 }
 
-export interface userDataType[] {
-  {id: number;
+export interface userDataType {
+  id: number;
   firstName: string;
   lastName: string;
   email?: string | null;
@@ -31,5 +31,5 @@ export interface userDataType[] {
   status: boolean;
   refreshToken?: null | string;
   refreshTokenExpiry?: null | string;
-  createdTime: string;}
+  createdTime: string;
 }

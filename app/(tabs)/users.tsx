@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import axiosClient from "@/constants/axiosClient";
+import { fetchUsers } from "@/constants/api";
 import { userDataType } from "@/constants/types";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -18,17 +18,6 @@ export default function ManagementScreen() {
   const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
   const [userData, setUserData] = useState<userDataType[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const fetchUsers = async () => {
-    const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
-    try {
-      const res = await axiosClient.get(url);
-      const data = res.data;
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleGetUsers = async () => {
     const userData = await fetchUsers();
