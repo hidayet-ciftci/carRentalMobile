@@ -1,8 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const records = [
   {
@@ -41,13 +42,19 @@ export default function VehicleRecordsScreen() {
       </ThemedView>
 
       <View style={styles.rowActions}>
-        <Link href="/create/new-service" asChild>
-          <Pressable style={styles.primaryAction}>
-            <ThemedText style={styles.primaryActionText}>
-              {deleteMode ? "Onayla" : "+ Yeni Servis"}
-            </ThemedText>
-          </Pressable>
-        </Link>
+        <Pressable
+          style={styles.primaryAction}
+          onPress={() => {
+            deleteMode
+              ? Toast.show({ type: "error", text1: "silindi" })
+              : router.push("/create/new-service");
+          }}
+        >
+          <ThemedText style={styles.primaryActionText}>
+            {deleteMode ? "Onayla" : "+ Yeni Servis"}
+          </ThemedText>
+        </Pressable>
+
         <Pressable
           style={[
             styles.secondaryAction,

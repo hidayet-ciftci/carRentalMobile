@@ -1,8 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link, router } from "expo-router";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const vehicleCards = [
   { plate: "34 CRN 107", model: "Renault Clio", km: "83.200 km" },
@@ -24,13 +25,18 @@ export default function VehiclesScreen() {
         </ThemedText>
       </ThemedView>
       <View style={styles.controls}>
-        <Link href="/create/new-vehicle" asChild>
-          <Pressable style={styles.primaryAction}>
-            <ThemedText style={styles.primaryActionText}>
-              {deleteMode ? "Onayla" : "+ Yeni Arac"}
-            </ThemedText>
-          </Pressable>
-        </Link>
+        <Pressable
+          style={styles.primaryAction}
+          onPress={() => {
+            deleteMode
+              ? Toast.show({ type: "error", text1: "silindi" })
+              : router.push("/create/new-vehicle");
+          }}
+        >
+          <ThemedText style={styles.primaryActionText}>
+            {deleteMode ? "Onayla" : "+ Yeni Arac"}
+          </ThemedText>
+        </Pressable>
         <Pressable
           style={[
             styles.secondaryAction,

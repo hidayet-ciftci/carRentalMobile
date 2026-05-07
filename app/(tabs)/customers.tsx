@@ -3,6 +3,7 @@ import { ThemedView } from "@/components/themed-view";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const customers = [
   { name: "Esra Cetin", phone: "0501 222 33 44", car: "34 CRN 107" },
@@ -29,7 +30,7 @@ export default function CustomersScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? console.log("silindi")
+              ? Toast.show({ type: "error", text1: "silindi" })
               : router.push("/create/new-customer");
           }}
         >
