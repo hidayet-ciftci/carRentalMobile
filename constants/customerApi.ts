@@ -1,5 +1,5 @@
 import axiosClient from "./axiosClient";
-import { userDataType, userUpdateData } from "./types";
+import { customerUpdateDataType, NewcustomerDataType } from "./types";
 
 export const fetchCustomers = async () => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
@@ -13,7 +13,7 @@ export const fetchCustomers = async () => {
 };
 
 export const deleteByIdsCustomer = async (customerIds: number[]) => {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users/delete-many`;
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers/delete-many`;
   try {
     const res = await axiosClient.delete(url, { data: customerIds });
     const data = res.data;
@@ -23,7 +23,7 @@ export const deleteByIdsCustomer = async (customerIds: number[]) => {
   }
 };
 
-export const createCustomer = async (customer: userDataType) => {
+export const createCustomer = async (customer: NewcustomerDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
   try {
     const res = await axiosClient.post(url, customer);
@@ -35,7 +35,7 @@ export const createCustomer = async (customer: userDataType) => {
 };
 
 export const getByIdCustomer = async (customerId: string | string[]) => {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users/user-detail/${customerId}`;
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers/customer-detail/${customerId}`;
   try {
     const res = await axiosClient.get(url);
     const data = res.data;
@@ -45,7 +45,7 @@ export const getByIdCustomer = async (customerId: string | string[]) => {
   }
 };
 
-export const updateCustomer = async (customer: userUpdateData) => {
+export const updateCustomer = async (customer: customerUpdateDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
   try {
     const res = await axiosClient.put(url, customer);

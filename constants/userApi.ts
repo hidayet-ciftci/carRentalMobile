@@ -1,5 +1,5 @@
 import axiosClient from "./axiosClient";
-import { userDataType, userUpdateData } from "./types";
+import { newUserDataType, userUpdateData } from "./types";
 
 export const fetchUsers = async () => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
@@ -12,8 +12,8 @@ export const fetchUsers = async () => {
   }
 };
 
-export const createUser = async (user: userDataType) => {
-  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Users`;
+export const createUser = async (user: newUserDataType) => {
+  const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Auth/register`;
   try {
     const res = await axiosClient.post(url, user);
     const data = res.data;

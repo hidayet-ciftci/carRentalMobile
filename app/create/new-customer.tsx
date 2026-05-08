@@ -1,6 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { createCustomer } from "@/constants/customerApi";
+import { NewcustomerDataType } from "@/constants/types";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,8 +11,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function NewCustomerScreen() {
+  const [newCustomer, setNewCustomer] = useState<NewcustomerDataType>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+  });
+
+  const handleAddCustomer = async () => {
+    if (newCustomer == undefined || newCustomer == null) return;
+    const customerData = await createCustomer(newCustomer);
+    if (customerData?.success) {
+      Toast.show({ type: "success", text1: customerData?.message });
+      router.back();
+    } else Toast.show({ type: "error", text1: customerData?.message });
+  };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>

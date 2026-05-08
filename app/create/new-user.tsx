@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { userDataType } from "@/constants/types";
+import { newUserDataType } from "@/constants/types";
 import { createUser } from "@/constants/userApi";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -14,17 +14,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 export default function NewUserScreen() {
-  const [newUserData, setNewUserData] = useState<userDataType>({
-    id: 0,
+  const [newUserData, setNewUserData] = useState<newUserDataType>({
     firstName: "",
     lastName: "",
     email: "",
-    passwordHash: "",
+    password: "",
     phoneNumber: "",
-    status: true,
-    refreshToken: null,
-    refreshTokenExpiry: null,
-    createdTime: new Date().toISOString(),
+    roleId: 2,
   });
 
   const handleAddUser = async () => {
@@ -127,11 +123,32 @@ export default function NewUserScreen() {
             placeholder="Guclu bir sifre girin"
             placeholderTextColor="#7A90A8"
             secureTextEntry
-            value={newUserData.passwordHash ?? ""}
+            value={newUserData.password ?? ""}
             onChangeText={(text) =>
               setNewUserData((prev) => ({
                 ...prev,
-                passwordHash: text,
+                password: text,
+              }))
+            }
+          />
+          <ThemedText style={styles.fieldLabel}>
+            Role (1:admin , 2:servis elemanı , 3: müşteri hizmetleri)
+          </ThemedText>
+
+          <TextInput
+            style={styles.input}
+            placeholder="05xx xxx xx xx"
+            placeholderTextColor="#7A90A8"
+            keyboardType="phone-pad"
+            value={
+              Number.isNaN(newUserData.roleId)
+                ? "0"
+                : newUserData.roleId.toString()
+            }
+            onChangeText={(text) =>
+              setNewUserData((prev) => ({
+                ...prev,
+                roleId: parseInt(text),
               }))
             }
           />
@@ -230,5 +247,14 @@ const styles = StyleSheet.create({
     marginBlock: 0,
     position: "absolute",
     zIndex: 10,
+  },
+  inputStatus: {
+    borderWidth: 1,
+    borderColor: "#D6E1EE",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: "#FBFDFF",
+    color: "#12243A",
   },
 });

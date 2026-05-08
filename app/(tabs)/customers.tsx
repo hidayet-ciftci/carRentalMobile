@@ -1,7 +1,8 @@
+import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { deleteByIdsCustomer, fetchCustomers } from "@/constants/customerApi";
-import { userDataType } from "@/constants/types";
+import { customerDataType } from "@/constants/types";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -14,38 +15,32 @@ import {
 } from "react-native";
 import Toast from "react-native-toast-message";
 
-const customers = [
-  { name: "Esra Cetin", phone: "0501 222 33 44", car: "34 CRN 107" },
-  { name: "Kemal Dogan", phone: "0532 771 88 29", car: "35 IZM 440" },
-  { name: "Banu Sahin", phone: "0543 118 00 64", car: "06 ANK 221" },
-];
-
 export default function CustomersScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userData, setUserData] = useState<userDataType[]>();
+  const [customerData, setCustomerData] = useState<customerDataType[]>();
   const isFocused = useIsFocused();
 
   const handleGetCustomers = async () => {
-    const userData = await fetchCustomers();
-    if (userData?.success) {
-      setUserData(userData.data);
+    const customerData = await fetchCustomers();
+    if (customerData?.success) {
+      setCustomerData(customerData.data);
       setIsLoading(false);
     } else {
-      Toast.show({ type: "error", text1: userData?.message });
+      Toast.show({ type: "error", text1: customerData?.message });
     }
   };
 
   const handleDeleteCustomers = async () => {
-    const deletedUserData = await deleteByIdsCustomer(selected);
-    if (deletedUserData?.success) {
-      Toast.show({ type: "success", text1: deletedUserData?.message });
+    const deletedCustomerData = await deleteByIdsCustomer(selected);
+    if (deletedCustomerData?.success) {
+      Toast.show({ type: "success", text1: deletedCustomerData?.message });
       setSelected([]);
       setDeleteMode(false);
       handleGetCustomers();
     } else {
-      Toast.show({ type: "error", text1: deletedUserData?.message });
+      Toast.show({ type: "error", text1: deletedCustomerData?.message });
     }
   };
 
@@ -75,7 +70,7 @@ export default function CustomersScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? Toast.show({ type: "error", text1: "silindi" })
+              ? deleteButton(handleDeleteCustomers)
               : router.push("/create/new-customer");
           }}
         >
@@ -107,22 +102,28 @@ export default function CustomersScreen() {
       <View style={styles.statsRow}>
         <ThemedView style={styles.statCard}>
           <ThemedText style={styles.statLabel}>
-            Toplam Müşteri: <ThemedText style={styles.statValue}>48</ThemedText>
+            Toplam Müşteri:{" "}
+            <ThemedText style={styles.statValue}>
+              {customerData?.length}
+            </ThemedText>
           </ThemedText>
         </ThemedView>
       </View>
-      {customers.map((customer, index) => (
+      {customerData?.map((customer) => (
         <Pressable
-          key={customer.phone}
+          key={customer.id}
           style={styles.cardLink}
           onPress={() => {
             deleteMode
               ? setSelected((prev) =>
-                  prev.includes(index)
-                    ? prev.filter((i) => i !== index)
-                    : [...prev, index],
+                  prev.includes(customer.id)
+                    ? prev.filter((i) => i !== customer.id)
+                    : [...prev, customer.id],
                 )
-              : router.push("/details/customer-admin-detail/[id]");
+              : router.push({
+                  pathname: "/details/customer-admin-detail/[id]",
+                  params: { id: customer.id },
+                });
           }}
         >
           <View
@@ -131,7 +132,7 @@ export default function CustomersScreen() {
             {deleteMode && (
               <ThemedView
                 style={
-                  selected.includes(index)
+                  selected.includes(customer.id)
                     ? styles.selectedCircle
                     : styles.selectCircle
                 }
@@ -139,13 +140,13 @@ export default function CustomersScreen() {
             )}
             <View style={deleteMode ? styles.cardContent : undefined}>
               <ThemedText style={styles.customerName}>
-                {customer.name}
+                {customer.firstName} {customer.lastName}
               </ThemedText>
               <ThemedText style={styles.customerMeta}>
-                Telefon: {customer.phone}
+                Telefon: {customer.phoneNumber}
               </ThemedText>
               <ThemedText style={styles.customerMeta}>
-                Arac: {customer.car}
+                Adres: {customer.address}
               </ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle

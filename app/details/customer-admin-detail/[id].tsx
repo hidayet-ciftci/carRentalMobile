@@ -1,9 +1,57 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { router } from "expo-router";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { getByIdCustomer, updateCustomer } from "@/constants/customerApi";
+import { customerDataType } from "@/constants/types";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function CustomerAdminDetailScreen() {
+  const [customer, setCustomer] = useState<customerDataType>({
+    id: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
+    createdTime: new Date().toISOString(),
+  });
+  const { id } = useLocalSearchParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleGetDetail = async () => {
+    const customerData = await getByIdCustomer(id);
+    setCustomer(customerData.data);
+    setIsLoading(false);
+  };
+
+  const updateCustomerById = async () => {
+    const { createdTime, ...restofCustomer } = customer;
+    const updatedCustomerData = await updateCustomer(restofCustomer);
+    if (updatedCustomerData?.success) {
+      Toast.show({ type: "success", text1: updatedCustomerData?.message });
+      router.back();
+    } else {
+      Toast.show({ type: "error", text1: updatedCustomerData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetDetail();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
@@ -16,20 +64,55 @@ export default function CustomerAdminDetailScreen() {
         </ThemedText>
 
         <ThemedText style={styles.label}>Ad Soyad</ThemedText>
-        <TextInput style={styles.input} defaultValue="Esra Cetin" />
+        <TextInput
+          style={styles.input}
+          value={customer?.firstName ?? ""}
+          onChangeText={(text) =>
+            setCustomer((prev) => ({
+              ...prev,
+              firstName: text,
+            }))
+          }
+        />
+
+        <ThemedText style={styles.label}>Soy isim</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={customer?.lastName ?? ""}
+          onChangeText={(text) =>
+            setCustomer((prev) => ({
+              ...prev,
+              lastName: text,
+            }))
+          }
+        />
 
         <ThemedText style={styles.label}>Telefon</ThemedText>
-        <TextInput style={styles.input} defaultValue="0501 222 33 44" />
-
-        <ThemedText style={styles.label}>Bagli Arac</ThemedText>
-        <TextInput style={styles.input} defaultValue="34 CRN 107" />
-
+        <TextInput
+          style={styles.input}
+          value={customer?.phoneNumber ?? ""}
+          onChangeText={(text) =>
+            setCustomer((prev) => ({
+              ...prev,
+              phoneNumber: text,
+            }))
+          }
+        />
         <ThemedText style={styles.label}>Adres</ThemedText>
-        <TextInput style={styles.input} defaultValue="Istanbul" />
+        <TextInput
+          style={styles.input}
+          value={customer?.address ?? ""}
+          onChangeText={(text) =>
+            setCustomer((prev) => ({
+              ...prev,
+              address: text,
+            }))
+          }
+        />
 
-        <ThemedView style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={updateCustomerById}>
           <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
-        </ThemedView>
+        </TouchableOpacity>
       </ThemedView>
     </ThemedView>
   );

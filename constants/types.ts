@@ -43,3 +43,40 @@ export interface userUpdateData {
   phoneNumber?: string | null;
   status: boolean;
 }
+
+export interface newUserDataType {
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  password: string | null;
+  phoneNumber?: string | null;
+  roleId: number;
+}
+
+// ----- customerTypes -------
+
+export interface customerDataType {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  phoneNumber?: string | null;
+  address?: string | null;
+  createdTime?: string | null;
+}
+export interface customerUpdateDataType {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  phoneNumber?: string | null;
+  address?: string | null;
+}
+
+export interface NewcustomerDataType {
+  firstName: string;
+  lastName: string;
+  email?: string | null;
+  phoneNumber?: string | null;
+  address?: string | null;
+}

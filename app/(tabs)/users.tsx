@@ -69,15 +69,11 @@ export default function ManagementScreen() {
       <View style={styles.quickActions}>
         <Pressable
           style={styles.actionButton}
-          onPress={
+          onPress={() => {
             deleteMode
-              ? () => {
-                  deleteButton(handleDeleteUser);
-                }
-              : () => {
-                  router.push("/create/new-user");
-                }
-          }
+              ? deleteButton(handleDeleteUser)
+              : router.push("/create/new-user");
+          }}
         >
           <ThemedText style={styles.actionText}>
             {deleteMode ? "Onayla" : "+ Kullanici Ekle"}
