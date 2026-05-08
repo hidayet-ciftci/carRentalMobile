@@ -1,12 +1,13 @@
+import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { deleteByIdUser, fetchUsers } from "@/constants/api";
 import { userDataType } from "@/constants/types";
+import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -19,6 +20,7 @@ export default function ManagementScreen() {
   const [selecteds, setSelecteds] = useState<number[]>([]);
   const [userData, setUserData] = useState<userDataType[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isFocused = useIsFocused();
 
   const handleGetUsers = async () => {
     const userData = await fetchUsers();
@@ -39,28 +41,10 @@ export default function ManagementScreen() {
     }
   };
 
-  const deleteButton = () => {
-    Alert.alert("Silme Onayı", "Seçilen kullanıcıları silmek istiyor musun?", [
-      {
-        text: "İptal",
-        style: "cancel",
-      },
-      {
-        text: "Sil",
-        style: "destructive",
-        onPress: handleDeleteUser,
-      },
-    ]);
-  };
-
   useEffect(() => {
     setIsLoading(true);
     handleGetUsers();
-  }, []);
-
-  useEffect(() => {
-    console.log(selecteds);
-  }, [selecteds]);
+  }, [handleDeleteUser, isFocused]);
 
   if (isLoading) {
     return (
@@ -85,7 +69,7 @@ export default function ManagementScreen() {
           onPress={
             deleteMode
               ? () => {
-                  deleteButton();
+                  deleteButton(handleDeleteUser);
                 }
               : () => {
                   router.push("/create/new-user");
