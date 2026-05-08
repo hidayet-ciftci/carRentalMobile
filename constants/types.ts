@@ -79,4 +79,5 @@ export interface NewcustomerDataType {
   email?: string | null;
   phoneNumber?: string | null;
   address?: string | null;
+  createdTime?: string | null;
 }

@@ -20,6 +20,7 @@ export default function NewCustomerScreen() {
     email: "",
     phoneNumber: "",
     address: "",
+    createdTime: new Date().toISOString(),
   });
 
   const handleAddCustomer = async () => {
@@ -45,11 +46,32 @@ export default function NewCustomerScreen() {
         </ThemedView>
 
         <ThemedView style={styles.card}>
-          <ThemedText style={styles.fieldLabel}>Ad Soyad</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Ad</ThemedText>
           <TextInput
             style={styles.input}
             placeholder="Ornek: Ali Celik"
             placeholderTextColor="#5E8C78"
+            value={newCustomer.firstName}
+            onChangeText={(text) =>
+              setNewCustomer((prev) => ({
+                ...prev,
+                firstName: text,
+              }))
+            }
+          />
+
+          <ThemedText style={styles.fieldLabel}>Soyad</ThemedText>
+          <TextInput
+            style={styles.input}
+            placeholder="Ornek: Ali Celik"
+            placeholderTextColor="#5E8C78"
+            value={newCustomer.lastName}
+            onChangeText={(text) =>
+              setNewCustomer((prev) => ({
+                ...prev,
+                lastName: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Telefon</ThemedText>
@@ -58,6 +80,13 @@ export default function NewCustomerScreen() {
             placeholder="05xx xxx xx xx"
             placeholderTextColor="#5E8C78"
             keyboardType="phone-pad"
+            value={newCustomer?.phoneNumber ?? ""}
+            onChangeText={(text) =>
+              setNewCustomer((prev) => ({
+                ...prev,
+                phoneNumber: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Email</ThemedText>
@@ -67,13 +96,13 @@ export default function NewCustomerScreen() {
             placeholderTextColor="#5E8C78"
             keyboardType="email-address"
             autoCapitalize="none"
-          />
-
-          <ThemedText style={styles.fieldLabel}>Bagli Arac (Plaka)</ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="Ornek: 34 ABC 123"
-            placeholderTextColor="#5E8C78"
+            value={newCustomer?.email ?? ""}
+            onChangeText={(text) =>
+              setNewCustomer((prev) => ({
+                ...prev,
+                email: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Adres</ThemedText>
@@ -84,11 +113,21 @@ export default function NewCustomerScreen() {
             multiline
             numberOfLines={3}
             textAlignVertical="top"
+            value={newCustomer.address ?? ""}
+            onChangeText={(text) =>
+              setNewCustomer((prev) => ({
+                ...prev,
+                address: text,
+              }))
+            }
           />
 
-          <ThemedView style={styles.saveButton}>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={handleAddCustomer}
+          >
             <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
-          </ThemedView>
+          </TouchableOpacity>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>
