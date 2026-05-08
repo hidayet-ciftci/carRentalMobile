@@ -77,7 +77,7 @@ export default function CustomersScreen() {
                     ? prev.filter((i) => i !== index)
                     : [...prev, index],
                 )
-              : router.push("/details/customer-admin-detail");
+              : router.push("/details/customer-admin-detail/[id]");
           }}
         >
           <View

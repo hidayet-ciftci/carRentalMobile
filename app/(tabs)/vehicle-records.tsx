@@ -90,7 +90,7 @@ export default function VehicleRecordsScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/details/service-detail");
+              : router.push("/details/service-detail/[id]");
           }}
         >
           <ThemedView

@@ -36,6 +36,9 @@ export default function ManagementScreen() {
     const deletedUserData = await deleteByIdUser(selecteds);
     if (deletedUserData?.success) {
       Toast.show({ type: "success", text1: deletedUserData?.message });
+      setSelecteds([]);
+      setDeleteMode(false);
+      handleGetUsers();
     } else {
       Toast.show({ type: "error", text1: deletedUserData?.message });
     }
@@ -44,7 +47,7 @@ export default function ManagementScreen() {
   useEffect(() => {
     setIsLoading(true);
     handleGetUsers();
-  }, [handleDeleteUser, isFocused]);
+  }, [isFocused]);
 
   if (isLoading) {
     return (

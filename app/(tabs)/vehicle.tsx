@@ -68,7 +68,7 @@ export default function VehiclesScreen() {
           onPress={() => {
             deleteMode
               ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/details/vehicle-detail");
+              : router.push("/details/vehicle-detail/[id]");
           }}
         >
           <View
