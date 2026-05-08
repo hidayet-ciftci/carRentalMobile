@@ -80,7 +80,8 @@ Tamamlananacaklar :
 - Auth girişde ve sonralarında refresh token ile istek atsın yeni token alıp giriş yapmış olsun accessToken bitmiş olabilir ?
 - bunun dışında token ++
 
--- Userdeki API bağlantılarını diğer yerler için yap.
--- API güncellendiğinde useEffect ile tetikle , veriler yenilensin
+-- Userdeki API bağlantılarını diğer yerler için yap. +-
+-- API güncellendiğinde useEffect ile tetikle , veriler yenilensin ++
+-- Şifre yenileme ??
 
 }
