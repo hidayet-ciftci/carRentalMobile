@@ -1,8 +1,8 @@
 import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { deleteByIdUser, fetchUsers } from "@/constants/api";
 import { userDataType } from "@/constants/types";
+import { deleteByIdUser, fetchUsers } from "@/constants/userApi";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";

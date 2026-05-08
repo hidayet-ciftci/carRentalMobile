@@ -1,8 +1,17 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { deleteByIdsCustomer, fetchCustomers } from "@/constants/customerApi";
+import { userDataType } from "@/constants/types";
+import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
 
 const customers = [
@@ -14,6 +23,42 @@ const customers = [
 export default function CustomersScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userData, setUserData] = useState<userDataType[]>();
+  const isFocused = useIsFocused();
+
+  const handleGetCustomers = async () => {
+    const userData = await fetchCustomers();
+    if (userData?.success) {
+      setUserData(userData.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: userData?.message });
+    }
+  };
+
+  const handleDeleteCustomers = async () => {
+    const deletedUserData = await deleteByIdsCustomer(selected);
+    if (deletedUserData?.success) {
+      Toast.show({ type: "success", text1: deletedUserData?.message });
+      setSelected([]);
+      setDeleteMode(false);
+      handleGetCustomers();
+    } else {
+      Toast.show({ type: "error", text1: deletedUserData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetCustomers();
+  }, [isFocused]);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>

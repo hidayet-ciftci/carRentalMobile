@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { createUser } from "@/constants/api";
 import { userDataType } from "@/constants/types";
+import { createUser } from "@/constants/userApi";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
