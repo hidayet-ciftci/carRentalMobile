@@ -77,11 +77,14 @@ Tamamlananacaklar :
 -Logic yazılacak
 
 - Tüm API ler bağlanacak sonra da AUTH üzerinde geliştirme yapılack
-- Auth girişde ve sonralarında refresh token ile istek atsın yeni token alıp giriş yapmış olsun accessToken bitmiş olabilir ?
+- Auth girişde ve sonralarında refresh token ile istek atsın yeni token alıp giriş yapmış olsun accessToken bitmiş olabilir ++
 - bunun dışında token ++
 
 -- Userdeki API bağlantılarını diğer yerler için yap. +-
+-- serviceRecord ve vehicle api bağlanacak.
+-- Role bazlı erişim verilecek.
+-- RoleClaim tablosu eklenecek.
+-- Şifre yenileme eklenecek ile profile sekmesi eklensin
 -- API güncellendiğinde useEffect ile tetikle , veriler yenilensin ++
--- Şifre yenileme ??
 
 }
