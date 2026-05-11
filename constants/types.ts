@@ -81,7 +81,7 @@ export interface NewcustomerDataType {
   address?: string | null;
   createdTime?: string | null;
 }
-
+// ---------- vehicle -----------
 export interface vehicleDataType {
   id: number;
   customerId: number;
@@ -89,5 +89,19 @@ export interface vehicleDataType {
   brand: string;
   color: string;
   viN_Number: string;
+  createdTime?: string;
+}
+
+// --------- service Record --------------
+
+export interface SCDataType {
+  id: number;
+  vehicleId: number;
+  userId: number;
+  description?: string | null;
+  state: string;
+  plannedEndDate?: string | null;
+  endDate?: string | null;
+  price: number | null;
   createdTime?: string;
 }

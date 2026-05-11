@@ -1,34 +1,62 @@
+import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import {
+  deleteSCById,
+  fetchServiceRecords,
+} from "@/constants/serviceRecordApi";
+import { SCDataType } from "@/constants/types";
+import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
-
-const records = [
-  {
-    id: "SRV-2401",
-    plate: "34 CRN 107",
-    note: "Periyodik bakim",
-    date: "02.05.2026",
-  },
-  {
-    id: "SRV-2402",
-    plate: "35 IZM 440",
-    note: "Lastik degisimi",
-    date: "28.04.2026",
-  },
-  {
-    id: "SRV-2403",
-    plate: "06 ANK 221",
-    note: "Yikama ve detay",
-    date: "24.04.2026",
-  },
-];
 
 export default function VehicleRecordsScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
-  const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
+  const [selecteds, setSelecteds] = useState<number[]>([]);
+  const [ServiceRecordData, setSCData] = useState<SCDataType[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isFocused = useIsFocused();
+
+  const handleGetServiceRecords = async () => {
+    const ServiceRecordData = await fetchServiceRecords();
+    if (ServiceRecordData?.success) {
+      setSCData(ServiceRecordData.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: ServiceRecordData?.message });
+    }
+  };
+
+  const handleDeleteSC = async () => {
+    const deletedSCData = await deleteSCById(selecteds);
+    if (deletedSCData?.success) {
+      Toast.show({ type: "success", text1: deletedSCData?.message });
+      setSelecteds([]);
+      setDeleteMode(false);
+      handleGetServiceRecords();
+    } else {
+      Toast.show({ type: "error", text1: deletedSCData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetServiceRecords();
+  }, [isFocused]);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -46,7 +74,7 @@ export default function VehicleRecordsScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? Toast.show({ type: "error", text1: "silindi" })
+              ? deleteButton(handleDeleteSC)
               : router.push("/create/new-service");
           }}
         >
@@ -83,14 +111,21 @@ export default function VehicleRecordsScreen() {
           </ThemedText>
         </ThemedView>
       </View>
-      {records.map((record, index) => (
+      {ServiceRecordData?.map((SC) => (
         <Pressable
-          key={record.id}
+          key={SC.id}
           style={styles.cardLink}
           onPress={() => {
             deleteMode
-              ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/details/service-detail/[id]");
+              ? setSelecteds((prev) =>
+                  prev.includes(SC.id)
+                    ? prev.filter((i) => i !== SC.id)
+                    : [...prev, SC.id],
+                )
+              : router.push({
+                  pathname: "/details/service-detail/[id]",
+                  params: { id: SC.id },
+                });
           }}
         >
           <ThemedView
@@ -99,7 +134,7 @@ export default function VehicleRecordsScreen() {
             {deleteMode && (
               <ThemedView
                 style={
-                  selecteds[index] == true
+                  selecteds.includes(SC.id)
                     ? styles.selectedCircle
                     : styles.selectCircle
                 }
@@ -107,11 +142,20 @@ export default function VehicleRecordsScreen() {
             )}
             <View style={deleteMode ? styles.cardContent : undefined}>
               <View style={styles.recordHeader}>
-                <ThemedText style={styles.recordId}>{record.id}</ThemedText>
-                <ThemedText style={styles.recordDate}>{record.date}</ThemedText>
+                <ThemedText style={styles.recordId}>
+                  USER: {SC.userId} VEHİCLE: {SC.vehicleId}
+                </ThemedText>
+                <ThemedText style={styles.recordDate}>
+                  Planlanan Bitiş:{" "}
+                  {new Date(SC.plannedEndDate ?? "0").toLocaleDateString()}
+                </ThemedText>
               </View>
-              <ThemedText style={styles.recordPlate}>{record.plate}</ThemedText>
-              <ThemedText style={styles.recordNote}>{record.note}</ThemedText>
+              <ThemedText style={styles.recordPlate}>
+                {SC.description}
+              </ThemedText>
+              <ThemedText style={styles.recordNote}>
+                Ücret: {SC.price}
+              </ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle
               </ThemedText>
@@ -205,7 +249,7 @@ const styles = StyleSheet.create({
   },
   recordDate: {
     color: "#8072A6",
-    fontSize: 12,
+    fontSize: 14,
   },
   recordPlate: {
     fontWeight: "700",

@@ -1,6 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { createServiceRecord } from "@/constants/serviceRecordApi";
+import { SCDataType } from "@/constants/types";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,8 +11,30 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function NewServiceScreen() {
+  const [serviceRecord, setserviceRecord] = useState<SCDataType>({
+    id: 0,
+    vehicleId: 0,
+    userId: 0,
+    description: "",
+    state: "",
+    plannedEndDate: null,
+    endDate: null,
+    price: 0,
+    createdTime: new Date().toISOString(),
+  });
+
+  const handleAddSC = async () => {
+    if (serviceRecord == undefined || serviceRecord == null) return;
+    const newSC = await createServiceRecord(serviceRecord);
+    if (newSC?.success) {
+      Toast.show({ type: "success", text1: newSC?.message });
+      router.back();
+    } else Toast.show({ type: "error", text1: newSC?.message });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -25,18 +50,36 @@ export default function NewServiceScreen() {
         </ThemedView>
 
         <ThemedView style={styles.card}>
-          <ThemedText style={styles.fieldLabel}>Plaka</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Müşteri</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: 34 ABC 123"
-            placeholderTextColor="#A090C0"
+            value={
+              Number.isNaN(serviceRecord.vehicleId)
+                ? "0"
+                : serviceRecord.vehicleId.toString()
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                vehicleId: parseInt(text),
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Servis Turu</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Tamirci</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: Periyodik Bakim"
-            placeholderTextColor="#A090C0"
+            value={
+              Number.isNaN(serviceRecord.userId)
+                ? "0"
+                : serviceRecord.userId.toString()
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                userId: parseInt(text),
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Aciklama</ThemedText>
@@ -47,25 +90,79 @@ export default function NewServiceScreen() {
             multiline
             numberOfLines={3}
             textAlignVertical="top"
+            value={serviceRecord.description ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                description: text,
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Tarih</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Durum</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="GG.AA.YYYY"
-            placeholderTextColor="#A090C0"
+            value={serviceRecord.state ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                state: text,
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Teknisyen</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Ücret</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: Mehmet Usta"
-            placeholderTextColor="#A090C0"
+            value={
+              Number.isNaN(serviceRecord.price)
+                ? "0"
+                : (serviceRecord?.price?.toString() ?? "0")
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                price: parseInt(text),
+              }))
+            }
           />
 
-          <ThemedView style={styles.saveButton}>
+          <ThemedText style={styles.fieldLabel}>
+            Planlanan Bitiş Tarihi
+          </ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.plannedEndDate ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                plannedEndDate: text,
+              }))
+            }
+          />
+
+          <ThemedText style={styles.fieldLabel}>Bitiş Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.endDate ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                endDate: text,
+              }))
+            }
+          />
+
+          <ThemedText style={styles.fieldLabel}>Olusturulma Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord?.createdTime}
+            editable={false}
+          />
+
+          <TouchableOpacity style={styles.saveButton} onPress={handleAddSC}>
             <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
-          </ThemedView>
+          </TouchableOpacity>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>

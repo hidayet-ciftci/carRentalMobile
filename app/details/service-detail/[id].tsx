@@ -1,37 +1,176 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { router } from "expo-router";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { getSCById, updateServiceRecord } from "@/constants/serviceRecordApi";
+import { SCDataType } from "@/constants/types";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function ServiceDetailScreen() {
+  const [serviceRecord, setserviceRecord] = useState<SCDataType>({
+    id: 0,
+    vehicleId: 0,
+    userId: 0,
+    description: "",
+    state: "",
+    plannedEndDate: "",
+    endDate: "",
+    price: 0,
+    createdTime: new Date().toISOString(),
+  });
+  const { id } = useLocalSearchParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleGetDetail = async () => {
+    const SCData = await getSCById(id);
+    setserviceRecord(SCData.data);
+    setIsLoading(false);
+  };
+
+  const updateSCById = async () => {
+    const updatedSCData = await updateServiceRecord(serviceRecord);
+    if (updatedSCData?.success) {
+      Toast.show({ type: "success", text1: updatedSCData?.message });
+      router.back();
+    } else {
+      Toast.show({ type: "error", text1: updatedSCData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetDetail();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
+
   return (
-    <ThemedView style={styles.page}>
-      <TouchableOpacity style={styles.backButton} onPress={router.back}>
-        <ThemedText>Go Back</ThemedText>
-      </TouchableOpacity>
-      <ThemedView style={styles.card}>
-        <ThemedText style={styles.title}>Servis Detayi</ThemedText>
-        <ThemedText style={styles.subtitle}>
-          Secilen servis kaydinin detaylari ve guncelleme alanlari.
-        </ThemedText>
+    <ScrollView style={{ flex: 1 }}>
+      <ThemedView style={styles.page}>
+        <TouchableOpacity style={styles.backButton} onPress={router.back}>
+          <ThemedText>Go Back</ThemedText>
+        </TouchableOpacity>
+        <ThemedView style={styles.card}>
+          <ThemedText style={styles.title}>Servis Detayi</ThemedText>
+          <ThemedText style={styles.subtitle}>
+            Secilen servis kaydinin detaylari ve guncelleme alanlari.
+          </ThemedText>
 
-        <ThemedText style={styles.label}>Kayit No</ThemedText>
-        <TextInput style={styles.input} value="SRV-2401" editable={false} />
+          <ThemedText style={styles.label}>Müşteri</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={
+              Number.isNaN(serviceRecord.vehicleId)
+                ? "0"
+                : serviceRecord.vehicleId.toString()
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                vehicleId: parseInt(text),
+              }))
+            }
+          />
+          <ThemedText style={styles.label}>Tamirci</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={
+              Number.isNaN(serviceRecord.userId)
+                ? "0"
+                : serviceRecord.userId.toString()
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                userId: parseInt(text),
+              }))
+            }
+          />
 
-        <ThemedText style={styles.label}>Plaka</ThemedText>
-        <TextInput style={styles.input} defaultValue="34 CRN 107" />
+          <ThemedText style={styles.label}>Açıklama</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.description ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                description: text,
+              }))
+            }
+          />
 
-        <ThemedText style={styles.label}>Servis Notu</ThemedText>
-        <TextInput style={styles.input} defaultValue="Periyodik bakim" />
+          <ThemedText style={styles.label}>Servis Durumu</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.state ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                state: text,
+              }))
+            }
+          />
+          <ThemedText style={styles.label}>Ücret</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={
+              Number.isNaN(serviceRecord.price)
+                ? "0"
+                : (serviceRecord?.price?.toString() ?? "0")
+            }
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                price: parseInt(text),
+              }))
+            }
+          />
+          <ThemedText style={styles.label}>Planlanan Bitiş Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.plannedEndDate ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                plannedEndDate: text,
+              }))
+            }
+          />
+          <ThemedText style={styles.label}>Bitiş Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord.endDate ?? ""}
+            onChangeText={(text) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                endDate: text,
+              }))
+            }
+          />
+          <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={serviceRecord?.createdTime}
+            editable={false}
+          />
 
-        <ThemedText style={styles.label}>Tarih</ThemedText>
-        <TextInput style={styles.input} defaultValue="02.05.2026" />
-
-        <ThemedView style={styles.button}>
-          <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
+          <TouchableOpacity style={styles.button} onPress={updateSCById}>
+            <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
+          </TouchableOpacity>
         </ThemedView>
       </ThemedView>
-    </ThemedView>
+    </ScrollView>
   );
 }
 
