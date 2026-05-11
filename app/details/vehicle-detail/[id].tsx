@@ -1,9 +1,58 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { router } from "expo-router";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { vehicleDataType } from "@/constants/types";
+import { getVehicleById, updateVehicles } from "@/constants/vehicleApi";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function VehicleDetailScreen() {
+  const [vehicle, setVehicle] = useState<vehicleDataType>({
+    id: 0,
+    brand: "",
+    color: "",
+    customerId: 0,
+    plate: "",
+    viN_Number: "",
+    createdTime: new Date().toISOString(),
+  });
+  const { id } = useLocalSearchParams();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleGetDetail = async () => {
+    const vehicleData = await getVehicleById(id);
+    setVehicle(vehicleData.data);
+    setIsLoading(false);
+  };
+
+  const updateVehicleById = async () => {
+    const updatedUserData = await updateVehicles(vehicle);
+    console.log(vehicle);
+
+    if (updatedUserData?.success) {
+      Toast.show({ type: "success", text1: updatedUserData?.message });
+      router.back();
+    } else {
+      Toast.show({ type: "error", text1: updatedUserData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetDetail();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
   return (
     <ThemedView style={styles.page}>
       <TouchableOpacity style={styles.backButton} onPress={router.back}>
@@ -16,20 +65,80 @@ export default function VehicleDetailScreen() {
         </ThemedText>
 
         <ThemedText style={styles.label}>Plaka</ThemedText>
-        <TextInput style={styles.input} value="34 CRN 107" editable={false} />
+        <TextInput
+          style={styles.input}
+          value={vehicle?.plate ?? ""}
+          onChangeText={(text) =>
+            setVehicle((prev) => ({
+              ...prev,
+              plate: text,
+            }))
+          }
+        />
 
         <ThemedText style={styles.label}>Model</ThemedText>
-        <TextInput style={styles.input} defaultValue="Renault Clio" />
+        <TextInput
+          style={styles.input}
+          value={vehicle?.brand ?? ""}
+          onChangeText={(text) =>
+            setVehicle((prev) => ({
+              ...prev,
+              brand: text,
+            }))
+          }
+        />
 
-        <ThemedText style={styles.label}>Kilometre</ThemedText>
-        <TextInput style={styles.input} defaultValue="83.200" />
+        <ThemedText style={styles.label}>Renk</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={vehicle?.color ?? ""}
+          onChangeText={(text) =>
+            setVehicle((prev) => ({
+              ...prev,
+              color: text,
+            }))
+          }
+        />
 
-        <ThemedText style={styles.label}>Durum</ThemedText>
-        <TextInput style={styles.input} defaultValue="Kirada" />
+        <ThemedText style={styles.label}>Şase Numarası</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={vehicle?.viN_Number ?? ""}
+          onChangeText={(text) =>
+            setVehicle((prev) => ({
+              ...prev,
+              viN_Number: text,
+            }))
+          }
+        />
 
-        <ThemedView style={styles.button}>
+        <ThemedText style={styles.label}>Araç Sahibi</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={
+            Number.isNaN(vehicle.customerId)
+              ? "0"
+              : vehicle.customerId.toString()
+          }
+          onChangeText={(text) =>
+            setVehicle((prev) => ({
+              ...prev,
+              customerId: parseInt(text),
+            }))
+          }
+          editable={false}
+        />
+
+        <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={vehicle?.createdTime}
+          editable={false}
+        />
+
+        <TouchableOpacity style={styles.button} onPress={updateVehicleById}>
           <ThemedText style={styles.buttonText}>Guncelle</ThemedText>
-        </ThemedView>
+        </TouchableOpacity>
       </ThemedView>
     </ThemedView>
   );

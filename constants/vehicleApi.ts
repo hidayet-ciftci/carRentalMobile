@@ -37,9 +37,8 @@ export const getVehicleById = async (vehicleId: string | string[]) => {
 
 export const updateVehicles = async (vehicle: vehicleDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Vehicles`;
-  const { createdTime, ...restOfVehicle } = vehicle;
   try {
-    const res = await axiosClient.put(url, restOfVehicle);
+    const res = await axiosClient.put(url, vehicle);
     const data = res.data;
     return data;
   } catch (error) {
