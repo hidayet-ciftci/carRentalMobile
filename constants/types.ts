@@ -81,3 +81,13 @@ export interface NewcustomerDataType {
   address?: string | null;
   createdTime?: string | null;
 }
+
+export interface vehicleDataType {
+  id: number;
+  customerId: number;
+  plate: string;
+  brand: string;
+  color: string;
+  viN_Number: string;
+  createdTime?: string;
+}

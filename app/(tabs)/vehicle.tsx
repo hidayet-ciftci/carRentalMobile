@@ -1,19 +1,59 @@
+import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { vehicleDataType } from "@/constants/types";
+import { deleteVehiclesByIds, fetchVehicles } from "@/constants/vehicleApi";
+import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import Toast from "react-native-toast-message";
-
-const vehicleCards = [
-  { plate: "34 CRN 107", model: "Renault Clio", km: "83.200 km" },
-  { plate: "06 ANK 221", model: "Fiat Egea", km: "51.780 km" },
-  { plate: "35 IZM 440", model: "Toyota Corolla", km: "67.440 km" },
-];
 
 export default function VehiclesScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
-  const [selecteds, setSelecteds] = useState<{ [key: number]: boolean }>({});
+  const [selecteds, setSelecteds] = useState<number[]>([]);
+  const [vehiclesData, setVehiclesData] = useState<vehicleDataType[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const isFocused = useIsFocused();
+
+  const handleGetVehicles = async () => {
+    const vehicleDatas = await fetchVehicles();
+    if (vehicleDatas?.success) {
+      setVehiclesData(vehicleDatas.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: vehicleDatas?.message });
+    }
+  };
+
+  const handleDeleteVehicle = async () => {
+    const deletedVehiclesData = await deleteVehiclesByIds(selecteds);
+    if (deletedVehiclesData?.success) {
+      Toast.show({ type: "success", text1: deletedVehiclesData?.message });
+      setSelecteds([]);
+      setDeleteMode(false);
+      handleGetVehicles();
+    } else {
+      Toast.show({ type: "error", text1: deletedVehiclesData?.message });
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    handleGetVehicles();
+  }, [isFocused]);
+
+  if (isLoading) {
+    return (
+      <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
+    );
+  }
 
   return (
     <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -29,7 +69,7 @@ export default function VehiclesScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? Toast.show({ type: "error", text1: "silindi" })
+              ? deleteButton(handleDeleteVehicle)
               : router.push("/create/new-vehicle");
           }}
         >
@@ -57,18 +97,28 @@ export default function VehiclesScreen() {
       <View style={styles.statsRow}>
         <ThemedView style={styles.statCard}>
           <ThemedText style={styles.statLabel}>
-            Toplam Arac: <ThemedText style={styles.statValue}>48</ThemedText>
+            Toplam Arac:{" "}
+            <ThemedText style={styles.statValue}>
+              {vehiclesData?.length ?? "0"}
+            </ThemedText>
           </ThemedText>
         </ThemedView>
       </View>
-      {vehicleCards.map((vehicle, index) => (
+      {vehiclesData?.map((vehicle, index) => (
         <Pressable
-          key={vehicle.plate}
+          key={vehicle.id}
           style={styles.cardLink}
           onPress={() => {
             deleteMode
-              ? setSelecteds((prev) => ({ ...prev, [index]: !prev[index] }))
-              : router.push("/details/vehicle-detail/[id]");
+              ? setSelecteds((prev) =>
+                  prev.includes(vehicle.id)
+                    ? prev.filter((i) => i !== vehicle.id)
+                    : [...prev, vehicle.id],
+                )
+              : router.push({
+                  pathname: "/details/vehicle-detail/[id]",
+                  params: { id: vehicle.id },
+                });
           }}
         >
           <View
@@ -77,16 +127,16 @@ export default function VehiclesScreen() {
             {deleteMode && (
               <ThemedView
                 style={
-                  selecteds[index] == true
+                  selecteds.includes(vehicle.id)
                     ? styles.selectedCircle
                     : styles.selectCircle
                 }
               />
             )}
             <View style={deleteMode ? styles.cardContent : undefined}>
-              <ThemedText style={styles.plate}>{vehicle.plate}</ThemedText>
-              <ThemedText style={styles.model}>{vehicle.model}</ThemedText>
-              <ThemedText style={styles.km}>{vehicle.km}</ThemedText>
+              <ThemedText style={styles.plate}>{vehicle.brand}</ThemedText>
+              <ThemedText style={styles.model}>{vehicle.color}</ThemedText>
+              <ThemedText style={styles.km}>{vehicle.plate}</ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle
               </ThemedText>
