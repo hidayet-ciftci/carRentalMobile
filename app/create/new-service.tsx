@@ -1,3 +1,4 @@
+import { DateInputView } from "@/components/Date-Input";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { createServiceRecord } from "@/constants/serviceRecordApi";
@@ -20,7 +21,7 @@ export default function NewServiceScreen() {
     userId: 0,
     description: "",
     state: "",
-    plannedEndDate: null,
+    plannedEndDate: "",
     endDate: null,
     price: 0,
     createdTime: new Date().toISOString(),
@@ -50,7 +51,7 @@ export default function NewServiceScreen() {
         </ThemedView>
 
         <ThemedView style={styles.card}>
-          <ThemedText style={styles.fieldLabel}>Müşteri</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Müşteri Aracı</ThemedText>
           <TextInput
             style={styles.input}
             value={
@@ -130,7 +131,7 @@ export default function NewServiceScreen() {
           <ThemedText style={styles.fieldLabel}>
             Planlanan Bitiş Tarihi
           </ThemedText>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             value={serviceRecord.plannedEndDate ?? ""}
             onChangeText={(text) =>
@@ -139,16 +140,42 @@ export default function NewServiceScreen() {
                 plannedEndDate: text,
               }))
             }
+          /> */}
+          <DateInputView
+            value={
+              serviceRecord.plannedEndDate
+                ? new Date(serviceRecord.plannedEndDate)
+                : undefined
+            }
+            onChange={(date) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                plannedEndDate: date ? date.toISOString() : null,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Bitiş Tarihi</ThemedText>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             value={serviceRecord.endDate ?? ""}
             onChangeText={(text) =>
               setserviceRecord((prev) => ({
                 ...prev,
                 endDate: text,
+              }))
+            }
+          /> */}
+          <DateInputView
+            value={
+              serviceRecord.endDate
+                ? new Date(serviceRecord.endDate)
+                : undefined
+            }
+            onChange={(date) =>
+              setserviceRecord((prev) => ({
+                ...prev,
+                endDate: date ? date.toISOString() : null,
               }))
             }
           />

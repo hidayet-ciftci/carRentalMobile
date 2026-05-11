@@ -15,7 +15,6 @@ export const fetchServiceRecords = async () => {
 export const createServiceRecord = async (SC: SCDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/ServiceRecords`;
   const { id, ...restOfServiceRecord } = SC;
-  console.log(new Date(SC.plannedEndDate ?? "0").toISOString());
 
   try {
     const res = await axiosClient.post(url, restOfServiceRecord);

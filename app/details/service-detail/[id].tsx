@@ -1,3 +1,4 @@
+import { DateInputView } from "@/components/Date-Input";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { getSCById, updateServiceRecord } from "@/constants/serviceRecordApi";
@@ -137,24 +138,30 @@ export default function ServiceDetailScreen() {
             }
           />
           <ThemedText style={styles.label}>Planlanan Bitiş Tarihi</ThemedText>
-          <TextInput
-            style={styles.input}
-            value={serviceRecord.plannedEndDate ?? ""}
-            onChangeText={(text) =>
+          <DateInputView
+            value={
+              serviceRecord.plannedEndDate
+                ? new Date(serviceRecord.plannedEndDate)
+                : undefined
+            }
+            onChange={(date) =>
               setserviceRecord((prev) => ({
                 ...prev,
-                plannedEndDate: text,
+                plannedEndDate: date ? date.toISOString() : null,
               }))
             }
           />
           <ThemedText style={styles.label}>Bitiş Tarihi</ThemedText>
-          <TextInput
-            style={styles.input}
-            value={serviceRecord.endDate ?? ""}
-            onChangeText={(text) =>
+          <DateInputView
+            value={
+              serviceRecord.plannedEndDate
+                ? new Date(serviceRecord.plannedEndDate)
+                : undefined
+            }
+            onChange={(date) =>
               setserviceRecord((prev) => ({
                 ...prev,
-                endDate: text,
+                plannedEndDate: date ? date.toISOString() : null,
               }))
             }
           />

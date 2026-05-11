@@ -133,11 +133,8 @@ export default function UserDetailScreen() {
         <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
         <TextInput
           style={styles.input}
-          value={
-            user?.createdTime
-              ? new Date(user.createdTime).toLocaleDateString("tr-TR")
-              : ""
-          }
+          value={user?.createdTime}
+          editable={false}
         />
 
         <TouchableOpacity style={styles.button} onPress={updateUserById}>

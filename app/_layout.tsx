@@ -9,6 +9,7 @@ import "react-native-reanimated";
 
 import { Provider, useDispatch, useSelector } from "react-redux";
 
+import DateProvider from "@/components/DatePaper";
 import axiosClient from "@/constants/axiosClient";
 import { getAccessToken } from "@/constants/storage";
 import { useColorScheme } from "@/hooks/use-color-scheme";
@@ -28,9 +29,11 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AppContent />
-        <StatusBar style="auto" />
-        <Toast />
+        <DateProvider>
+          <AppContent />
+          <StatusBar style="auto" />
+          <Toast />
+        </DateProvider>
       </ThemeProvider>
     </Provider>
   );
@@ -88,10 +91,10 @@ function AppContent() {
       <Stack.Screen name="customer/customer-details" />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
-      <Stack.Screen name="details/user-detail" />
-      <Stack.Screen name="details/customer-admin-detail" />
-      <Stack.Screen name="details/vehicle-detail" />
-      <Stack.Screen name="details/service-detail" />
+      <Stack.Screen name="details/user-detail/[id]" />
+      <Stack.Screen name="details/customer-admin-detail/[id]" />
+      <Stack.Screen name="details/vehicle-detail/[id]" />
+      <Stack.Screen name="details/service-detail/[id]" />
 
       <Stack.Screen name="create/new-vehicle" />
       <Stack.Screen name="create/new-service" />

@@ -31,7 +31,7 @@ export interface userDataType {
   status: boolean;
   refreshToken?: null | string;
   refreshTokenExpiry?: null | string;
-  createdTime?: string | null;
+  createdTime: string;
 }
 
 export interface userUpdateData {
