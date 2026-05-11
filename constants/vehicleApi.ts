@@ -14,7 +14,8 @@ export const fetchVehicles = async () => {
 
 export const createVehicle = async (vehicle: vehicleDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Vehicles`;
-  const { id, createdTime, ...restOfVehicle } = vehicle;
+  const { id, ...restOfVehicle } = vehicle;
+
   try {
     const res = await axiosClient.post(url, restOfVehicle);
     const data = res.data;

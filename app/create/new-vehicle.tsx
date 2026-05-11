@@ -1,6 +1,9 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { vehicleDataType } from "@/constants/types";
+import { createVehicle } from "@/constants/vehicleApi";
 import { router } from "expo-router";
+import { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,8 +11,27 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 export default function NewVehicleScreen() {
+  const [vehicle, setVehicle] = useState<vehicleDataType>({
+    id: 0,
+    brand: "",
+    color: "",
+    customerId: 0,
+    plate: "",
+    viN_Number: "",
+    createdTime: new Date().toISOString(),
+  });
+  const handleAddVehicle = async () => {
+    if (vehicle == undefined || vehicle == null) return;
+    const vehicleData = await createVehicle(vehicle);
+    if (vehicleData?.success) {
+      Toast.show({ type: "success", text1: vehicleData?.message });
+      router.back();
+    } else Toast.show({ type: "error", text1: vehicleData?.message });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -30,6 +52,13 @@ export default function NewVehicleScreen() {
             style={styles.input}
             placeholder="Ornek: 34 ABC 123"
             placeholderTextColor="#9E8C7A"
+            value={vehicle?.plate ?? ""}
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                plate: text,
+              }))
+            }
           />
 
           <ThemedText style={styles.fieldLabel}>Marka</ThemedText>
@@ -37,41 +66,74 @@ export default function NewVehicleScreen() {
             style={styles.input}
             placeholder="Ornek: Renault"
             placeholderTextColor="#9E8C7A"
+            value={vehicle?.brand ?? ""}
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                brand: text,
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Model</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Color</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: Clio"
+            placeholder="Ornek: Mavi"
             placeholderTextColor="#9E8C7A"
+            value={vehicle?.color ?? ""}
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                color: text,
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Yil</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Şase Numarası</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: 2022"
+            placeholder="Şase Numarası"
             placeholderTextColor="#9E8C7A"
-            keyboardType="numeric"
+            value={vehicle?.viN_Number ?? ""}
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                viN_Number: text,
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Kilometre</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Araç Sahibi</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: 45000"
+            placeholder="Şase Numarası"
             placeholderTextColor="#9E8C7A"
-            keyboardType="numeric"
+            value={
+              Number.isNaN(vehicle.customerId)
+                ? "0"
+                : vehicle.customerId.toString()
+            }
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                customerId: parseInt(text),
+              }))
+            }
           />
 
-          <ThemedText style={styles.fieldLabel}>Durum</ThemedText>
+          <ThemedText style={styles.fieldLabel}>Olusturulma Tarihi</ThemedText>
           <TextInput
             style={styles.input}
-            placeholder="Ornek: Musait / Kirada"
-            placeholderTextColor="#9E8C7A"
+            value={vehicle?.createdTime}
+            editable={false}
           />
 
-          <ThemedView style={styles.saveButton}>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={handleAddVehicle}
+          >
             <ThemedText style={styles.saveButtonText}>Kaydet</ThemedText>
-          </ThemedView>
+          </TouchableOpacity>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>
