@@ -80,11 +80,12 @@ Tamamlananacaklar :
 - Auth girişde ve sonralarında refresh token ile istek atsın yeni token alıp giriş yapmış olsun accessToken bitmiş olabilir ++
 - bunun dışında token ++
 
--- Userdeki API bağlantılarını diğer yerler için yap. +-
--- serviceRecord ve vehicle api bağlanacak.
--- Role bazlı erişim verilecek.
--- RoleClaim tablosu eklenecek.
--- Şifre yenileme eklenecek ile profile sekmesi eklensin
+-- Userdeki API bağlantılarını diğer yerler için yap. ++
+-- serviceRecord ve vehicle api bağlanacak. ++
+-- Role bazlı erişim verilecek. --
+-- RoleClaim tablosu eklenecek. --
+-- Şifre yenileme eklenecek ile profile sekmesi eklensin --
+-- Silme durumlarında hatalar olabiliyor, örnek customer silerken , vehicle hatası.
 -- API güncellendiğinde useEffect ile tetikle , veriler yenilensin ++
 
 }
