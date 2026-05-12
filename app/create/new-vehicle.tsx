@@ -124,7 +124,9 @@ export default function NewVehicleScreen() {
           <ThemedText style={styles.fieldLabel}>Olusturulma Tarihi</ThemedText>
           <TextInput
             style={styles.input}
-            value={vehicle?.createdTime}
+            value={new Date(vehicle?.createdTime ?? "0").toLocaleString(
+              "tr-TR",
+            )}
             editable={false}
           />
 

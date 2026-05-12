@@ -24,7 +24,7 @@ export default function ServiceDetailScreen() {
     plannedEndDate: "",
     endDate: "",
     price: 0,
-    createdTime: new Date().toISOString(),
+    createdTime: "",
   });
   const { id } = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -168,7 +168,9 @@ export default function ServiceDetailScreen() {
           <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
           <TextInput
             style={styles.input}
-            value={serviceRecord?.createdTime}
+            value={new Date(serviceRecord?.createdTime ?? "0").toLocaleString(
+              "tr-TR",
+            )}
             editable={false}
           />
 

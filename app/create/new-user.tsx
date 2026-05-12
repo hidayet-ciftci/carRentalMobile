@@ -1,6 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { newUserDataType } from "@/constants/types";
+import { registerUserDataType } from "@/constants/types";
 import { createUser } from "@/constants/userApi";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 export default function NewUserScreen() {
-  const [newUserData, setNewUserData] = useState<newUserDataType>({
+  const [newUserData, setNewUserData] = useState<registerUserDataType>({
     firstName: "",
     lastName: "",
     email: "",

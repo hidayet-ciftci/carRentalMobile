@@ -20,7 +20,7 @@ export default function VehicleDetailScreen() {
     customerId: 0,
     plate: "",
     viN_Number: "",
-    createdTime: new Date().toISOString(),
+    createdTime: "",
   });
   const { id } = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,6 +32,12 @@ export default function VehicleDetailScreen() {
   };
 
   const updateVehicleById = async () => {
+    /* console.log(
+      new Date(new Date().getTimezoneOffset() + Date.now()).toLocaleString(),
+    ); */
+    /* console.log((new Date().getTimezoneOffset() + Date.now()).toLocaleString());
+    console.log(new Date().getTimezoneOffset()); */
+
     const updatedUserData = await updateVehicles(vehicle);
     console.log(vehicle);
 
@@ -132,7 +138,7 @@ export default function VehicleDetailScreen() {
         <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
         <TextInput
           style={styles.input}
-          value={vehicle?.createdTime}
+          value={new Date(vehicle?.createdTime ?? "0").toLocaleString("tr-TR")}
           editable={false}
         />
 

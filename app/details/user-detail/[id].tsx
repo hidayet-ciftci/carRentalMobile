@@ -34,9 +34,7 @@ export default function UserDetailScreen() {
   };
 
   const updateUserById = async () => {
-    const { createdTime, refreshToken, refreshTokenExpiry, ...restofUser } =
-      user;
-    const updatedUserData = await updateUser(restofUser);
+    const updatedUserData = await updateUser(user);
     if (updatedUserData?.success) {
       Toast.show({ type: "success", text1: updatedUserData?.message });
       router.back();
@@ -133,7 +131,7 @@ export default function UserDetailScreen() {
         <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
         <TextInput
           style={styles.input}
-          value={user?.createdTime}
+          value={new Date(user?.createdTime).toLocaleString()}
           editable={false}
         />
 

@@ -20,7 +20,7 @@ export default function CustomerAdminDetailScreen() {
     email: "",
     phoneNumber: "",
     address: "",
-    createdTime: new Date().toISOString(),
+    createdTime: "",
   });
   const { id } = useLocalSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,8 +32,7 @@ export default function CustomerAdminDetailScreen() {
   };
 
   const updateCustomerById = async () => {
-    const { createdTime, ...restofCustomer } = customer;
-    const updatedCustomerData = await updateCustomer(restofCustomer);
+    const updatedCustomerData = await updateCustomer(customer);
     if (updatedCustomerData?.success) {
       Toast.show({ type: "success", text1: updatedCustomerData?.message });
       router.back();
@@ -108,6 +107,13 @@ export default function CustomerAdminDetailScreen() {
               address: text,
             }))
           }
+        />
+
+        <ThemedText style={styles.label}>Olusturulma Tarihi</ThemedText>
+        <TextInput
+          style={styles.input}
+          value={new Date(customer?.createdTime ?? "0").toLocaleString("tr-TR")}
+          editable={false}
         />
 
         <TouchableOpacity style={styles.button} onPress={updateCustomerById}>

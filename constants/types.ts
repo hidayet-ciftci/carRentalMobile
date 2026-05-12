@@ -20,7 +20,7 @@ export interface loginDataType {
   email: string;
   password: string;
 }
-
+// ---- User ---
 export interface userDataType {
   id: number;
   firstName: string;
@@ -34,17 +34,7 @@ export interface userDataType {
   createdTime: string;
 }
 
-export interface userUpdateData {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email?: string | null;
-  passwordHash: string | null;
-  phoneNumber?: string | null;
-  status: boolean;
-}
-
-export interface newUserDataType {
+export interface registerUserDataType {
   firstName: string;
   lastName: string;
   email?: string | null;
@@ -64,23 +54,7 @@ export interface customerDataType {
   address?: string | null;
   createdTime?: string | null;
 }
-export interface customerUpdateDataType {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email?: string | null;
-  phoneNumber?: string | null;
-  address?: string | null;
-}
 
-export interface NewcustomerDataType {
-  firstName: string;
-  lastName: string;
-  email?: string | null;
-  phoneNumber?: string | null;
-  address?: string | null;
-  createdTime?: string | null;
-}
 // ---------- vehicle -----------
 export interface vehicleDataType {
   id: number;

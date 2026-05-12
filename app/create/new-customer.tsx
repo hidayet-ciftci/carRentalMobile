@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { createCustomer } from "@/constants/customerApi";
-import { NewcustomerDataType } from "@/constants/types";
+import { customerDataType } from "@/constants/types";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -14,7 +14,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 export default function NewCustomerScreen() {
-  const [newCustomer, setNewCustomer] = useState<NewcustomerDataType>({
+  const [newCustomer, setNewCustomer] = useState<customerDataType>({
+    id: 0,
     firstName: "",
     lastName: "",
     email: "",
@@ -120,6 +121,14 @@ export default function NewCustomerScreen() {
                 address: text,
               }))
             }
+          />
+          <ThemedText style={styles.fieldLabel}>Olusturulma Tarihi</ThemedText>
+          <TextInput
+            style={styles.input}
+            value={new Date(newCustomer?.createdTime ?? "0").toLocaleString(
+              "tr-TR",
+            )}
+            editable={false}
           />
 
           <TouchableOpacity

@@ -1,5 +1,5 @@
 import axiosClient from "./axiosClient";
-import { customerUpdateDataType, NewcustomerDataType } from "./types";
+import { customerDataType } from "./types";
 
 export const fetchCustomers = async () => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
@@ -23,10 +23,11 @@ export const deleteByIdsCustomer = async (customerIds: number[]) => {
   }
 };
 
-export const createCustomer = async (customer: NewcustomerDataType) => {
+export const createCustomer = async (customer: customerDataType) => {
+  const { id, ...restOfCustomer } = customer;
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
   try {
-    const res = await axiosClient.post(url, customer);
+    const res = await axiosClient.post(url, restOfCustomer);
     const data = res.data;
     return data;
   } catch (error) {
@@ -45,7 +46,7 @@ export const getByIdCustomer = async (customerId: string | string[]) => {
   }
 };
 
-export const updateCustomer = async (customer: customerUpdateDataType) => {
+export const updateCustomer = async (customer: customerDataType) => {
   const url = `${process.env.EXPO_PUBLIC_API_URL}/api/Customers`;
   try {
     const res = await axiosClient.put(url, customer);

@@ -183,7 +183,9 @@ export default function NewServiceScreen() {
           <ThemedText style={styles.fieldLabel}>Olusturulma Tarihi</ThemedText>
           <TextInput
             style={styles.input}
-            value={serviceRecord?.createdTime}
+            value={new Date(serviceRecord?.createdTime ?? "0").toLocaleString(
+              "tr-TR",
+            )}
             editable={false}
           />
 
