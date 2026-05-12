@@ -3,6 +3,8 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { userDataType } from "@/constants/types";
 import { deleteByIdUser, fetchUsers } from "@/constants/userApi";
+import { AppDispatch, RootState } from "@/store/store";
+import { setUserStoreData } from "@/store/userSlice";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -14,18 +16,25 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<number[]>([]);
-  const [userData, setUserData] = useState<userDataType[]>();
+  /* const [userData, setUserData] = useState<userDataType[]>(); */
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isFocused = useIsFocused();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const userData: userDataType[] = useSelector(
+    (state: RootState) => state.userStoreData.userData,
+  );
 
   const handleGetUsers = async () => {
     const userData = await fetchUsers();
     if (userData?.success) {
-      setUserData(userData.data);
+      dispatch(setUserStoreData(userData.data));
+      /* setUserData(userData.data); */
       setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: userData?.message });

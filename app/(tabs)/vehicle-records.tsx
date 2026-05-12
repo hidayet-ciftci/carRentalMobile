@@ -6,6 +6,8 @@ import {
   fetchServiceRecords,
 } from "@/constants/serviceRecordApi";
 import { SCDataType } from "@/constants/types";
+import { setSCStoreData } from "@/store/serviceRecord";
+import { AppDispatch, RootState } from "@/store/store";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -17,18 +19,26 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function VehicleRecordsScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<number[]>([]);
-  const [ServiceRecordData, setSCData] = useState<SCDataType[]>();
+  /*   const [ServiceRecordData, setSCData] = useState<SCDataType[]>(); */
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isFocused = useIsFocused();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const ServiceRecordData: SCDataType[] = useSelector(
+    (state: RootState) => state.ScStoreData.serviceRecordData,
+  );
 
   const handleGetServiceRecords = async () => {
     const ServiceRecordData = await fetchServiceRecords();
     if (ServiceRecordData?.success) {
-      setSCData(ServiceRecordData.data);
+      dispatch(setSCStoreData(ServiceRecordData.data));
+      /*       setSCData(ServiceRecordData.data); */
       setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: ServiceRecordData?.message });

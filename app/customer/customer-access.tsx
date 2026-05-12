@@ -4,14 +4,15 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
-import { getCustomerDetail } from "@/constants/userApi";
+import { getCustomerDetail } from "@/constants/api";
+import { AppDispatch } from "@/store/store";
 import { setData } from "@/store/uCustomerSlice";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
 export default function CustomerAccessScreen() {
   const [email, setEmail] = useState<string>("");
-  const disPatch = useDispatch();
+  const disPatch = useDispatch<AppDispatch>();
 
   async function handleLogin() {
     const loginData = await getCustomerDetail(email);

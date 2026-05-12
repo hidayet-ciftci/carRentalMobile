@@ -3,6 +3,8 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { deleteByIdsCustomer, fetchCustomers } from "@/constants/customerApi";
 import { customerDataType } from "@/constants/types";
+import { setCustomerStoreData } from "@/store/customerSlice";
+import { AppDispatch, RootState } from "@/store/store";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -14,18 +16,25 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CustomersScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selected, setSelected] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [customerData, setCustomerData] = useState<customerDataType[]>();
+  /*   const [customerData, setCustomerData] = useState<customerDataType[]>(); */
   const isFocused = useIsFocused();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const customerData: customerDataType[] = useSelector(
+    (state: RootState) => state.customerStoreData.customerData,
+  );
 
   const handleGetCustomers = async () => {
     const customerData = await fetchCustomers();
     if (customerData?.success) {
-      setCustomerData(customerData.data);
+      /* setCustomerData(customerData.data); */
+      dispatch(setCustomerStoreData(customerData.data));
       setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: customerData?.message });

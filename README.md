@@ -84,10 +84,12 @@ Tamamlananacaklar :
 -- serviceRecord ve vehicle api bağlanacak. ++
 -- RoleClaim tablosu eklenecek. ++
 -- Silerken uyarı verecek ona göre silinmesi istenecek. ++
+
 -- Role bazlı erişim verilecek. --
 -- Şifre yenileme eklenecek ile profile sekmesi eklensin --
--- State durumunu seçerek ekleme ++
 -- ID yerine liste üzerinden seçme --
+
+-- State durumunu seçerek ekleme ++
 -- Silme durumlarında hatalar olabiliyor, örnek customer silerken , vehicle hatası. ++
 -- API güncellendiğinde useEffect ile tetikle , veriler yenilensin ++
 

@@ -3,6 +3,8 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { vehicleDataType } from "@/constants/types";
 import { deleteVehiclesByIds, fetchVehicles } from "@/constants/vehicleApi";
+import { AppDispatch, RootState } from "@/store/store";
+import { setVehicleStoreData } from "@/store/vehicleSlice";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -14,18 +16,25 @@ import {
   View,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function VehiclesScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<number[]>([]);
-  const [vehiclesData, setVehiclesData] = useState<vehicleDataType[]>();
+  /*   const [vehiclesData, setVehiclesData] = useState<vehicleDataType[]>(); */
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isFocused = useIsFocused();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const vehiclesData: vehicleDataType[] = useSelector(
+    (state: RootState) => state.vehicleStoreData.VehicleData,
+  );
 
   const handleGetVehicles = async () => {
     const vehicleDatas = await fetchVehicles();
     if (vehicleDatas?.success) {
-      setVehiclesData(vehicleDatas.data);
+      /*       setVehiclesData(vehicleDatas.data); */
+      dispatch(setVehicleStoreData(vehicleDatas.data));
       setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: vehicleDatas?.message });
