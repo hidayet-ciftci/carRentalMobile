@@ -154,8 +154,8 @@ export default function ServiceDetailScreen() {
           <ThemedText style={styles.label}>Bitiş Tarihi</ThemedText>
           <DateInputView
             value={
-              serviceRecord.plannedEndDate
-                ? new Date(serviceRecord.plannedEndDate)
+              serviceRecord.endDate
+                ? new Date(serviceRecord.endDate)
                 : undefined
             }
             onChange={(date) =>

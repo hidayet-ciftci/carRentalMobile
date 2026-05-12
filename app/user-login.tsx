@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 
 export default function AdminLoginScreen() {
   const [loginData, setLoginData] = useState<loginDataType>({
-    email: "user122@user.com",
+    email: "admin@admin.com",
     password: "12345678",
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
