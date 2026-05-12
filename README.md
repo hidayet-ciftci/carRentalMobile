@@ -82,11 +82,11 @@ Tamamlananacaklar :
 
 -- Userdeki API bağlantılarını diğer yerler için yap. ++
 -- serviceRecord ve vehicle api bağlanacak. ++
--- Role bazlı erişim verilecek. --
 -- RoleClaim tablosu eklenecek. ++
+-- Silerken uyarı verecek ona göre silinmesi istenecek. ++
+-- Role bazlı erişim verilecek. --
 -- Şifre yenileme eklenecek ile profile sekmesi eklensin --
--- Silerken uyarı verecek ona göre silinmesi istenecek. --
--- State durumunu seçerek ekleme --
+-- State durumunu seçerek ekleme ++
 -- ID yerine liste üzerinden seçme --
 -- Silme durumlarında hatalar olabiliyor, örnek customer silerken , vehicle hatası. ++
 -- API güncellendiğinde useEffect ile tetikle , veriler yenilensin ++

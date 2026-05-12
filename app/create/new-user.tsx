@@ -5,6 +5,8 @@ import { createUser } from "@/constants/userApi";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
+  Alert,
+  Platform,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -25,6 +27,18 @@ export default function NewUserScreen() {
 
   const handleAddUser = async () => {
     if (newUserData == undefined || newUserData == null) return;
+    const illegalRole: boolean =
+      newUserData.roleId == 1 ||
+      newUserData.roleId == 2 ||
+      newUserData.roleId == 3;
+    if (!illegalRole) {
+      if (Platform.OS == "web") {
+        alert("yanlış rol seçtiniz");
+      } else {
+        Alert.alert("yanlış rol seçtiniz");
+      }
+      return;
+    }
     const userData = await createUser(newUserData);
     console.log(userData);
     if (userData?.success) {

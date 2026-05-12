@@ -70,7 +70,10 @@ export default function CustomersScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? deleteButton(handleDeleteCustomers)
+              ? deleteButton(
+                  handleDeleteCustomers,
+                  "Seçilen müşterileri silmek , Servis kayıtlarının ve araçlarının silinmesi sağlar",
+                )
               : router.push("/create/new-customer");
           }}
         >

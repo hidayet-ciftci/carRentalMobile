@@ -10,6 +10,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
@@ -101,16 +102,62 @@ export default function NewServiceScreen() {
           />
 
           <ThemedText style={styles.fieldLabel}>Durum</ThemedText>
-          <TextInput
-            style={styles.input}
-            value={serviceRecord.state ?? ""}
-            onChangeText={(text) =>
-              setserviceRecord((prev) => ({
-                ...prev,
-                state: text,
-              }))
-            }
-          />
+
+          <View
+            style={{
+              flex: 1,
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={[
+                styles.statusButton,
+                serviceRecord.state === "Tamamlandi" && styles.active,
+              ]}
+              onPress={() =>
+                setserviceRecord((prev) => ({
+                  ...prev,
+                  state: "Tamamlandi",
+                }))
+              }
+            >
+              <ThemedText style={styles.statusText}>Tamamlandı</ThemedText>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.statusButton,
+                serviceRecord.state === "Yeni Basladi" && styles.active,
+              ]}
+              onPress={() =>
+                setserviceRecord((prev) => ({
+                  ...prev,
+                  state: "Yeni Basladi",
+                }))
+              }
+            >
+              <ThemedText style={styles.statusText}>Yeni Başladı</ThemedText>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                setserviceRecord((prev) => ({
+                  ...prev,
+                  state: "Devam Ediyor",
+                }))
+              }
+              style={[
+                styles.statusButton,
+                serviceRecord.state === "Devam Ediyor" && styles.active,
+              ]}
+            >
+              <ThemedText style={styles.statusText}>Devam Ediyor</ThemedText>
+            </TouchableOpacity>
+          </View>
 
           <ThemedText style={styles.fieldLabel}>Ücret</ThemedText>
           <TextInput
@@ -275,5 +322,27 @@ const styles = StyleSheet.create({
     top: 0,
     marginBlock: 0,
     position: "fixed",
+  },
+  statusContainer: {
+    flexDirection: "row",
+    width: "100%",
+    gap: 10,
+  },
+
+  statusButton: {
+    flex: 1,
+    backgroundColor: "#EDE7FF",
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+
+  statusText: {
+    fontWeight: "600",
+    color: "#3C2C74",
+  },
+
+  active: {
+    backgroundColor: "#5841A8",
   },
 });

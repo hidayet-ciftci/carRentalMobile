@@ -69,7 +69,10 @@ export default function VehiclesScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? deleteButton(handleDeleteVehicle)
+              ? deleteButton(
+                  handleDeleteVehicle,
+                  "Seçilen araçları silmek , Servis kayıtlarının silinmesi sağlar",
+                )
               : router.push("/create/new-vehicle");
           }}
         >

@@ -71,7 +71,10 @@ export default function ManagementScreen() {
           style={styles.actionButton}
           onPress={() => {
             deleteMode
-              ? deleteButton(handleDeleteUser)
+              ? deleteButton(
+                  handleDeleteUser,
+                  "Seçilen kullanıcıları silmek , Servis kayıtlarının silinmesi sağlar",
+                )
               : router.push("/create/new-user");
           }}
         >

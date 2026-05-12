@@ -74,7 +74,10 @@ export default function VehicleRecordsScreen() {
           style={styles.primaryAction}
           onPress={() => {
             deleteMode
-              ? deleteButton(handleDeleteSC)
+              ? deleteButton(
+                  handleDeleteSC,
+                  "Seçilen Servis kayıtlarını silmek, başka kayıtları etkilemez",
+                )
               : router.push("/create/new-service");
           }}
         >
