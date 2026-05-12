@@ -32,6 +32,7 @@ export interface userDataType {
   refreshToken?: null | string;
   refreshTokenExpiry?: null | string;
   createdTime: string;
+  roleName?: string | null;
 }
 
 export interface registerUserDataType {

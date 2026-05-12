@@ -103,11 +103,31 @@ export default function VehicleRecordsScreen() {
       <View style={styles.statsRow}>
         <ThemedView style={styles.statCard}>
           <ThemedText style={styles.statLabel}>
-            Toplam Servis: <ThemedText style={styles.statValue}>48</ThemedText>
+            Toplam Servis:{" "}
+            <ThemedText style={styles.statValue}>
+              {ServiceRecordData?.length ?? "0"}
+            </ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Yeni başlayan Servisler:{" "}
+            <ThemedText style={styles.statValue}>
+              {ServiceRecordData?.filter((a) => a.state == "Yeni Basladi")
+                .length ?? "0"}
+            </ThemedText>
+          </ThemedText>
+          <ThemedText style={styles.statLabel}>
+            Devam eden Servisler:{" "}
+            <ThemedText style={styles.statValue}>
+              {ServiceRecordData?.filter((a) => a.state == "Devam Ediyor")
+                .length ?? "0"}
+            </ThemedText>
           </ThemedText>
           <ThemedText style={styles.statLabel}>
             Tamlananlar Servisler:{" "}
-            <ThemedText style={styles.statValue}>48</ThemedText>
+            <ThemedText style={styles.statValue}>
+              {ServiceRecordData?.filter((a) => a.state == "Tamamlandi")
+                .length ?? "0"}
+            </ThemedText>
           </ThemedText>
         </ThemedView>
       </View>

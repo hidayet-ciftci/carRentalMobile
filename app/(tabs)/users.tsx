@@ -103,17 +103,27 @@ export default function ManagementScreen() {
         <ThemedView style={styles.statCard}>
           <ThemedText style={styles.statLabel}>
             Toplam Servis elemanı:{" "}
-            <ThemedText style={styles.statValue}>15</ThemedText>
+            <ThemedText style={styles.statValue}>
+              {userData?.length ?? "0"}
+            </ThemedText>
           </ThemedText>
           <ThemedText style={styles.statLabel}>
             Toplam Müşteri hizmetleri:{" "}
-            <ThemedText style={styles.statValue}>5</ThemedText>
+            <ThemedText style={styles.statValue}>
+              {userData?.filter((u) => u.roleName == "Manager").length ?? "0"}
+            </ThemedText>
           </ThemedText>
           <ThemedText style={styles.statLabel}>
-            Toplam Yönetici: <ThemedText style={styles.statValue}>3</ThemedText>
+            Toplam Yönetici:{" "}
+            <ThemedText style={styles.statValue}>
+              {userData?.filter((u) => u.roleName == "Admin").length ?? "0"}
+            </ThemedText>
           </ThemedText>
           <ThemedText style={styles.statLabel}>
-            Toplam Çalışan: <ThemedText style={styles.statValue}>23</ThemedText>
+            Toplam Çalışan:{" "}
+            <ThemedText style={styles.statValue}>
+              {userData?.filter((u) => u.roleName == "Worker").length ?? "0"}
+            </ThemedText>
           </ThemedText>
         </ThemedView>
       </View>
@@ -148,7 +158,7 @@ export default function ManagementScreen() {
               <ThemedText style={styles.cardTitle}>
                 {user.firstName + " " + user.lastName}
               </ThemedText>
-              <ThemedText style={styles.cardSub}>{user.email}</ThemedText>
+              <ThemedText style={styles.cardSub}>{user.roleName}</ThemedText>
             </View>
             <View style={styles.cardRight}>
               <ThemedText style={styles.status}>
