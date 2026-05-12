@@ -1,7 +1,8 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { vehicleDataType } from "@/constants/types";
+import { customerDataType, vehicleDataType } from "@/constants/types";
 import { createVehicle } from "@/constants/vehicleApi";
+import { RootState } from "@/store/store";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -10,8 +11,10 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useSelector } from "react-redux";
 
 export default function NewVehicleScreen() {
   const [vehicle, setVehicle] = useState<vehicleDataType>({
@@ -31,7 +34,9 @@ export default function NewVehicleScreen() {
       router.back();
     } else Toast.show({ type: "error", text1: vehicleData?.message });
   };
-
+  const customerData: customerDataType[] = useSelector(
+    (state: RootState) => state.customerStoreData.customerData,
+  );
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.page} contentContainerStyle={styles.content}>
@@ -47,6 +52,37 @@ export default function NewVehicleScreen() {
         </ThemedView>
 
         <ThemedView style={styles.card}>
+          <ThemedText style={styles.fieldLabel}>Araç Sahibi</ThemedText>
+          {/* <TextInput
+            style={styles.input}
+            placeholder="Şase Numarası"
+            placeholderTextColor="#9E8C7A"
+            value={
+              Number.isNaN(vehicle.customerId)
+                ? "0"
+                : vehicle.customerId.toString()
+            }
+            onChangeText={(text) =>
+              setVehicle((prev) => ({
+                ...prev,
+                customerId: parseInt(text),
+              }))
+            }
+          /> */}
+          <Dropdown
+            style={styles.input}
+            data={customerData.map((c) => ({
+              ...c,
+              label: `${c.firstName} ${c.lastName}`,
+            }))}
+            labelField="label"
+            valueField="id"
+            placeholder="müşteri seç"
+            value={vehicle.customerId}
+            onChange={(item) => {
+              setVehicle((prev) => ({ ...prev, customerId: item.id }));
+            }}
+          />
           <ThemedText style={styles.fieldLabel}>Plaka</ThemedText>
           <TextInput
             style={styles.input}
@@ -99,24 +135,6 @@ export default function NewVehicleScreen() {
               setVehicle((prev) => ({
                 ...prev,
                 viN_Number: text,
-              }))
-            }
-          />
-
-          <ThemedText style={styles.fieldLabel}>Araç Sahibi</ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="Şase Numarası"
-            placeholderTextColor="#9E8C7A"
-            value={
-              Number.isNaN(vehicle.customerId)
-                ? "0"
-                : vehicle.customerId.toString()
-            }
-            onChangeText={(text) =>
-              setVehicle((prev) => ({
-                ...prev,
-                customerId: parseInt(text),
               }))
             }
           />
