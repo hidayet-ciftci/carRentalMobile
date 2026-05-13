@@ -51,7 +51,10 @@ axiosClient.interceptors.response.use(
         store.dispatch(clearToken());
       }
     }
-
+    // API yani axios hataları interceptor ile burada manage edilip dışarıya verilmeli
+    if (error.response?.status == 404) {
+      throw new Error("Bağlantı hatası");
+    }
     return Promise.reject(error);
   },
 );

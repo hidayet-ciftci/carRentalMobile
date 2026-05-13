@@ -54,6 +54,12 @@ export const updateUser = async (user: userDataType) => {
     const data = res.data;
     return data;
   } catch (error: any) {
+    // axiosClient içerisinde verilen throw error dışarıya buraya gelir.
+    // burada ise eğer ki backendimizden data.message gönderildiyse onu gösteririz
+    // gönderilmediyse throw ettiğimiz hatayı gösteririz
+    // hata çeşitlerini handle etmeyi ise axiosClient içerisinde
+    // if (error.response?.status == 404) { throw new Error("Bağlantı hatası"); }
+    // şeklinde handle edip şekillendirebiliriz.
     if (error?.response?.data?.message) {
       Toast.show({ type: "error", text1: error.response.data.message });
     } else {
