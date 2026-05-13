@@ -35,7 +35,7 @@ export default function VehicleDetailScreen() {
         Toast.show({ type: "success", text1: vehicleData?.message });
       }
     } else {
-      router.back();
+      router.replace("/(tabs)/users");
     }
   };
 

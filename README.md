@@ -72,7 +72,7 @@ Tamamlananacaklar :
 -Dosya yolu düzenlenecek ??,
 -Araç,Kullanıcı vb. silme düzeltilecek ++
 -Hot toast ile geri bildirim , hatalar handle edilecek. ++
--API'ler bağlanacak , +-
+-API'ler bağlanacak , ++
 -Auth entegre edilecek, ++
 -Logic yazılacak
 
