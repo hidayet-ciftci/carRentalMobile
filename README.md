@@ -85,7 +85,7 @@ Tamamlananacaklar :
 -- RoleClaim tablosu eklenecek. ++
 -- Silerken uyarı verecek ona göre silinmesi istenecek. ++
 
--- Role bazlı erişim verilecek. --
+-- Role bazlı erişim verilecek. ++
 -- ID yerine liste üzerinden seçme ++
 
 -- State durumunu seçerek ekleme ++
