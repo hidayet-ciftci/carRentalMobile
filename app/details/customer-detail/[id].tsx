@@ -27,7 +27,7 @@ export default function CustomerAdminDetailScreen() {
 
   const handleGetDetail = async () => {
     const customerData = await getByIdCustomer(id);
-    setCustomer(customerData.data);
+    setCustomer(customerData?.data);
     setIsLoading(false);
   };
 

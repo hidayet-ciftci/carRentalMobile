@@ -134,7 +134,7 @@ export default function CustomersScreen() {
                     : [...prev, customer.id],
                 )
               : router.push({
-                  pathname: "/details/customer-admin-detail/[id]",
+                  pathname: "/details/customer-detail/[id]",
                   params: { id: customer.id },
                 });
           }}

@@ -1,4 +1,3 @@
-import { store } from "@/store/store";
 import axios from "axios";
 import { clearToken, setToken } from "../store/authSlice";
 import {
@@ -40,12 +39,15 @@ axiosClient.interceptors.response.use(
         if (refreshToken) {
           await saveTokens(newAccessToken, newRefreshToken);
         }
+        // lazy Loading sayesinde circular dependency sorunundan kurtuluyoruz
+        const { store } = await import("@/store/store");
         store.dispatch(setToken(newAccessToken));
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         console.log("token refrehsed");
         return axiosClient(originalRequest);
-      } catch (error) {
+      } catch (refreshError) {
         await clearTokens();
+        const { store } = await import("@/store/store");
         store.dispatch(clearToken());
       }
     }
