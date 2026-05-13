@@ -1,10 +1,9 @@
 import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { vehicleDataType } from "@/constants/types";
-import { deleteVehiclesByIds, fetchVehicles } from "@/constants/vehicleApi";
+import { deleteVehiclesByIds } from "@/constants/vehicleApi";
 import { AppDispatch, RootState } from "@/store/store";
-import { setVehicleStoreData } from "@/store/vehicleSlice";
+import { fetchVehiclesThunk } from "@/store/vehicleSlice";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -22,24 +21,24 @@ export default function VehiclesScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<number[]>([]);
   /*   const [vehiclesData, setVehiclesData] = useState<vehicleDataType[]>(); */
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  /* const [isLoading, setIsLoading] = useState<boolean>(false); */
   const isFocused = useIsFocused();
   const dispatch = useDispatch<AppDispatch>();
 
-  const vehiclesData: vehicleDataType[] = useSelector(
-    (state: RootState) => state.vehicleStoreData.VehicleData,
+  const { vehiclesData, loading, error } = useSelector(
+    (state: RootState) => state.vehicleStoreData,
   );
 
-  const handleGetVehicles = async () => {
+  /*   const handleGetVehicles = async () => {
     const vehicleDatas = await fetchVehicles();
     if (vehicleDatas?.success) {
-      /*       setVehiclesData(vehicleDatas.data); */
+            setVehiclesData(vehicleDatas.data);
+      
       dispatch(setVehicleStoreData(vehicleDatas.data));
-      setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: vehicleDatas?.message });
     }
-  };
+  }; */
 
   const handleDeleteVehicle = async () => {
     const deletedVehiclesData = await deleteVehiclesByIds(selecteds);
@@ -47,18 +46,24 @@ export default function VehiclesScreen() {
       Toast.show({ type: "success", text1: deletedVehiclesData?.message });
       setSelecteds([]);
       setDeleteMode(false);
-      handleGetVehicles();
+      /* handleGetVehicles(); */
+      dispatch(fetchVehiclesThunk());
     } else {
       Toast.show({ type: "error", text1: deletedVehiclesData?.message });
     }
   };
 
   useEffect(() => {
+    /* 
     setIsLoading(true);
-    handleGetVehicles();
+    handleGetVehicles(); */
+    dispatch(fetchVehiclesThunk());
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+    }
   }, [isFocused]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
     );

@@ -1,14 +1,26 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { LogoutButton } from "@/components/logoutButton";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { fetchCustomersThunk } from "@/store/customerSlice";
+import { AppDispatch } from "@/store/store";
+import { fetchVehiclesThunk } from "@/store/vehicleSlice";
+import { useDispatch } from "react-redux";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    /* setIsLoading(true);
+    handleGetCustomers(); */
+    dispatch(fetchVehiclesThunk());
+    dispatch(fetchCustomersThunk());
+  }, []);
 
   return (
     <Tabs
