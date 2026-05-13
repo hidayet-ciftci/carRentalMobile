@@ -87,7 +87,7 @@ Tamamlananacaklar :
 
 -- Role bazlı erişim verilecek. --
 -- Şifre yenileme eklenecek ile profile sekmesi eklensin --
--- ID yerine liste üzerinden seçme --
+-- ID yerine liste üzerinden seçme ++
 
 -- State durumunu seçerek ekleme ++
 -- Silme durumlarında hatalar olabiliyor, örnek customer silerken , vehicle hatası. ++

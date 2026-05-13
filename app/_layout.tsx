@@ -92,7 +92,7 @@ function AppContent() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
       <Stack.Screen name="details/user-detail/[id]" />
-      <Stack.Screen name="details/customer-admin-detail/[id]" />
+      <Stack.Screen name="details/customer-detail/[id]" />
       <Stack.Screen name="details/vehicle-detail/[id]" />
       <Stack.Screen name="details/service-detail/[id]" />
 

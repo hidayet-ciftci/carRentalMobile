@@ -36,10 +36,11 @@ axiosClient.interceptors.response.use(
           { refreshToken },
         );
         const newAccessToken = response.data.data.accessToken;
-
-        await saveTokens(newAccessToken, refreshToken!);
+        const newRefreshToken = response.data.data.refreshToken;
+        if (refreshToken) {
+          await saveTokens(newAccessToken, newRefreshToken);
+        }
         store.dispatch(setToken(newAccessToken));
-
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         console.log("token refrehsed");
         return axiosClient(originalRequest);
