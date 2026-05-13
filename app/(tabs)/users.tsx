@@ -172,9 +172,9 @@ export default function ManagementScreen() {
             )}
             <View style={styles.cardLeft}>
               <ThemedText style={styles.cardTitle}>
-                {user.firstName + " " + user.lastName}
+                {user?.firstName + " " + user?.lastName}
               </ThemedText>
-              <ThemedText style={styles.cardSub}>{user.roleName}</ThemedText>
+              <ThemedText style={styles.cardSub}>{user?.roleName}</ThemedText>
             </View>
             <View style={styles.cardRight}>
               <ThemedText style={styles.status}>

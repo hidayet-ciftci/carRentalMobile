@@ -86,7 +86,6 @@ Tamamlananacaklar :
 -- Silerken uyarı verecek ona göre silinmesi istenecek. ++
 
 -- Role bazlı erişim verilecek. --
--- Şifre yenileme eklenecek ile profile sekmesi eklensin --
 -- ID yerine liste üzerinden seçme ++
 
 -- State durumunu seçerek ekleme ++

@@ -80,16 +80,16 @@ export default function NewServiceScreen() {
             style={styles.input}
             data={vehiclesData.map((c) => ({
               ...c,
-              label: ` ${c.brand} ${c.plate}`,
+              label: ` ${c?.brand} ${c?.plate}`,
             }))}
             labelField="label"
             valueField="id"
             placeholder="müşteri aracı seç"
-            value={serviceRecord.vehicleId}
+            value={serviceRecord?.vehicleId}
             onChange={(item) => {
               setserviceRecord((prev) => ({
                 ...prev,
-                vehicleId: item.id,
+                vehicleId: item?.id,
               }));
             }}
           />
@@ -111,15 +111,15 @@ export default function NewServiceScreen() {
           <Dropdown
             style={styles.input}
             data={userData
-              .filter((u) => u.roleName == "Worker")
+              .filter((u) => u?.roleName == "Worker")
               .map((c) => ({
                 ...c,
-                label: `${c.firstName} ${c.lastName}`,
+                label: `${c?.firstName} ${c?.lastName}`,
               }))}
             labelField="label"
             valueField="id"
             placeholder="tamirci seç"
-            value={serviceRecord.userId}
+            value={serviceRecord?.userId ?? 0}
             onChange={(item) => {
               setserviceRecord((prev) => ({
                 ...prev,

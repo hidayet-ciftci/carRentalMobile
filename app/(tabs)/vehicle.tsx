@@ -151,9 +151,9 @@ export default function VehiclesScreen() {
               />
             )}
             <View style={deleteMode ? styles.cardContent : undefined}>
-              <ThemedText style={styles.plate}>{vehicle.brand}</ThemedText>
-              <ThemedText style={styles.model}>{vehicle.color}</ThemedText>
-              <ThemedText style={styles.km}>{vehicle.plate}</ThemedText>
+              <ThemedText style={styles.plate}>{vehicle?.brand}</ThemedText>
+              <ThemedText style={styles.model}>{vehicle?.color}</ThemedText>
+              <ThemedText style={styles.km}>{vehicle?.plate}</ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle
               </ThemedText>

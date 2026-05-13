@@ -78,7 +78,7 @@ export default function NewVehicleScreen() {
             labelField="label"
             valueField="id"
             placeholder="müşteri seç"
-            value={vehicle.customerId}
+            value={vehicle?.customerId}
             onChange={(item) => {
               setVehicle((prev) => ({ ...prev, customerId: item.id }));
             }}

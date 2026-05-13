@@ -27,8 +27,12 @@ export default function VehicleDetailScreen() {
 
   const handleGetDetail = async () => {
     const vehicleData = await getVehicleById(id);
-    setVehicle(vehicleData.data);
-    setIsLoading(false);
+    if (vehicleData?.success) {
+      setVehicle(vehicleData?.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "success", text1: vehicleData?.message });
+    }
   };
 
   const updateVehicleById = async () => {

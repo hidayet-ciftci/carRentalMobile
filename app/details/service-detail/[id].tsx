@@ -41,8 +41,12 @@ export default function ServiceDetailScreen() {
 
   const handleGetDetail = async () => {
     const SCData = await getSCById(id);
-    setserviceRecord(SCData.data);
-    setIsLoading(false);
+    if (SCData?.success) {
+      setserviceRecord(SCData?.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: SCData?.message });
+    }
   };
 
   const updateSCById = async () => {

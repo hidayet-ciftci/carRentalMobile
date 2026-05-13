@@ -57,6 +57,9 @@ export default function CustomersScreen() {
     /* setIsLoading(true);
     handleGetCustomers(); */
     dispatch(fetchCustomersThunk());
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+    }
   }, [isFocused]);
 
   if (loading) {
@@ -153,13 +156,13 @@ export default function CustomersScreen() {
             )}
             <View style={deleteMode ? styles.cardContent : undefined}>
               <ThemedText style={styles.customerName}>
-                {customer.firstName} {customer.lastName}
+                {customer?.firstName} {customer?.lastName}
               </ThemedText>
               <ThemedText style={styles.customerMeta}>
-                Telefon: {customer.phoneNumber}
+                Telefon: {customer?.phoneNumber}
               </ThemedText>
               <ThemedText style={styles.customerMeta}>
-                Adres: {customer.address}
+                Adres: {customer?.address}
               </ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle

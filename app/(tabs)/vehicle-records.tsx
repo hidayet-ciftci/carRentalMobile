@@ -44,7 +44,7 @@ export default function VehicleRecordsScreen() {
   const handleGetServiceRecords = async () => {
     const ServiceRecordData = await fetchServiceRecords();
     if (ServiceRecordData?.success) {
-      dispatch(setSCStoreData(ServiceRecordData.data));
+      dispatch(setSCStoreData(ServiceRecordData?.data));
       /*       setSCData(ServiceRecordData.data); */
       setIsLoading(false);
     } else {
@@ -185,12 +185,12 @@ export default function VehicleRecordsScreen() {
                 <ThemedText style={styles.recordId}>
                   USER:{" "}
                   {userData
-                    .filter((u) => u.id == SC.userId)
-                    .map((u) => `${u.firstName} ${u.lastName}`)}{" "}
+                    ?.filter((u) => u?.id == SC?.userId)
+                    ?.map((u) => `${u?.firstName} ${u?.lastName}`)}{" "}
                   VEHİCLE:{" "}
                   {vehiclesData
-                    .filter((v) => v.id == SC.vehicleId)
-                    .map((v) => v.plate)}
+                    ?.filter((v) => v?.id == SC?.vehicleId)
+                    ?.map((v) => v?.plate)}
                 </ThemedText>
                 <ThemedText style={styles.recordDate}>
                   Planlanan Bitiş:{" "}
@@ -198,10 +198,10 @@ export default function VehicleRecordsScreen() {
                 </ThemedText>
               </View>
               <ThemedText style={styles.recordPlate}>
-                {SC.description}
+                {SC?.description}
               </ThemedText>
               <ThemedText style={styles.recordNote}>
-                Ücret: {SC.price}
+                Ücret: {SC?.price}
               </ThemedText>
               <ThemedText style={styles.detailText}>
                 Detay ve Guncelle

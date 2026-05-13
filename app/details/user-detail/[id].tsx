@@ -29,8 +29,12 @@ export default function UserDetailScreen() {
 
   const handleGetDetail = async () => {
     const userData = await getIdUser(id);
-    setUser(userData.data);
-    setIsLoading(false);
+    if (userData?.success) {
+      setUser(userData?.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: userData?.message });
+    }
   };
 
   const updateUserById = async () => {

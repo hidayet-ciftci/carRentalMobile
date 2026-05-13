@@ -27,8 +27,12 @@ export default function CustomerAdminDetailScreen() {
 
   const handleGetDetail = async () => {
     const customerData = await getByIdCustomer(id);
-    setCustomer(customerData?.data);
-    setIsLoading(false);
+    if (customerData?.success) {
+      setCustomer(customerData?.data);
+      setIsLoading(false);
+    } else {
+      Toast.show({ type: "error", text1: "hata" });
+    }
   };
 
   const updateCustomerById = async () => {

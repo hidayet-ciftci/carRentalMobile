@@ -40,7 +40,6 @@ export default function NewUserScreen() {
       return;
     }
     const userData = await createUser(newUserData);
-    console.log(userData);
     if (userData?.success) {
       Toast.show({ type: "success", text1: userData?.message });
       router.back();
@@ -73,7 +72,7 @@ export default function NewUserScreen() {
             style={styles.input}
             placeholder="Ornek: Ahmet"
             placeholderTextColor="#7A90A8"
-            value={newUserData.firstName}
+            value={newUserData?.firstName}
             onChangeText={(text) =>
               setNewUserData((prev) => ({
                 ...prev,
@@ -88,7 +87,7 @@ export default function NewUserScreen() {
             style={styles.input}
             placeholder="Ornek: Demir"
             placeholderTextColor="#7A90A8"
-            value={newUserData.lastName}
+            value={newUserData?.lastName}
             onChangeText={(text) =>
               setNewUserData((prev) => ({
                 ...prev,

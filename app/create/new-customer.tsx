@@ -52,7 +52,7 @@ export default function NewCustomerScreen() {
             style={styles.input}
             placeholder="Ornek: Ali Celik"
             placeholderTextColor="#5E8C78"
-            value={newCustomer.firstName}
+            value={newCustomer?.firstName}
             onChangeText={(text) =>
               setNewCustomer((prev) => ({
                 ...prev,
@@ -66,7 +66,7 @@ export default function NewCustomerScreen() {
             style={styles.input}
             placeholder="Ornek: Ali Celik"
             placeholderTextColor="#5E8C78"
-            value={newCustomer.lastName}
+            value={newCustomer?.lastName}
             onChangeText={(text) =>
               setNewCustomer((prev) => ({
                 ...prev,
