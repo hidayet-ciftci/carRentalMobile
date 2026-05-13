@@ -27,10 +27,14 @@ export default function NewCustomerScreen() {
   const handleAddCustomer = async () => {
     if (newCustomer == undefined || newCustomer == null) return;
     const customerData = await createCustomer(newCustomer);
-    if (customerData?.success) {
-      Toast.show({ type: "success", text1: customerData?.message });
+    if (customerData) {
+      if (customerData?.success) {
+        Toast.show({ type: "success", text1: customerData?.message });
+        router.back();
+      } else Toast.show({ type: "error", text1: customerData?.message });
+    } else {
       router.back();
-    } else Toast.show({ type: "error", text1: customerData?.message });
+    }
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>

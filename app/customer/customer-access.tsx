@@ -16,11 +16,13 @@ export default function CustomerAccessScreen() {
 
   async function handleLogin() {
     const loginData = await getCustomerDetail(email);
-    if (!loginData?.success)
-      Toast.show({ type: "error", text1: loginData?.message });
-    if (loginData?.success) {
-      disPatch(setData(loginData?.data));
-      router.push("/customer/customer-details");
+    if (loginData) {
+      if (!loginData?.success)
+        Toast.show({ type: "error", text1: loginData?.message });
+      if (loginData?.success) {
+        disPatch(setData(loginData?.data));
+        router.push("/customer/customer-details");
+      }
     }
   }
 

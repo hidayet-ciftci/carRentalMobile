@@ -42,14 +42,16 @@ export default function CustomersScreen() {
 
   const handleDeleteCustomers = async () => {
     const deletedCustomerData = await deleteByIdsCustomer(selected);
-    if (deletedCustomerData?.success) {
-      Toast.show({ type: "success", text1: deletedCustomerData?.message });
-      setSelected([]);
-      setDeleteMode(false);
-      dispatch(fetchCustomersThunk());
-      /* handleGetCustomers(); */
-    } else {
-      Toast.show({ type: "error", text1: deletedCustomerData?.message });
+    if (deletedCustomerData) {
+      if (deletedCustomerData?.success) {
+        Toast.show({ type: "success", text1: deletedCustomerData?.message });
+        setSelected([]);
+        setDeleteMode(false);
+        dispatch(fetchCustomersThunk());
+        /* handleGetCustomers(); */
+      } else {
+        Toast.show({ type: "error", text1: deletedCustomerData?.message });
+      }
     }
   };
 

@@ -29,10 +29,14 @@ export default function NewVehicleScreen() {
   const handleAddVehicle = async () => {
     if (vehicle == undefined || vehicle == null) return;
     const vehicleData = await createVehicle(vehicle);
-    if (vehicleData?.success) {
-      Toast.show({ type: "success", text1: vehicleData?.message });
+    if (vehicleData) {
+      if (vehicleData?.success) {
+        Toast.show({ type: "success", text1: vehicleData?.message });
+        router.back();
+      } else Toast.show({ type: "error", text1: vehicleData?.message });
+    } else {
       router.back();
-    } else Toast.show({ type: "error", text1: vehicleData?.message });
+    }
   };
   const customerData: customerDataType[] = useSelector(
     (state: RootState) => state.customerStoreData.customerData,

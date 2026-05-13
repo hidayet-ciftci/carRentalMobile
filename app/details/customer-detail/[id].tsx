@@ -27,21 +27,29 @@ export default function CustomerAdminDetailScreen() {
 
   const handleGetDetail = async () => {
     const customerData = await getByIdCustomer(id);
-    if (customerData?.success) {
-      setCustomer(customerData?.data);
-      setIsLoading(false);
+    if (customerData) {
+      if (customerData?.success) {
+        setCustomer(customerData?.data);
+        setIsLoading(false);
+      } else {
+        Toast.show({ type: "error", text1: customerData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: "hata" });
+      router.back();
     }
   };
 
   const updateCustomerById = async () => {
     const updatedCustomerData = await updateCustomer(customer);
-    if (updatedCustomerData?.success) {
-      Toast.show({ type: "success", text1: updatedCustomerData?.message });
-      router.back();
+    if (updatedCustomerData) {
+      if (updatedCustomerData?.success) {
+        Toast.show({ type: "success", text1: updatedCustomerData?.message });
+        router.back();
+      } else {
+        Toast.show({ type: "error", text1: updatedCustomerData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: updatedCustomerData?.message });
+      router.back();
     }
   };
 

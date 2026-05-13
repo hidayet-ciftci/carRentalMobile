@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import axiosClient from "./axiosClient";
 import { vehicleDataType } from "./types";
 
@@ -7,8 +8,12 @@ export const fetchVehicles = async () => {
     const res = await axiosClient.get(url);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -20,8 +25,12 @@ export const createVehicle = async (vehicle: vehicleDataType) => {
     const res = await axiosClient.post(url, restOfVehicle);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -31,8 +40,12 @@ export const getVehicleById = async (vehicleId: string | string[]) => {
     const res = await axiosClient.get(url);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -42,8 +55,12 @@ export const updateVehicles = async (vehicle: vehicleDataType) => {
     const res = await axiosClient.put(url, vehicle);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -53,7 +70,11 @@ export const deleteVehiclesByIds = async (vehicleIds: number[]) => {
     const res = await axiosClient.delete(url, { data: vehicleIds });
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };

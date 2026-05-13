@@ -40,10 +40,14 @@ export default function NewUserScreen() {
       return;
     }
     const userData = await createUser(newUserData);
-    if (userData?.success) {
-      Toast.show({ type: "success", text1: userData?.message });
+    if (userData) {
+      if (userData?.success) {
+        Toast.show({ type: "success", text1: userData?.message });
+        router.back();
+      } else Toast.show({ type: "error", text1: userData?.message });
+    } else {
       router.back();
-    } else Toast.show({ type: "error", text1: userData?.message });
+    }
   };
 
   return (

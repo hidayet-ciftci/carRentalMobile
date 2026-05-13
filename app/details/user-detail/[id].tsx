@@ -29,21 +29,29 @@ export default function UserDetailScreen() {
 
   const handleGetDetail = async () => {
     const userData = await getIdUser(id);
-    if (userData?.success) {
-      setUser(userData?.data);
-      setIsLoading(false);
+    if (userData) {
+      if (userData?.success) {
+        setUser(userData?.data);
+        setIsLoading(false);
+      } else {
+        Toast.show({ type: "error", text1: userData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: userData?.message });
+      router.back();
     }
   };
 
   const updateUserById = async () => {
     const updatedUserData = await updateUser(user);
-    if (updatedUserData?.success) {
-      Toast.show({ type: "success", text1: updatedUserData?.message });
-      router.back();
+    if (updatedUserData) {
+      if (updatedUserData?.success) {
+        Toast.show({ type: "success", text1: updatedUserData?.message });
+        router.back();
+      } else {
+        Toast.show({ type: "error", text1: updatedUserData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: updatedUserData?.message });
+      router.back();
     }
   };
 

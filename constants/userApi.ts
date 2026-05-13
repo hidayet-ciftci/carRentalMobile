@@ -1,3 +1,4 @@
+import Toast from "react-native-toast-message";
 import axiosClient from "./axiosClient";
 import { registerUserDataType, userDataType } from "./types";
 
@@ -7,8 +8,12 @@ export const fetchUsers = async () => {
     const res = await axiosClient.get(url);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -18,8 +23,12 @@ export const createUser = async (user: registerUserDataType) => {
     const res = await axiosClient.post(url, user);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -29,8 +38,12 @@ export const getIdUser = async (userId: string | string[]) => {
     const res = await axiosClient.get(url);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -40,8 +53,12 @@ export const updateUser = async (user: userDataType) => {
     const res = await axiosClient.put(url, user);
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };
 
@@ -51,7 +68,11 @@ export const deleteByIdUser = async (userIds: number[]) => {
     const res = await axiosClient.delete(url, { data: userIds });
     const data = res.data;
     return data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error?.response?.data?.message) {
+      Toast.show({ type: "error", text1: error.response.data.message });
+    } else {
+      Toast.show({ type: "error", text1: error.message });
+    }
   }
 };

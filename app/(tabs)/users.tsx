@@ -42,14 +42,16 @@ export default function ManagementScreen() {
 
   const handleDeleteUser = async () => {
     const deletedUserData = await deleteByIdUser(selecteds);
-    if (deletedUserData?.success) {
-      Toast.show({ type: "success", text1: deletedUserData?.message });
-      setSelecteds([]);
-      setDeleteMode(false);
-      dispatch(fetchUsersThunk());
-      /* handleGetUsers(); */
-    } else {
-      Toast.show({ type: "error", text1: deletedUserData?.message });
+    if (deletedUserData) {
+      if (deletedUserData?.success) {
+        Toast.show({ type: "success", text1: deletedUserData?.message });
+        setSelecteds([]);
+        setDeleteMode(false);
+        dispatch(fetchUsersThunk());
+        /* handleGetUsers(); */
+      } else {
+        Toast.show({ type: "error", text1: deletedUserData?.message });
+      }
     }
   };
 

@@ -43,24 +43,29 @@ export default function VehicleRecordsScreen() {
 
   const handleGetServiceRecords = async () => {
     const ServiceRecordData = await fetchServiceRecords();
-    if (ServiceRecordData?.success) {
-      dispatch(setSCStoreData(ServiceRecordData?.data));
-      /*       setSCData(ServiceRecordData.data); */
-      setIsLoading(false);
-    } else {
-      Toast.show({ type: "error", text1: ServiceRecordData?.message });
+    if (ServiceRecordData) {
+      if (ServiceRecordData?.success) {
+        dispatch(setSCStoreData(ServiceRecordData?.data));
+        /*       setSCData(ServiceRecordData.data); */
+        setIsLoading(false);
+      } else {
+        Toast.show({ type: "error", text1: ServiceRecordData?.message });
+        setIsLoading(false);
+      }
     }
   };
 
   const handleDeleteSC = async () => {
     const deletedSCData = await deleteSCById(selecteds);
-    if (deletedSCData?.success) {
-      Toast.show({ type: "success", text1: deletedSCData?.message });
-      setSelecteds([]);
-      setDeleteMode(false);
-      handleGetServiceRecords();
-    } else {
-      Toast.show({ type: "error", text1: deletedSCData?.message });
+    if (deletedSCData) {
+      if (deletedSCData?.success) {
+        Toast.show({ type: "success", text1: deletedSCData?.message });
+        setSelecteds([]);
+        setDeleteMode(false);
+        handleGetServiceRecords();
+      } else {
+        Toast.show({ type: "error", text1: deletedSCData?.message });
+      }
     }
   };
 

@@ -27,29 +27,29 @@ export default function VehicleDetailScreen() {
 
   const handleGetDetail = async () => {
     const vehicleData = await getVehicleById(id);
-    if (vehicleData?.success) {
-      setVehicle(vehicleData?.data);
-      setIsLoading(false);
+    if (vehicleData) {
+      if (vehicleData?.success) {
+        setVehicle(vehicleData?.data);
+        setIsLoading(false);
+      } else {
+        Toast.show({ type: "success", text1: vehicleData?.message });
+      }
     } else {
-      Toast.show({ type: "success", text1: vehicleData?.message });
+      router.back();
     }
   };
 
   const updateVehicleById = async () => {
-    /* console.log(
-      new Date(new Date().getTimezoneOffset() + Date.now()).toLocaleString(),
-    ); */
-    /* console.log((new Date().getTimezoneOffset() + Date.now()).toLocaleString());
-    console.log(new Date().getTimezoneOffset()); */
-
     const updatedUserData = await updateVehicles(vehicle);
-    console.log(vehicle);
-
-    if (updatedUserData?.success) {
-      Toast.show({ type: "success", text1: updatedUserData?.message });
-      router.back();
+    if (updatedUserData) {
+      if (updatedUserData?.success) {
+        Toast.show({ type: "success", text1: updatedUserData?.message });
+        router.back();
+      } else {
+        Toast.show({ type: "error", text1: updatedUserData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: updatedUserData?.message });
+      router.back();
     }
   };
 

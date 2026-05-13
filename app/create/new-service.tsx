@@ -40,10 +40,14 @@ export default function NewServiceScreen() {
   const handleAddSC = async () => {
     if (serviceRecord == undefined || serviceRecord == null) return;
     const newSC = await createServiceRecord(serviceRecord);
-    if (newSC?.success) {
-      Toast.show({ type: "success", text1: newSC?.message });
+    if (newSC) {
+      if (newSC?.success) {
+        Toast.show({ type: "success", text1: newSC?.message });
+        router.back();
+      } else Toast.show({ type: "error", text1: newSC?.message });
+    } else {
       router.back();
-    } else Toast.show({ type: "error", text1: newSC?.message });
+    }
   };
 
   return (

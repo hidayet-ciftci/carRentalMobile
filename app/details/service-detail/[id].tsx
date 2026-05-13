@@ -41,21 +41,29 @@ export default function ServiceDetailScreen() {
 
   const handleGetDetail = async () => {
     const SCData = await getSCById(id);
-    if (SCData?.success) {
-      setserviceRecord(SCData?.data);
-      setIsLoading(false);
+    if (SCData) {
+      if (SCData?.success) {
+        setserviceRecord(SCData?.data);
+        setIsLoading(false);
+      } else {
+        Toast.show({ type: "error", text1: SCData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: SCData?.message });
+      router.back();
     }
   };
 
   const updateSCById = async () => {
     const updatedSCData = await updateServiceRecord(serviceRecord);
-    if (updatedSCData?.success) {
-      Toast.show({ type: "success", text1: updatedSCData?.message });
-      router.back();
+    if (updatedSCData) {
+      if (updatedSCData?.success) {
+        Toast.show({ type: "success", text1: updatedSCData?.message });
+        router.back();
+      } else {
+        Toast.show({ type: "error", text1: updatedSCData?.message });
+      }
     } else {
-      Toast.show({ type: "error", text1: updatedSCData?.message });
+      router.back();
     }
   };
 

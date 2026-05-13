@@ -42,14 +42,16 @@ export default function VehiclesScreen() {
 
   const handleDeleteVehicle = async () => {
     const deletedVehiclesData = await deleteVehiclesByIds(selecteds);
-    if (deletedVehiclesData?.success) {
-      Toast.show({ type: "success", text1: deletedVehiclesData?.message });
-      setSelecteds([]);
-      setDeleteMode(false);
-      /* handleGetVehicles(); */
-      dispatch(fetchVehiclesThunk());
-    } else {
-      Toast.show({ type: "error", text1: deletedVehiclesData?.message });
+    if (deletedVehiclesData) {
+      if (deletedVehiclesData?.success) {
+        Toast.show({ type: "success", text1: deletedVehiclesData?.message });
+        setSelecteds([]);
+        setDeleteMode(false);
+        /* handleGetVehicles(); */
+        dispatch(fetchVehiclesThunk());
+      } else {
+        Toast.show({ type: "error", text1: deletedVehiclesData?.message });
+      }
     }
   };
 

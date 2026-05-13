@@ -45,7 +45,7 @@ axiosClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         console.log("token refrehsed");
         return axiosClient(originalRequest);
-      } catch (refreshError) {
+      } catch (err) {
         await clearTokens();
         const { store } = await import("@/store/store");
         store.dispatch(clearToken());
