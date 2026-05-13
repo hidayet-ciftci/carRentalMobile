@@ -60,10 +60,13 @@ export default function VehiclesScreen() {
     setIsLoading(true);
     handleGetVehicles(); */
     dispatch(fetchVehiclesThunk());
+  }, [isFocused]);
+
+  useEffect(() => {
     if (error) {
       Toast.show({ type: "error", text1: error });
     }
-  }, [isFocused]);
+  }, [error]);
 
   if (loading) {
     return (

@@ -48,8 +48,6 @@ export default function CustomerAdminDetailScreen() {
       } else {
         Toast.show({ type: "error", text1: updatedCustomerData?.message });
       }
-    } else {
-      router.back();
     }
   };
 

@@ -19,7 +19,8 @@ export const fetchCustomersThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await fetchCustomers();
-      if (!response.success) return thunkAPI.rejectWithValue(response?.message);
+      if (!response?.success)
+        return thunkAPI.rejectWithValue(response?.message);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue("API hatası meydana geldi");

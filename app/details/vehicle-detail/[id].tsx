@@ -48,8 +48,6 @@ export default function VehicleDetailScreen() {
       } else {
         Toast.show({ type: "error", text1: updatedUserData?.message });
       }
-    } else {
-      router.back();
     }
   };
 

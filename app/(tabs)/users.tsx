@@ -59,10 +59,13 @@ export default function ManagementScreen() {
     /*  setIsLoading(true);
     handleGetUsers(); */
     dispatch(fetchUsersThunk());
+  }, [isFocused]);
+
+  useEffect(() => {
     if (error) {
       Toast.show({ type: "error", text1: error });
     }
-  }, [isFocused]);
+  }, [error]);
 
   if (loading) {
     return (

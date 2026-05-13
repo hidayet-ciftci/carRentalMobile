@@ -59,10 +59,13 @@ export default function CustomersScreen() {
     /* setIsLoading(true);
     handleGetCustomers(); */
     dispatch(fetchCustomersThunk());
+  }, [isFocused]);
+
+  useEffect(() => {
     if (error) {
       Toast.show({ type: "error", text1: error });
     }
-  }, [isFocused]);
+  }, [error]);
 
   if (loading) {
     return (

@@ -47,8 +47,11 @@ export default function ServiceDetailScreen() {
         setIsLoading(false);
       } else {
         Toast.show({ type: "error", text1: SCData?.message });
+        setIsLoading(false);
+        router.back();
       }
     } else {
+      setIsLoading(false);
       router.back();
     }
   };
@@ -62,8 +65,6 @@ export default function ServiceDetailScreen() {
       } else {
         Toast.show({ type: "error", text1: updatedSCData?.message });
       }
-    } else {
-      router.back();
     }
   };
 
