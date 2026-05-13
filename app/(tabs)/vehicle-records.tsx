@@ -34,6 +34,13 @@ export default function VehicleRecordsScreen() {
     (state: RootState) => state.ScStoreData.serviceRecordData,
   );
 
+  const vehiclesData = useSelector(
+    (state: RootState) => state.vehicleStoreData.vehiclesData,
+  );
+  const userData = useSelector(
+    (state: RootState) => state.userStoreData.userData,
+  );
+
   const handleGetServiceRecords = async () => {
     const ServiceRecordData = await fetchServiceRecords();
     if (ServiceRecordData?.success) {
@@ -176,7 +183,14 @@ export default function VehicleRecordsScreen() {
             <View style={deleteMode ? styles.cardContent : undefined}>
               <View style={styles.recordHeader}>
                 <ThemedText style={styles.recordId}>
-                  USER: {SC.userId} VEHİCLE: {SC.vehicleId}
+                  USER:{" "}
+                  {userData
+                    .filter((u) => u.id == SC.userId)
+                    .map((u) => `${u.firstName} ${u.lastName}`)}{" "}
+                  VEHİCLE:{" "}
+                  {vehiclesData
+                    .filter((v) => v.id == SC.vehicleId)
+                    .map((v) => v.plate)}
                 </ThemedText>
                 <ThemedText style={styles.recordDate}>
                   Planlanan Bitiş:{" "}

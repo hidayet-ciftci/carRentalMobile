@@ -1,10 +1,9 @@
 import { deleteButton } from "@/components/Alert-Delete";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { userDataType } from "@/constants/types";
-import { deleteByIdUser, fetchUsers } from "@/constants/userApi";
+import { deleteByIdUser } from "@/constants/userApi";
 import { AppDispatch, RootState } from "@/store/store";
-import { setUserStoreData } from "@/store/userSlice";
+import { fetchUsersThunk } from "@/store/userSlice";
 import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -22,24 +21,24 @@ export default function ManagementScreen() {
   const [deleteMode, setDeleteMode] = useState(false);
   const [selecteds, setSelecteds] = useState<number[]>([]);
   /* const [userData, setUserData] = useState<userDataType[]>(); */
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  /*   const [isLoading, setIsLoading] = useState<boolean>(false); */
   const isFocused = useIsFocused();
   const dispatch = useDispatch<AppDispatch>();
 
-  const userData: userDataType[] = useSelector(
-    (state: RootState) => state.userStoreData.userData,
+  const { userData, error, loading } = useSelector(
+    (state: RootState) => state.userStoreData,
   );
 
-  const handleGetUsers = async () => {
+  /*  const handleGetUsers = async () => {
     const userData = await fetchUsers();
     if (userData?.success) {
       dispatch(setUserStoreData(userData.data));
-      /* setUserData(userData.data); */
+      setUserData(userData.data);
       setIsLoading(false);
     } else {
       Toast.show({ type: "error", text1: userData?.message });
     }
-  };
+  }; */
 
   const handleDeleteUser = async () => {
     const deletedUserData = await deleteByIdUser(selecteds);
@@ -47,18 +46,23 @@ export default function ManagementScreen() {
       Toast.show({ type: "success", text1: deletedUserData?.message });
       setSelecteds([]);
       setDeleteMode(false);
-      handleGetUsers();
+      dispatch(fetchUsersThunk());
+      /* handleGetUsers(); */
     } else {
       Toast.show({ type: "error", text1: deletedUserData?.message });
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    handleGetUsers();
+    /*  setIsLoading(true);
+    handleGetUsers(); */
+    dispatch(fetchUsersThunk());
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+    }
   }, [isFocused]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <ActivityIndicator size={"large"} style={{ flex: 1 }}></ActivityIndicator>
     );

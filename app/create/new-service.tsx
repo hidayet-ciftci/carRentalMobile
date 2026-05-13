@@ -2,7 +2,8 @@ import { DateInputView } from "@/components/Date-Input";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { createServiceRecord } from "@/constants/serviceRecordApi";
-import { SCDataType } from "@/constants/types";
+import { SCDataType, userDataType } from "@/constants/types";
+import { RootState } from "@/store/store";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -12,8 +13,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useSelector } from "react-redux";
 
 export default function NewServiceScreen() {
   const [serviceRecord, setserviceRecord] = useState<SCDataType>({
@@ -27,6 +30,12 @@ export default function NewServiceScreen() {
     price: 0,
     createdTime: new Date().toISOString(),
   });
+  const vehiclesData = useSelector(
+    (state: RootState) => state.vehicleStoreData.vehiclesData,
+  );
+  const userData: userDataType[] = useSelector(
+    (state: RootState) => state.userStoreData.userData,
+  );
 
   const handleAddSC = async () => {
     if (serviceRecord == undefined || serviceRecord == null) return;
@@ -53,7 +62,7 @@ export default function NewServiceScreen() {
 
         <ThemedView style={styles.card}>
           <ThemedText style={styles.fieldLabel}>Müşteri Aracı</ThemedText>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             value={
               Number.isNaN(serviceRecord.vehicleId)
@@ -66,10 +75,26 @@ export default function NewServiceScreen() {
                 vehicleId: parseInt(text),
               }))
             }
+          /> */}
+          <Dropdown
+            style={styles.input}
+            data={vehiclesData.map((c) => ({
+              ...c,
+              label: ` ${c.brand} ${c.plate}`,
+            }))}
+            labelField="label"
+            valueField="id"
+            placeholder="müşteri aracı seç"
+            value={serviceRecord.vehicleId}
+            onChange={(item) => {
+              setserviceRecord((prev) => ({
+                ...prev,
+                vehicleId: item.id,
+              }));
+            }}
           />
-
           <ThemedText style={styles.fieldLabel}>Tamirci</ThemedText>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             value={
               Number.isNaN(serviceRecord.userId)
@@ -82,8 +107,26 @@ export default function NewServiceScreen() {
                 userId: parseInt(text),
               }))
             }
+          /> */}
+          <Dropdown
+            style={styles.input}
+            data={userData
+              .filter((u) => u.roleName == "Worker")
+              .map((c) => ({
+                ...c,
+                label: `${c.firstName} ${c.lastName}`,
+              }))}
+            labelField="label"
+            valueField="id"
+            placeholder="tamirci seç"
+            value={serviceRecord.userId}
+            onChange={(item) => {
+              setserviceRecord((prev) => ({
+                ...prev,
+                userId: item.id,
+              }));
+            }}
           />
-
           <ThemedText style={styles.fieldLabel}>Aciklama</ThemedText>
           <TextInput
             style={[styles.input, styles.inputMultiline]}

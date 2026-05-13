@@ -8,6 +8,7 @@ import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { fetchCustomersThunk } from "@/store/customerSlice";
 import { AppDispatch } from "@/store/store";
+import { fetchUsersThunk } from "@/store/userSlice";
 import { fetchVehiclesThunk } from "@/store/vehicleSlice";
 import { useDispatch } from "react-redux";
 
@@ -16,9 +17,8 @@ export default function TabLayout() {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    /* setIsLoading(true);
-    handleGetCustomers(); */
     dispatch(fetchVehiclesThunk());
+    dispatch(fetchUsersThunk());
     dispatch(fetchCustomersThunk());
   }, []);
 

@@ -41,6 +41,7 @@ axiosClient.interceptors.response.use(
         store.dispatch(setToken(newAccessToken));
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        console.log("token refrehsed");
         return axiosClient(originalRequest);
       } catch (error) {
         await clearTokens();
